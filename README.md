@@ -8,7 +8,7 @@ A few QoL tools for uploaders
 * PyYAML==6.0.2
 
 1. run pip install -r requirements.txt to install dependencies
-2. copy default_config.cfg into settings.json and modify with your settings and defaults (cache_path, metadata, input_path, output_path)
+2. copy templates/default_config.cfg into config/settings.json and modify your settings and defaults (cache_path, metadata, input_path, output_path)
 3. the following config setting can be overriden by command line parameters: metadata, input_path, output_path, dry_run, verbose
 
 
