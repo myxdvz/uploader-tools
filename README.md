@@ -34,10 +34,12 @@ The following settings are in the config file: announceUrl, upload_path, torrent
 python uploader-tools.py createTorrent --input /path/to/media
 ~~~
 
-Generate Torrent file from a media folder and corresponding JsonFastFillout file. It will check if a metadata.json file exists to generate metadata file
+Generate Torrent file from a media folder and corresponding JsonFastFillout file. It will use the --book and --metadata params to generate metadata file
 The following settings are in the config file: announceUrl, upload_path, torrent_path
 ~~~
 python uploader-tools.py createTorrent --input /path/to/media --book [ids or file] --metadata file
 ~~~
 
+## Disclaimers
+* GoogleBooks API is notorious for returning 429 (rate limits)
 
