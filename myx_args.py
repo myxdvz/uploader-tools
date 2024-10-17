@@ -12,7 +12,7 @@ def importArgs():
     #Primary Action to run
     parser.add_argument ("action", choices=["createJson", "createTorrent"], help="A specific task or tool to run")
     parser.add_argument ("--metadata", choices=["audible", "google", "file"], default="audible", help="Source of metadata")
-    parser.add_argument ("--book", help="List of Books: ASIN or ISBN or Yaml Files", required=True)
+    parser.add_argument ("--book", help="List of Books: ASIN or ISBN or Yaml Files")
     parser.add_argument ("--input", help="Where are the source media files")
     parser.add_argument ("--output", help="Where to save the output files")
     #Debug flags

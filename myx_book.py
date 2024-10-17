@@ -3,7 +3,6 @@ from dataclasses import field
 import myx_utilities
 import myx_args
 import pprint
-import pyperclip
 import json
 import httpx, os
 import yaml

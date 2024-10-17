@@ -67,7 +67,8 @@ def main(cfg):
 
         case "createTorrent":
             #uploader-tools createTorrent --book [IDs, files] --source [audible, file] --input [path/to/files]
-            createTorrent(cfg)
+            #createTorrent(cfg)
+            print (f"This feature is still in testing... coming soon!")
 
         case _:
             print ("Please select from the following actions: createJson, createTorrent")
