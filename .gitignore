@@ -1,0 +1,12 @@
+.dockerfile
+.DS_Store 
+__pycache__
+__cache__
+logs/*
+config/*
+*.sh
+*.csv
+*.json
+private.txt
+*.pkl
+@eaDir/*
