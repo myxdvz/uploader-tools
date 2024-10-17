@@ -1,3 +1,4 @@
+.gitignore
 .dockerfile
 .DS_Store 
 __pycache__
@@ -6,7 +7,8 @@ logs/*
 config/*
 *.sh
 *.csv
-*.json
 private.txt
 *.pkl
 @eaDir/*
+tests/*
+

@@ -1,8 +1,12 @@
+from myx_audible import AudibleBook
+from myx_google import GoogleBook
+from myx_yaml import YamlBook
 import myx_args
 import myx_book
 import myx_utilities
 import pprint
 import os, sys, subprocess, shlex, re
+
 
 def createJsonFastFill(cfg):
     books=myx_args.params.book
@@ -15,15 +19,15 @@ def createJsonFastFill(cfg):
         match metadata:
             case "file":
                 #yaml file
-                book = myx_book.YamlBook()
+                book = YamlBook()
 
             case "google":
                 #googlebooks api
-                book = myx_book.GoogleBook()
+                book = GoogleBook()
 
             case _:
                 #default is audible
-                book = myx_book.AudibleBook()
+                book = AudibleBook()
 
         #pass config file
         book.config = cfg
