@@ -1,0 +1,26 @@
+{
+    "title": "__TITLE__",
+    "subtitle": "__SUBTITLE__",
+    "authors":
+      [
+      ],
+    "narrators":
+      [
+      ],
+    "tags": "__TAGS__",
+    "description": "__DESCRIPTION__",
+    "series":
+      [
+        {
+          "name": "First series name goes here",
+          "number": 3
+        },
+        {
+          "name": "Second series name goes here",
+          "number": "1-3"
+        }
+      ],
+    "thumbnail": "__THUMBNAIL__",
+    "language": "__LANGUAGE__",
+    "category": "__CATEGORY__"
+   }           

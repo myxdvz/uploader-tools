@@ -1,0 +1,22 @@
+{
+    "Config": {
+        "metadata": "audible",
+        "cache_path": "config",         
+        "input_path": "/data/media/audiobooks/libation",
+        "output_path": "logs/json",
+        "uploader-tools": {
+            "torrent_path": "/data/torrents/auto-uploads",
+            "upload_path": "/data/torrents/complete/uploads/audiobooks",
+            "announce": "https://t.myanonamouse.net/tracker.php/x4FGV1CxWDl2Cv_yHOvcOS_0OOSOWPda/announce",
+            "upload_files": [".m4b", ".cue", ".jpg"],
+            "in_series": "{author} - {series} {part} - {title}",
+            "no_series": "{author} - {title}",
+            "forbidden_authors": ["J R R Tolkien", "Anne Perry", "Simon Scarrow", "Sara Gruen", "Joan Elliott", "Alan Dart", "Chris Mead", "Paul Moore", "Gavin Jones", "Noah K Sturdevant", "Benedict Brown", "Erika T Wurth"]
+        }, 
+        "flags": {
+            "dry_run": 0,
+            "verbose": 1,
+            "ebooks": 0
+        }
+    }
+}
