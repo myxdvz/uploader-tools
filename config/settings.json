@@ -7,7 +7,7 @@
         "uploader-tools": {
             "torrent_path": "/data/torrents/auto-uploads",
             "upload_path": "/data/torrents/complete/uploads/audiobooks",
-            "announce": "https://t.myanonamouse.net/tracker.php/x4FGV1CxWDl2Cv_yHOvcOS_0OOSOWPda/announce",
+            "announce": "https://t.myanonamouse.net/yourannounce",
             "upload_files": [".m4b", ".cue", ".jpg"],
             "in_series": "{author} - {series} {part} - {title}",
             "no_series": "{author} - {title}",
