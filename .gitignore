@@ -11,4 +11,5 @@ private.txt
 *.pkl
 @eaDir/*
 tests/*
+config/settings.json
 
