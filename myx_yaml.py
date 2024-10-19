@@ -11,6 +11,8 @@ class YamlBook(Book):
         self.source="file"
 
     def getByID (self, id=""):
+        add_hash = self.config.get("Config/flags/add_hash", False)
+
         #for a local book, we're expecting a yaml file as the id
         yaml_file = id
         if os.path.exists(yaml_file):
@@ -20,8 +22,11 @@ class YamlBook(Book):
 
                     #set the book object
                     self.__dic2Book__(book)
-                    #set the ID of the book, hash of file
-                    self.id = myx_utilities.getHash(yaml_file)
+                    fn = os.path.splitext(os.path.basename(yaml_file))[0]
+                    if add_hash:
+                        self.id = f"{fn}-{myx_utilities.getHash(yaml_file)}"
+                    else:
+                        self.id = f"{fn}"
 
             except Exception as e:
                 print (f"Error getting YAML {yaml_file}: {e}")

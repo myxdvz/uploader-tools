@@ -12,4 +12,5 @@ private.txt
 @eaDir/*
 tests/*
 config/settings.json
-
+myx_tor.py
+templates/book2.yaml

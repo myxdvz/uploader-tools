@@ -203,3 +203,11 @@ def loadFromCache(cfg, key, category):
         f = file.read()
     
     return json.loads(f)
+
+def getApiKey(cfg, source):
+    apiKey=cfg.get(f"Config/sources/{source}ApiKey")
+
+    if (apiKey is None):
+        apiKey=""
+
+    return apiKey

@@ -9,6 +9,7 @@ class GoogleBook(Book):
         self.source="google"
 
     def getByID (self, id=""):
+        apiKey=myx_utilities.getApiKey(self.config, self.source)
         print (f"Searching Google Books for\n\tisbn:{id}")
         #9780698146402, 0698146409
 
@@ -21,12 +22,14 @@ class GoogleBook(Book):
             books = myx_utilities.loadFromCache(self.config, cacheKey, "google")
         else:
             try:
+                #&key={YOUR_API_KEY}
                 p=f"https://www.googleapis.com/books/v1/volumes"
 
                 r = httpx.get (
                     p,
                     params={
                         "q": f"isbn:{id}",
+                        "key": apiKey,
                         "orderBy": "relevance",
                         "printType": "all",
                         "projection": "full"
@@ -53,7 +56,6 @@ class GoogleBook(Book):
 
     def __dic2Book__(self, book):
         #book is an google books volumeInfo dictionary
-        print (book)
         if book is not None:
             if 'id' in book: self.id=str(book["id"])
             if 'industryIdentifiers' in book: self.isbn=str(book["industryIdentifiers"][0]["identifier"])

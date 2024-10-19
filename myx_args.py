@@ -18,6 +18,7 @@ def importArgs():
     #Debug flags
     parser.add_argument("--dry-run", default=None, action="store_true", help="If provided, will override dryRun in config")
     parser.add_argument("--verbose", default=None, action="store_true", help="If provided, will print additional info")
+    parser.add_argument("--add-hash", default=None, action="store_true", help="If provided, will add hash to output filenames")
 
     #get all arguments
     args = parser.parse_args()
@@ -67,6 +68,8 @@ class Config(object):
                 if params.verbose is not None:
                     cfg["Config"]["flags"]["verbose"] = bool(params.verbose)            
 
+                if params.add_hash is not None:
+                    cfg["Config"]["flags"]["add_hash"] = bool(params.verbose)            
 
             self._data = cfg            
         except Exception as e:

@@ -42,15 +42,24 @@ def createJsonFastFill(cfg):
             book.getJSONFastFillOut(output, jsonFile)
 
 def createTorrent(cfg):
+    #where to get the metadata information
     metadata=cfg.get("Config/metadata")
-    output=cfg.get("Config/output_path")
+    #where are the original files in
+    input_path=cfg.get("Config/input_path]")
+    #where to save the .torrent file
+    torrent_path=cfg.get("Config/uploader-tools/torrent_path")
+    #where the torrent upload files are (this is the source of the .torrent file)
+    upload_path=cfg.get("Config/uploader-tools/update_path")
+
+    #flags
     dryRun=cfg.get("Config/flags/dry_run")
     verbose=cfg.get("Config/flags/verbose")
 
-
-    print (f"Creating Torrent File from {folder}")
+    print (f"Creating Torrent File from {input_path}")
     #check if source folder exists
-    if os.path.exists(source):
+    if os.path.exists(input_path):
+        #hardlink the files in the upload folder
+        
         #myx_utilities.createTorrent())
         return
 

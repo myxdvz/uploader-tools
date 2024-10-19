@@ -42,6 +42,7 @@ class Book:
     tags:list[str]= field(default_factory=list)    
     delimiter:str="|"
     config:Config=None
+    source_path:str=""
 
     def __getMamIsbn__ (self):
         if len(self.asin):
@@ -90,3 +91,4 @@ class Book:
 
         except Exception as e:
             print (f"Error getting JSON Fast Fillout {json_file}: {e}")
+
