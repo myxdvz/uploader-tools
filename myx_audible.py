@@ -7,6 +7,8 @@ class AudibleBook(Book):
     def __init__ (self, cfg=None):
         super().__init__(cfg)
         self.metadata="audible"
+        #category is from Config        
+        self.category=self.config.get("Config/uploader-tools/category")
         
     def getByID (self, id=""):
         print (f"Searching Audible for\n\tasin:{id}")
@@ -68,7 +70,7 @@ class AudibleBook(Book):
             if 'series' in book: 
                 for s in book["series"]:
                     self.series.append(self.Series(str(s["title"]), str(s["sequence"])))
-            if 'language' in book: self.language=str(book ["language"])
+            if 'language' in book: self.language=str(book ["language"]).capitalize()
             if 'product_images' in book: self.cover=str(book ["product_images"]["500"])
             if 'category_ladders' in book:
                 for cl in book["category_ladders"]:
@@ -77,7 +79,7 @@ class AudibleBook(Book):
                         if (i==0):
                             self.genres.append(item["name"])
                         else:
-                            self.tags.append(item["name"])            
+                            self.tags.append(item["name"])    
             return self
         else:
             return None       

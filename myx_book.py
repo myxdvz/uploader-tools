@@ -78,7 +78,6 @@ class Book:
         jff = {
             "isbn": self.__getMamIsbn__(),
             "title": self.title,
-            "subtitle": self.subtitle,
             "description": self.description,
             "authors": [],
             "series": [],
@@ -88,6 +87,10 @@ class Book:
             "language": self.language,
             "category": self.category
         } 
+
+        #subtitle
+        if len(self.subtitle):
+            jff["subtitle"]=self.subtitle
 
         #authors
         for author in self.authors:

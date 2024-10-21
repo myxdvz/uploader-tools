@@ -3,6 +3,7 @@ from myx_google import GoogleBook
 from myx_yaml import YamlBook
 from myx_libation import LibationBook
 from myx_tor import TBook
+from myx_library import Library
 import myx_args
 import myx_book
 import myx_utilities
@@ -55,6 +56,19 @@ def createTorrent(cfg, books):
 
     return
 
+def mylib2mam(cfg, books):
+    #books is a path to a log with all the books that needs to be processed
+    for book in books:
+        #load books from my library
+        myLib = Library(cfg, book)
+        myLib.load()
+
+        #create a torrent for each file in the library
+        for file in myLib.libraryBooks:
+            book = loadBook(cfg, file)
+            tbook = TBook(cfg, book)
+            tbook.go()        
+
 def main(cfg):
     action=myx_args.params.action
     books=myx_args.params.book
@@ -72,6 +86,9 @@ def main(cfg):
         case "createTorrent":
             #uploader-tools createTorrent --book [IDs, files]
             createTorrent(cfg, books)
+
+        case "mylib2mam":
+            mylib2mam(cfg, books)
 
         case _:
             print ("Please select from the following actions: createJson, createTorrent")
