@@ -38,9 +38,7 @@ def loadBook(cfg, bookid):
 
     return book
 
-def createJsonFastFill(cfg):
-    books=myx_args.params.book
-
+def createJsonFastFill(cfg, books):
     for bookid in books:    
         book = loadBook(cfg, bookid)
 
@@ -49,9 +47,7 @@ def createJsonFastFill(cfg):
 
     return
 
-def createTorrent(cfg):
-    books=myx_args.params.book
-
+def createTorrent(cfg, books):
     for bookid in books:
         book = loadBook(cfg, bookid)
         tbook = TBook(cfg, book)
@@ -61,23 +57,21 @@ def createTorrent(cfg):
 
 def main(cfg):
     action=myx_args.params.action
-    metadata=cfg.get("Config/metadata")
-    output=cfg.get("Config/output_path")
+    books=myx_args.params.book
     dryRun=cfg.get("Config/flags/dry_run")
     verbose=cfg.get("Config/flags/verbose")
 
     #assume all parameters are from command line
-    if verbose: print (f"Action: {action}, Dry Run: {dryRun}, Verbose: {verbose}")
+    if verbose: print (f"Action: {action}, Books: {books}, Dry Run: {dryRun}, Verbose: {verbose}")
 
     match action:
         case "createJson":
-            #uploader-tools createJson --book [IDs, files] --source [audible, file]
-            createJsonFastFill(cfg)
+            #uploader-tools createJson --book [IDs, files]
+            createJsonFastFill(cfg, books)
 
         case "createTorrent":
-            #uploader-tools createTorrent --book [IDs, files] --source [audible, file] --input [path/to/files]
-            #createTorrent(cfg)
-            createTorrent(cfg)
+            #uploader-tools createTorrent --book [IDs, files]
+            createTorrent(cfg, books)
 
         case _:
             print ("Please select from the following actions: createJson, createTorrent")
