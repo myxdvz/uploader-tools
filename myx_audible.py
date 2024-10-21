@@ -85,4 +85,4 @@ class AudibleBook(Book):
             return None       
 
     def __getMamTags__ (self, delimiter="|"):
-        return f"Duration: {self.length} min | Chapterized | Libation True Decrypt | Audible Release: {self.releaseDate} | Publisher: {self.publisher} | {','.join(set(self.genres))}"
+        return f"Duration: {self.__convert_to_hours_minutes__(self.length)} | Chapterized | Libation True Decrypt | Audible Release: {self.releaseDate} | Publisher: {self.publisher} | {','.join(set(self.genres))}"

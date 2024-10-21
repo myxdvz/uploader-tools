@@ -56,6 +56,16 @@ class Book:
     def __getMamTags__ (self, delimiter="|"):
         return self.tags
 
+    def __convert_to_hours_minutes__ (self, minutes):
+        hours = minutes // 60
+        minutes = minutes % 60
+
+        if minutes > 0:
+            return f"{hours} hours {minutes} minutes"
+        else:
+            return f"{hours} hours"
+
+
     def getJSONFastFillOut (self, jff_path=None, jff_template=None):
         dry_run = self.config.get ("Config/flags/dry_run")
         verbose = self.config.get ("Config/flags/verbose")
