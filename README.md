@@ -15,29 +15,28 @@ A few QoL tools for uploaders
 ## Usage Examples
 Generate JSONFastFillout file from Audible metadata
 ~~~
-python uploader-tools.py createJson --book [comma delimited list of ASIN/ISBN] --metadata audible
+python uploader-tools.py createJson --book [list of ASIN/ISBN] --metadata audible
 ~~~
 
 Generate JSONFastFillout file from Google metadata
 ~~~
-python uploader-tools.py createJson --book [comma delimited list of ASIN/ISBN] --metadata google
+python uploader-tools.py createJson --book [list of ISBN] --metadata google
 ~~~
 
 Generate JSONFastFillout file from a local file (must be a yaml file)
 ~~~
-python uploader-tools.py createJson --book [comma delimited list of file paths] --metadata file
+python uploader-tools.py createJson --book [list of file paths] --metadata file
 ~~~
 
-Generate Torrent file from a media folder and corresponding JsonFastFillout file. It will check if a metadata.json file exists to generate metadata file
-The following settings are in the config file: announceUrl, upload_path, torrent_path
+Generate JSONFastFillout file from a libation exported metadata
 ~~~
-python uploader-tools.py createTorrent --input /path/to/media
+python uploader-tools.py createJson --book [list of libation M4B paths] --metadata libation
 ~~~
 
-Generate Torrent file from a media folder and corresponding JsonFastFillout file. It will use the --book and --metadata params to generate metadata file
+Generate Torrent file from a Libation m4b filepath and corresponding JsonFastFillout file. Metadata is generated from the Libation metadata.json file
 The following settings are in the config file: announceUrl, upload_path, torrent_path
 ~~~
-python uploader-tools.py createTorrent --input /path/to/media --book [ids or file] --metadata file
+python uploader-tools.py createTorrent --book [list of libation M4B paths] --metadata libation
 ~~~
 
 ## Disclaimers
