@@ -4,12 +4,12 @@ import httpx
 import json
 
 class GoogleBook(Book):
-    def __init__ (self):
-        super().__init__()
-        self.source="google"
+    def __init__ (self, cfg=None):
+        super().__init__(cfg)
+        self.metadata="google"
 
     def getByID (self, id=""):
-        apiKey=myx_utilities.getApiKey(self.config, self.source)
+        apiKey=myx_utilities.getApiKey(self.config, self.metadata)
         print (f"Searching Google Books for\n\tisbn:{id}")
         #9780698146402, 0698146409
 

@@ -1,6 +1,8 @@
 from langcodes import *
 import hashlib
-import json, os
+import json, os, re
+import mimetypes
+import unicodedata
 
 def getMAMCategories():
     categories = [
@@ -98,40 +100,6 @@ def getMAMCategories():
 
     return categories
 
-def createTorrent (cfg, book, directory, filename):
-    verbose = cfg.get("Config/flags/verbose")
-    announceURL = cfg.get("Config/library/announce")
-    torrent_path = cfg.get("Config/library/torrent_path")
-    torrent_file = os.path.join(torrent_path, filename + ".torrent")
-
-    #py3createtorrent -t udp://tracker.opentrackr.org:1337/announce file_or_folder
-    cmnd = ['py3createtorrent','--private', '--force', '--tracker', announceURL, directory, '--output', torrent_file]
-    if verbose: print (f"Running: {cmnd}")
-    p = subprocess.Popen(cmnd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    out, err =  p.communicate()
-    pprint(out)
-    pprint(err)
-
-    #generate the mam json file for easy upload
-    mamBook = {
-        "authors": [book.getAuthors()],
-        "description": book.description,
-        "narrators": [book.getNarrators()],
-        "tags": f"Duration: {book.length} min | Chapterized | Libation True Decrypt | Audible Release: {book.releaseDate} | Publisher: {book.publisher} | {book.genres}",
-        "thumbnail": "",
-        "title": book.title,
-        "language": book.language,
-        "series": [],
-        "category": "Audibooks - General Fiction"
-    } 
-    #Set series
-    for s in book.series:
-        mamBook["series"].append({name: s.name, number: s.part})
-
-    json_file = os.path.join(torrent_path, filename + ".json")
-    with open(json_file, mode='w', encoding='utf-8') as file:
-        json.dump(mamBook, file)    
-
 def getList(items, delimiter=",", encloser="", stripaccents=True):
     enclosedItems=[]
     for item in items:
@@ -211,3 +179,45 @@ def getApiKey(cfg, source):
         apiKey=""
 
     return apiKey
+
+def strip_accents(s):
+    return ''.join(c for c in unicodedata.normalize('NFD', s)
+                    if unicodedata.category(c) != 'Mn')
+
+def cleanseAuthor(author):
+    #remove some characters we don't want on the author name
+    stdAuthor=strip_accents(author)
+
+    #remove some characters we don't want on the author name
+    for c in ["- editor", "- contributor", " - ", "'"]:
+        stdAuthor=stdAuthor.replace(c,"")
+
+    #replace . with space, and then make sure that there's only single space between words)
+    stdAuthor=" ".join(stdAuthor.replace("."," ").split())
+    return stdAuthor
+
+def cleanseTitle(title="", stripaccents=True, stripUnabridged=False):
+    #remove (Unabridged) and strip accents
+    stdTitle=str(title)
+
+    for w in [" (Unabridged)", "m4b", "mp3", ",", "- "]:
+        stdTitle=stdTitle.replace(w," ")
+    
+    if stripaccents:
+        stdTitle = strip_accents(stdTitle)
+
+    #remove Book X
+    stdTitle = re.sub (r"\bBook(\s)?(\d)+\b", "", stdTitle, flags=re.IGNORECASE)
+
+    # remove any subtitle that goes after a :
+    stdTitle = re.sub (r"(:(\s)?([a-zA-Z0-9_'\.\s]{2,})*)", "", stdTitle, flags=re.IGNORECASE)
+
+    return stdTitle
+
+def cleanseSeries(series):
+    #remove colons
+    cleanSeries = series
+    for c in [":", "'"]:
+        cleanSeries = cleanSeries.replace (c, "")
+
+    return cleanSeries.strip()

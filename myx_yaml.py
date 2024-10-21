@@ -6,9 +6,9 @@ import yaml
 import os
 
 class YamlBook(Book):
-    def __init__ (self):
-        super().__init__()
-        self.source="file"
+    def __init__ (self, cfg=None):
+        super().__init__(cfg)
+        self.metadata="file"
 
     def getByID (self, id=""):
         add_hash = self.config.get("Config/flags/add_hash", False)

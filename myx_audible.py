@@ -4,10 +4,10 @@ import httpx
 import json
 
 class AudibleBook(Book):
-    def __init__ (self):
-        super().__init__()
-        self.source="audible"
-
+    def __init__ (self, cfg=None):
+        super().__init__(cfg)
+        self.metadata="audible"
+        
     def getByID (self, id=""):
         print (f"Searching Audible for\n\tasin:{id}")
 

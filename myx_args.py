@@ -11,8 +11,8 @@ def importArgs():
     parser = argparse.ArgumentParser(prog="uploader-tools", description=appDescription)
     #Primary Action to run
     parser.add_argument ("action", choices=["createJson", "createTorrent"], help="A specific task or tool to run")
-    parser.add_argument ("--metadata", choices=["audible", "google", "file"], help="Source of metadata")
-    parser.add_argument ("--book", help="List of Books: ASIN or ISBN or Yaml Files")
+    parser.add_argument ("--metadata", choices=["audible", "google", "file", "libation"], help="Source of metadata")
+    parser.add_argument ("--book", help="List of Books: ASIN or ISBN or Yaml Files", nargs="+")
     parser.add_argument ("--input", help="Where are the source media files")
     parser.add_argument ("--output", help="Where to save the output files")
     #Debug flags

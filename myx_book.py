@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from dataclasses import field
+from pathvalidate import sanitize_filename
 from myx_args import Config
 import myx_utilities
 import pprint
@@ -21,6 +22,7 @@ class Book:
             else:
                 return self.name
 
+    config:Config
     id:str=""
     asin:str=""
     isbn:str=""
@@ -33,16 +35,17 @@ class Book:
     description:str=""
     releaseDate:str=""    
     cover:str=""
-    source:str=""
+    metadata:str=""
     category:str=""
-    series:list[Series]= field(default_factory=list)
     authors:list[str]= field(default_factory=list)
     narrators:list[str]= field(default_factory=list)
+    series:list[Series]= field(default_factory=list)
     genres:list[str]= field(default_factory=list)
-    tags:list[str]= field(default_factory=list)    
-    delimiter:str="|"
-    config:Config=None
+    tags:list[str]= field(default_factory=list)   
+    delimiter:str="|" 
     source_path:str=""
+    filename:str=""
+    metadataJson:str=""
 
     def __getMamIsbn__ (self):
         if len(self.asin):
@@ -53,9 +56,22 @@ class Book:
     def __getMamTags__ (self, delimiter="|"):
         return self.tags
 
-    def getJSONFastFillOut (self, path, filename):
-        #write the file out
-        json_file = os.path.join(path, filename + ".json")
+    def getJSONFastFillOut (self, jff_path=None, jff_template=None):
+        dry_run = self.config.get ("Config/flags/dry_run")
+        verbose = self.config.get ("Config/flags/verbose")
+            
+        #generating JsonFastFilleout file defaults
+        if jff_path is None:
+            jff_path = self.config.get("Config/output_path")
+
+        if jff_template is None:
+            jff_template = self.config.get("Config/uploader-tools/json_fastfillout")
+
+        #generate filename from template
+        jff_filename = sanitize_filename(jff_template.format (**self.__dict__))
+
+        json_file = os.path.join (jff_path, jff_filename + ".json")
+        if verbose: print (f"Generating JsonFastFill file {json_file}")
 
         # --- Generate .json Metadata file ---
         #generate the mam json file for easy upload
