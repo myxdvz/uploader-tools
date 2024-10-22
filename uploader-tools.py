@@ -61,13 +61,38 @@ def mylib2mam(cfg, books):
     for book in books:
         #load books from my library
         myLib = Library(cfg, book)
-        myLib.load()
+        myLib.loadFromFile(book)
 
         #create a torrent for each file in the library
-        for file in myLib.libraryBooks:
+        for file in myLib.libraryCatalog:
             book = loadBook(cfg, file)
             tbook = TBook(cfg, book)
             tbook.go()        
+
+def scanLibrary(cfg, books):
+    dryRun = bool(cfg.get("Config/flags/dry_run"))
+    verbose = bool(cfg.get("Config/flags/verbose"))
+    
+    #books is a path to the libation/library root
+    myLib = Library(cfg)
+
+    for book in books:
+        #scan books from my library
+        myLib.scan(book)
+        print (f"Found {len(myLib.libraryCatalog)} in your library at {book}")
+
+def sanitizeLibrary(cfg, books):
+    dryRun = bool(cfg.get("Config/flags/dry_run"))
+    verbose = bool(cfg.get("Config/flags/verbose"))
+    
+    #books is a path to the libation/library root
+    myLib = Library(cfg)
+
+    for book in books:
+        #scan books from my library
+        badFiles = myLib.sanitize(book)
+        print (f"Found {len(badFiles)} badly named files in your library at {book}")
+
 
 def main(cfg):
     action=myx_args.params.action
@@ -80,18 +105,29 @@ def main(cfg):
 
     match action:
         case "createJson":
+            #creates a Json file for the passed books
             #uploader-tools createJson --book [IDs, files]
             createJsonFastFill(cfg, books)
 
         case "createTorrent":
+            #performs all steps in the torrent creation process (steps in config) for a list of books
             #uploader-tools createTorrent --book [IDs, files]
             createTorrent(cfg, books)
 
         case "mylib2mam":
+            #performs all steps in the torrent creation process for all books in the passed library file
             mylib2mam(cfg, books)
 
+        case "scanLibrary":
+            #scans your library -- and then what?
+            scanLibrary(cfg, books)
+
+        case "sanitizeLibrary":
+            #scans your library -- and then what?
+            sanitizeLibrary(cfg, books)
+
         case _:
-            print ("Please select from the following actions: createJson, createTorrent")
+            print ("Invalid action...")
 
 
 if __name__ == "__main__":

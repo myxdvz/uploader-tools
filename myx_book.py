@@ -46,6 +46,7 @@ class Book:
     source_path:str=""
     filename:str=""
     metadataJson:str=""
+    includeSubtitle:bool=False
 
     def __getMamIsbn__ (self):
         if len(self.asin):
@@ -60,10 +61,14 @@ class Book:
         hours = minutes // 60
         minutes = minutes % 60
 
+        duration = ""
+        if hours > 0:
+            duration = f"{hours} hours "
+
         if minutes > 0:
-            return f"{hours} hours {minutes} minutes"
-        else:
-            return f"{hours} hours"
+            duration += f"{minutes} minutes"
+
+        return duration
 
 
     def getJSONFastFillOut (self, jff_path=None, jff_template=None):
@@ -88,7 +93,7 @@ class Book:
         jff = {
             "isbn": self.__getMamIsbn__(),
             "title": self.title,
-            "description": self.description,
+            "description": self.description.replace("<p>", "<p><br/>"),
             "authors": [],
             "series": [],
             "narrators": [],
@@ -99,7 +104,7 @@ class Book:
         } 
 
         #subtitle
-        if len(self.subtitle):
+        if (self.includeSubtitle) and len(self.subtitle):
             jff["subtitle"]=self.subtitle
 
         #authors

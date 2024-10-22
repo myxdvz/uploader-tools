@@ -10,11 +10,12 @@ def importArgs():
     appDescription = """Uploader toolkit - useful scripts to help an uploader automate some of their tasks"""
     parser = argparse.ArgumentParser(prog="uploader-tools", description=appDescription)
     #Primary Action to run
-    parser.add_argument ("action", choices=["createJson", "createTorrent", "mylib2mam"], help="A specific task or tool to run")
+    parser.add_argument ("action", choices=["createJson", "createTorrent", "mylib2mam", "scanLibrary", "sanitizeLibrary"], help="A specific task or tool to run")
     parser.add_argument ("--metadata", choices=["audible", "google", "file", "libation"], help="Source of metadata")
     parser.add_argument ("--book", help="List of Books: ASIN or ISBN or Yaml Files", nargs="+")
     parser.add_argument ("--input", help="Where are the source media files")
     parser.add_argument ("--output", help="Where to save the output files")
+
     #Debug flags
     parser.add_argument("--dry-run", default=None, action="store_true", help="If provided, will override dryRun in config")
     parser.add_argument("--verbose", default=None, action="store_true", help="If provided, will print additional info")

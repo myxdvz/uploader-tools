@@ -10,8 +10,12 @@ class LibationBook(AudibleBook):
         self.metadata="libation"
     
     def getByID (self, id=""):
+        #flags
+        dry_run=bool(self.config.get("Config/flags/dry_run"))
+        verbose=bool(self.config.get("Config/flags/verbose"))
+
         #id is the path of the m4b file in the libation download folder
-        print (f"Getting metadata for \n\tLibation Book:{id}")
+        if verbose: print (f"Getting metadata for \n\tLibation Book:{id}")
 
         #parse path and filename
         self.source_path = os.path.dirname(id)
@@ -21,7 +25,7 @@ class LibationBook(AudibleBook):
         self.metadataJson = os.path.join (self.source_path, self.filename + ".metadata.json")
 
         if os.path.exists(self.metadataJson):
-            print (f"Loading metadata from \n\tMetadata Json:{self.metadataJson}")
+            if verbose: print (f"Loading metadata from \n\tMetadata Json:{self.metadataJson}")
             product={}
             try:
                 #load book info from metadata.json file

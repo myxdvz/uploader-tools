@@ -9,6 +9,7 @@ class YamlBook(Book):
     def __init__ (self, cfg=None):
         super().__init__(cfg)
         self.metadata="file"
+        self.includeSubtitle=True
 
     def getByID (self, id=""):
         add_hash = self.config.get("Config/flags/add_hash", False)
