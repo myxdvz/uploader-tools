@@ -50,6 +50,13 @@ def createJsonFastFill(cfg, books):
 
 def createTorrent(cfg, books):
     for bookid in books:
+        tbook = TBook(cfg)
+        tbook.createTorrent(bookid)
+
+    return
+
+def prep4upload(cfg, books):
+    for bookid in books:
         book = loadBook(cfg, bookid)
         tbook = TBook(cfg, book)
         tbook.go()
@@ -106,16 +113,22 @@ def main(cfg):
     match action:
         case "createJson":
             #creates a Json file for the passed books
-            #uploader-tools createJson --book [IDs, files]
+            #--book is a list of ISBN, ASIN or Yaml Files
             createJsonFastFill(cfg, books)
 
         case "createTorrent":
-            #performs all steps in the torrent creation process (steps in config) for a list of books
-            #uploader-tools createTorrent --book [IDs, files]
+            #creates a Torrent file from a folder
+            #--book is a list of paths to upload folder
             createTorrent(cfg, books)
+
+        case "prep4upload":
+            #performs all steps in the torrent creation process (steps in config) for a list of books
+            #--book is a list of M4B files from source, e.g. libation folder
+            prep4upload(cfg, books)
 
         case "mylib2mam":
             #performs all steps in the torrent creation process for all books in the passed library file
+            #--book is path to a CSV file that has a list of M4B paths, sames a prep4upload with a file input
             mylib2mam(cfg, books)
 
         case "scanLibrary":
@@ -123,7 +136,8 @@ def main(cfg):
             scanLibrary(cfg, books)
 
         case "sanitizeLibrary":
-            #scans your library -- and then what?
+            #scans your library -- and sanitizes filenames (removes colons)
+            #--book is a root path
             sanitizeLibrary(cfg, books)
 
         case _:
