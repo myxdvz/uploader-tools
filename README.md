@@ -5,7 +5,9 @@ A few QoL tools for uploaders
 * Python >= 3.10
 * httpx==0.27.2
 * langcodes==3.4.0
+* pathvalidate==3.2.0
 * PyYAML==6.0.2
+* Requests==2.32.3
 
 1. run pip install -r requirements.txt to install dependencies
 2. copy templates/default_config.cfg into config/settings.json and modify your settings and defaults (cache_path, metadata, input_path, output_path)
