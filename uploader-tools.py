@@ -2,6 +2,7 @@ from myx_audible import AudibleBook
 from myx_google import GoogleBook
 from myx_yaml import YamlBook
 from myx_libation import LibationBook
+from myx_mam import MAMBook
 from myx_tor import TBook
 from myx_library import Library
 import myx_args
@@ -29,6 +30,10 @@ def loadBook(cfg, bookid):
             #googlebooks api
             book = LibationBook(cfg)
 
+        case "mam":
+            #MAM api
+            book = MAMBook(cfg)
+
         case _:
             #default is audible
             book = AudibleBook(cfg)
@@ -39,12 +44,10 @@ def loadBook(cfg, bookid):
 
     return book
 
-def createJsonFastFill(cfg, books):
+def createJson(cfg, books):
     for bookid in books:    
         book = loadBook(cfg, bookid)
-
-        if len(book.id):
-            book.getJSONFastFillOut()
+        book.getJSONFastFillOut()
 
     return
 
@@ -114,7 +117,7 @@ def main(cfg):
         case "createJson":
             #creates a Json file for the passed books
             #--book is a list of ISBN, ASIN or Yaml Files
-            createJsonFastFill(cfg, books)
+            createJson(cfg, books)
 
         case "createTorrent":
             #creates a Torrent file from a folder

@@ -47,6 +47,7 @@ class GoogleBook(Book):
                 
         #check for ["items"][0]["volumeInfo"]
         if "totalItems" in books:
+            self.json=books
             count = int(books["totalItems"])
             print (f"{count} books returned for {id}.")
             if (count == 1):

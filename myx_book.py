@@ -5,7 +5,7 @@ from myx_args import Config
 import myx_utilities
 import pprint
 import json
-import os
+import os, re
 
 @dataclass
 class Book:
@@ -47,6 +47,24 @@ class Book:
     filename:str=""
     metadataJson:str=""
     includeSubtitle:bool=False
+    extension:str=""
+    #Added for MAMBook
+    added:str=""
+    bookmarked:str=""
+    browseFlags=int=0
+    cat:str=""
+    categoryId:int=0
+    catName:str=""
+    vip:bool=False
+    fl_vip:bool=False
+    free:bool=False
+    main_cat:int=0
+    my_snatched:bool=False
+    numfiles:int=0
+    owner:int=0
+    owner_name:str=""
+    personal_fl:bool=False
+    json:dict=None
 
     def __getMamIsbn__ (self):
         if len(self.asin):
@@ -70,6 +88,29 @@ class Book:
 
         return duration
 
+    def __cleanseName__(self, name:str):
+        #remove periods
+        name=name.replace(".", "")
+        honorifics=["Mr", "Mrs", "Ms", "Miss", "Dr", "PhD", "Professor", "Prof"]
+
+        #remove honorifics
+        for prefix in honorifics:
+            name = name.removeprefix(prefix)
+        
+        return name.strip()
+
+    def __cleanseSeries__(self, series:str):
+        #remove The and Series
+        prefixes=["The","A"]
+        suffixes=["Series", "Novel", "Novels", "Trilogy", "Saga"]
+
+        for prefix in prefixes:
+           series = series.removeprefix(prefix)
+
+        for suffix in suffixes:
+            series = series.removesuffix(suffix)
+
+        return series.strip()
 
     def getJSONFastFillOut (self, jff_path=None, jff_template=None):
         dry_run = self.config.get ("Config/flags/dry_run")
@@ -109,15 +150,15 @@ class Book:
 
         #authors
         for author in self.authors:
-            jff["authors"].append(author)
+            jff["authors"].append(self.__cleanseName__(author))
 
         #narrators
         for narrator in self.narrators:
-            jff["narrators"].append(narrator)
+            jff["narrators"].append(self.__cleanseName__(narrator))
 
         #series
         for series in self.series:
-            jff["series"].append({"name": series.name, "number": series.number})
+            jff["series"].append({"name": self.__cleanseSeries__(series.name), "number": series.number})
 
         try:
             with open(json_file, mode='w', encoding='utf-8') as jfile:
@@ -126,3 +167,6 @@ class Book:
         except Exception as e:
             print (f"Error getting JSON Fast Fillout {json_file}: {e}")
 
+
+    def export(self, filename):
+        return False

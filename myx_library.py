@@ -70,13 +70,21 @@ class Library():
         #for each book, grab the metadata, search MAM
         for entry in self.libraryCatalog:
             print (f"Adding {entry} into the Catalog")
-            if not dryRun:
-                #grab metadata
-                book = LibationBook(self.config)
-                book.getByID (entry)
-
+            #grab metadata
+            book = LibationBook(self.config)
+            asin = book.getAsin(entry)
+            if book.getByID (entry) is None:
+                #no metadata information found, create one
+                audibleBook = AudibleBook(self.config)
+                audibleBook = book.getByID (asin)
+                if not dryRun:
+                    audibleBook.export (book.metadataJson)
+                else:
+                    print (f"Exporting to {book.metadataJson}")
+                self.libraryBooks[asin]=audiblebook
+            else:
                 #add in libraryBoks
-                key = myx_utilities.getHash(book.source_path)
+                key = book.id
                 self.libraryBooks[key]=book
 
         #generate a csv file

@@ -22,6 +22,7 @@ class YamlBook(Book):
                     book = yaml.safe_load(yfile) 
 
                     #set the book object
+                    self.json=book
                     self.__dic2Book__(book)
                     fn = os.path.splitext(os.path.basename(yaml_file))[0]
                     if add_hash:

@@ -1,7 +1,9 @@
+from pathvalidate import sanitize_filename
 from myx_book import Book
 import myx_utilities
 import httpx
 import json
+import os
 
 class AudibleBook(Book):
     def __init__ (self, cfg=None):
@@ -46,6 +48,7 @@ class AudibleBook(Book):
             
         #check for ["product"]
         if "product" in books:
+            self.json=books
             self.__dic2Book__(books["product"])
             self.id=self.asin
         
@@ -86,3 +89,17 @@ class AudibleBook(Book):
 
     def __getMamTags__ (self, delimiter="|"):
         return f"Duration: {self.__convert_to_hours_minutes__(self.length)} | Chapterized | Libation True Decrypt | Audible Release: {self.releaseDate} | Publisher: {self.publisher} | {','.join(set(self.genres))}"
+
+    def export(self, filename):
+        #Config
+        verbose = bool(self.config.get("Config/flags/verbose"))
+
+        if os.path.exists(filename):
+            print (f"Target file {filename} exists... skipping export")
+        else:
+            #create the cache file
+            with open(filename, mode="w", encoding='utf-8', errors='ignore') as file:
+                file.write(json.dumps(self.json["product"], indent=4))
+
+        return os.path.exists(filename)        
+       

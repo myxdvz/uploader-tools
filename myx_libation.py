@@ -1,8 +1,9 @@
+from pathvalidate import sanitize_filename
 from myx_audible import AudibleBook
 import myx_utilities
 import httpx
 import json
-import os
+import os, re
 
 class LibationBook(AudibleBook):
     def __init__ (self, cfg=None):
@@ -22,7 +23,7 @@ class LibationBook(AudibleBook):
         self.filename = os.path.splitext(os.path.basename(id))[0]
 
         #metadata path
-        self.metadataJson = os.path.join (self.source_path, self.filename + ".metadata.json")
+        self.metadataJson = os.path.join (self.source_path, sanitize_filename(self.filename) + ".metadata.json")
 
         if os.path.exists(self.metadataJson):
             if verbose: print (f"Loading metadata from \n\tMetadata Json:{self.metadataJson}")
@@ -38,10 +39,24 @@ class LibationBook(AudibleBook):
                 print(f"Error loading metadata.json: {e}")
 
             #check for ["product"]
+            self.json=product
             self.__dic2Book__(product)
             self.id=self.asin
 
+            return self
+
         else:
             print(f"Metadata file {self.metadata}, not found")
+            return None
 
-        return self
+    def getAsin(self, filename):
+        #derive asin from the filename, formatted *[asin].m4b
+        match = re.search(r"\[(?P<asin>[a-zA-Z0-9]+)\]",filename, re.IGNORECASE)
+        if match:
+            return match.groupdict()["asin"]
+        else:
+            return None
+
+
+
+        
