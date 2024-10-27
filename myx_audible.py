@@ -105,7 +105,8 @@ class AudibleBook(Book):
                 self.category = "Audiobooks - Art"
 
             case "Biographies & Memoirs":
-                self.category = "Audiobooks - Biographical"
+                if "True Crime" in self.tags: self.category = "Audiobooks - True Crime"
+                else: self.category = "Audiobooks - Biographical"
                 
             case "Business & Careers":
                 self.category = "Audiobooks - Business"
@@ -120,7 +121,9 @@ class AudibleBook(Book):
                 self.category = "Audiobooks - Computer/Internet"
                 
             case "Education & Learning":
-                self.category = "Audiobooks - Instructional"
+                if "Language Learning" in self.tags: self.category = "Audiobooks - Language"
+                elif "Words, Language & Grammar" in self.tags: self.category = "Audiobooks - Language"
+                else: self.category = "Audiobooks - Instructional"
                 
             case "Erotica":
                 self.category = "Audiobooks - Romance"
@@ -132,7 +135,9 @@ class AudibleBook(Book):
                 self.category = "Audiobooks - History"
                 
             case "Home & Garden":
-                self.category = "Audiobooks - Home/Garden"
+                if "Crafts & Hobbies" in self.tags: self.category = "Audiobooks - Craft"
+                elif "Food & Wine" in self.tags: self.category = "Audiobooks - Food"
+                else: self.category = "Audiobooks - Home/Garden"
                 
             case "LGBTQ+":                
                 if "Biographies & Memoirs" in self.tags: self.category = "Audiobooks - Biographical"
@@ -157,11 +162,12 @@ class AudibleBook(Book):
                 
             case "Mystery, Thriller & Suspense":
                 if "Crime Fiction" in self.tags: self.category = "Audiobooks - Crime/Thriller"
-                elif "True Crime" in self.tags: self.category = "Audiobooks - Crime/Thriller"
+                elif "True Crime" in self.tags: self.category = "Audiobooks - True Crime"
                 else: self.category = "Audiobooks - Mystery"
                 
             case "Politics & Social Sciences":
-                self.category = "Audiobooks - Pol/Soc/Relig"
+                if "Philosophy" in self.tags: self.category = "Audiobooks - Philosophy"
+                else: self.category = "Audiobooks - Pol/Soc/Relig"
                 
             case "Relationships, Parenting & Personal Development":
                 self.category = "Audiobooks - Self-Help"
@@ -172,6 +178,7 @@ class AudibleBook(Book):
             case "Romance":
                 #MAM has a few romance breakdowns
                 if "Urban" in self.tags: self.category = "Audiobooks - Urban Fantasy"
+                elif "Paranormal" in self.tags: self.category = "Audiobooks - Urban Fantasy"
                 elif "Westerns" in self.tags: self.category = "Audiobooks - Western"
                 else: self.category = "Audiobooks - Romance"
 
@@ -183,7 +190,8 @@ class AudibleBook(Book):
                 else: self.category = "Audiobooks - Science Fiction"
                 
             case "Sports & Outdoors":
-                self.category = "Audiobooks - General Non-Fic"
+                if "Outdoors & Nature" in self.tags: self.category = "Audiobooks - Nature"
+                else: self.category = "Audiobooks - Recreation"
                 
             case "Teen & Young Adult":
                 self.category = "Audiobooks - Young Adult"
