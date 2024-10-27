@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from dataclasses import field
 from pathvalidate import sanitize_filename
 from myx_args import Config
+import unicodedata
 import myx_utilities
 import pprint
 import json
@@ -48,22 +49,7 @@ class Book:
     metadataJson:str=""
     includeSubtitle:bool=False
     extension:str=""
-    #Added for MAMBook
-    added:str=""
-    bookmarked:str=""
-    browseFlags=int=0
-    cat:str=""
-    categoryId:int=0
-    catName:str=""
-    vip:bool=False
-    fl_vip:bool=False
-    free:bool=False
-    main_cat:int=0
-    my_snatched:bool=False
-    numfiles:int=0
-    owner:int=0
-    owner_name:str=""
-    personal_fl:bool=False
+
     json:dict=None
 
     def __getMamIsbn__ (self):
@@ -88,6 +74,21 @@ class Book:
 
         return duration
 
+    def __cleanseTitle__ (self, stripaccents=True, stripUnabridged=False):
+        #remove (Unabridged) and strip accents
+        stdTitle=str(self.title)
+
+        for w in [" (Unabridged)", "m4b", "mp3", ",", "- "]:
+            stdTitle=stdTitle.replace(w," ")
+        
+        if stripaccents:
+            stdTitle = myx_utilities.strip_accents(stdTitle)
+
+        # remove any subtitle that goes after a :
+        stdTitle = re.sub (r"(:(\s)?([a-zA-Z0-9_'\.\s]{2,})*)", "", stdTitle, flags=re.IGNORECASE)
+
+        return stdTitle        
+
     def __cleanseName__(self, name:str):
         #remove periods
         name=name.replace(".", "")
@@ -95,7 +96,7 @@ class Book:
 
         #remove honorifics
         for prefix in honorifics:
-            name = name.removeprefix(prefix)
+            name = name.removeprefix(prefix + " ")
         
         return name.strip()
 
@@ -105,12 +106,54 @@ class Book:
         suffixes=["Series", "Novel", "Novels", "Trilogy", "Saga"]
 
         for prefix in prefixes:
-           series = series.removeprefix(prefix)
+           series = series.removeprefix(prefix + " ")
 
         for suffix in suffixes:
-            series = series.removesuffix(suffix)
+            series = series.removesuffix(" " + suffix)
 
         return series.strip()
+
+    def __getAuthors__ (self, delimiter=",", encloser="", stripaccents=True):
+        if len(self.authors):
+            items=[]
+            for author in self.authors:
+                items.append(f"{encloser}{self.__cleanseName__(author)}{encloser}")
+            return delimiter.join(items)         
+        else:
+             return ""
+
+    def __getNarrators__ (self, delimiter=",", encloser="", stripaccents=True):
+        if len(self.narrators):
+            items=[]
+            for narrator in self.narrators:
+                items.append(f"{encloser}{self.__cleanseName__(narrator)}{encloser}")
+            return delimiter.join(items)         
+        else:
+             return ""
+
+    def __getSeries__ (self, delimiter=",", encloser="", stripaccents=True):
+        if len(self.series):
+            items=[]
+            for s in self.series:
+                items.append(f"{encloser}{self.__cleanseSeries__(s.name)}{encloser}")
+            return delimiter.join(items)         
+        else:
+             return ""
+
+    def __isForbiddenAuthor__ (self, forbidden_authors=""):
+        verbose = bool(self.config.get ("Config/flags/verbose"))
+
+        if len(forbidden_authors) == 0:
+            forbidden_authors = self.config.get("Config/uploader-tools/forbidden_authors", [])
+
+        found = False
+        for a in self.authors:
+            if self.__cleanseName__(a) in forbidden_authors:
+                if verbose: print (f"{a}'s {self.title} is a forbidden author")
+                found = True
+                break
+
+        return found
 
     def getJSONFastFillOut (self, jff_path=None, jff_template=None):
         dry_run = self.config.get ("Config/flags/dry_run")
@@ -121,7 +164,7 @@ class Book:
             jff_path = self.config.get("Config/output_path")
 
         if jff_template is None:
-            jff_template = self.config.get("Config/uploader-tools/json_fastfillout")
+            jff_template = self.config.get("Config/uploader-tools/json_fastfillout", "{metadata}-{title}-{id}" )
 
         #generate filename from template
         jff_filename = sanitize_filename(jff_template.format (**self.__dict__))
@@ -141,7 +184,7 @@ class Book:
             "tags": self.__getMamTags__(self.delimiter),
             "thumbnail": self.cover,
             "language": self.language,
-            "category": self.category
+            "category": self.getMAMCategory()
         } 
 
         #subtitle
@@ -167,6 +210,8 @@ class Book:
         except Exception as e:
             print (f"Error getting JSON Fast Fillout {json_file}: {e}")
 
-
     def export(self, filename):
         return False
+
+    def getMAMCategory (self):  
+        return self.category        

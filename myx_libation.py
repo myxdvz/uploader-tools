@@ -22,8 +22,8 @@ class LibationBook(AudibleBook):
         self.source_path = os.path.dirname(id)
         self.filename = os.path.splitext(os.path.basename(id))[0]
 
-        #metadata path
-        self.metadataJson = os.path.join (self.source_path, sanitize_filename(self.filename) + ".metadata.json")
+        #metadata path - max 255
+        self.metadataJson = self.getMetadataJsonFilename()
 
         if os.path.exists(self.metadataJson):
             if verbose: print (f"Loading metadata from \n\tMetadata Json:{self.metadataJson}")
@@ -43,11 +43,11 @@ class LibationBook(AudibleBook):
             self.__dic2Book__(product)
             self.id=self.asin
 
-            return self
+            return True
 
         else:
-            print(f"Metadata file {self.metadata}, not found")
-            return None
+            print(f"Metadata file {self.metadataJson}, not found")
+            return False
 
     def getAsin(self, filename):
         #derive asin from the filename, formatted *[asin].m4b
@@ -56,6 +56,17 @@ class LibationBook(AudibleBook):
             return match.groupdict()["asin"]
         else:
             return None
+
+    def getMetadataJsonFilename(self):
+        filename = self.source_path, sanitize_filename(self.filename) + ".metadata.json"
+
+        #MAX FILE NAME LENGTH = 255
+        if (len(filename) > 255):
+            filename = os.path.join (self.source_path, "metadata.json")
+        else:
+            filename = os.path.join (self.source_path, sanitize_filename(self.filename) + ".metadata.json")
+
+        return filename
 
 
 

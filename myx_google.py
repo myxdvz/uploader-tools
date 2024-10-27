@@ -7,6 +7,8 @@ class GoogleBook(Book):
     def __init__ (self, cfg=None):
         super().__init__(cfg)
         self.metadata="google"
+        self.extension="epub"
+
 
     def getByID (self, id=""):
         apiKey=myx_utilities.getApiKey(self.config, self.metadata)
@@ -53,7 +55,9 @@ class GoogleBook(Book):
             if (count == 1):
                 self.__dic2Book__(books["items"][0]["volumeInfo"])
                 self.id=self.isbn
-        return self
+                return True
+        else:
+            return False
 
     def __dic2Book__(self, book):
         #book is an google books volumeInfo dictionary

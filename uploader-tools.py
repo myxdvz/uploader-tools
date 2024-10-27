@@ -89,7 +89,6 @@ def scanLibrary(cfg, books):
     for book in books:
         #scan books from my library
         myLib.scan(book)
-        print (f"Found {len(myLib.libraryCatalog)} in your library at {book}")
 
 def sanitizeLibrary(cfg, books):
     dryRun = bool(cfg.get("Config/flags/dry_run"))

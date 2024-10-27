@@ -6,11 +6,12 @@ import json
 import os
 
 class AudibleBook(Book):
+    contentType:str=""
+
     def __init__ (self, cfg=None):
         super().__init__(cfg)
         self.metadata="audible"
-        #category is from Config        
-        self.category=self.config.get("Config/uploader-tools/category")
+        self.extension="m4b"
         
     def getByID (self, id=""):
         print (f"Searching Audible for\n\tasin:{id}")
@@ -51,8 +52,10 @@ class AudibleBook(Book):
             self.json=books
             self.__dic2Book__(books["product"])
             self.id=self.asin
-        
-        return self
+
+            return True
+        else:
+            return False
 
     def __dic2Book__(self, book):
         #book is an Audible product dictionary
@@ -83,12 +86,115 @@ class AudibleBook(Book):
                             self.genres.append(item["name"])
                         else:
                             self.tags.append(item["name"])    
+            if 'content_type' in book:
+                self.contentType = str(book["content_type"])
+
             return self
         else:
             return None       
 
     def __getMamTags__ (self, delimiter="|"):
         return f"Duration: {self.__convert_to_hours_minutes__(self.length)} | Chapterized | Libation True Decrypt | Audible Release: {self.releaseDate} | Publisher: {self.publisher} | {','.join(set(self.genres))}"
+
+    def getMAMCategory (self):  
+        genre = ""
+        
+        if len(self.genres): genre = self.genres[0]
+        match genre:
+            case "Arts & Entertainment":
+                self.category = "Audiobooks - Art"
+
+            case "Biographies & Memoirs":
+                self.category = "Audiobooks - Biographical"
+                
+            case "Business & Careers":
+                self.category = "Audiobooks - Business"
+                
+            case "Children's Audiobooks":
+                self.category = "Audiobooks - Juvenile"
+                
+            case "Comedy & Humor":
+                self.category = "Audiobooks - Humor"
+                
+            case "Computers & Technology":
+                self.category = "Audiobooks - Computer/Internet"
+                
+            case "Education & Learning":
+                self.category = "Audiobooks - Instructional"
+                
+            case "Erotica":
+                self.category = "Audiobooks - Romance"
+                
+            case "Health & Wellness":
+                self.category = "Audiobooks - Medical"
+                
+            case "History":
+                self.category = "Audiobooks - History"
+                
+            case "Home & Garden":
+                self.category = "Audiobooks - Home/Garden"
+                
+            case "LGBTQ+":                
+                if "Biographies & Memoirs" in self.tags: self.category = "Audiobooks - Biographical"
+                elif "History" in self.tags: self.category = "Audiobooks - History"
+                elif "Mystery, Thriller & Suspense" in self.tags: self.category = "Audiobooks - Mystery"
+                elif "Science Fiction & Fantasy" in self.tags: self.category = "Audiobooks - Science Fiction"
+                elif "Parenting & Families" in self.tags: self.category = "Audiobooks - General Non-Fic"
+                elif "Literature & Fiction" in self.tags: self.category = "Audiobooks - General Fiction"
+                else: self.category = "Audiobooks - Romance"
+                
+            case "Literature & Fiction":
+                if "Action & Adventure" in self.tags: self.category = "Audiobooks - Action/Adventure"
+                elif "Classics" in self.tags: self.category = "Audiobooks - Literary Classics"
+                elif "Historical Fiction" in self.tags: self.category = "Audiobooks - Historical Fiction"
+                elif "Horror" in self.tags: self.category = "Audiobooks - Horror"
+                elif "Humor & Satire" in self.tags: self.category = "Audiobooks - Humor"
+                elif "Memoirs, Diaries & Correspondence" in self.tags: self.category = "Audiobooks - Biographical"
+                else: self.category = "Audiobooks - General Fiction"
+                
+            case "Money & Finance":
+                self.category = "Audiobooks - Business"
+                
+            case "Mystery, Thriller & Suspense":
+                if "Crime Fiction" in self.tags: self.category = "Audiobooks - Crime/Thriller"
+                elif "True Crime" in self.tags: self.category = "Audiobooks - Crime/Thriller"
+                else: self.category = "Audiobooks - Mystery"
+                
+            case "Politics & Social Sciences":
+                self.category = "Audiobooks - Pol/Soc/Relig"
+                
+            case "Relationships, Parenting & Personal Development":
+                self.category = "Audiobooks - Self-Help"
+                
+            case "Religion & Spirituality":
+                self.category = "Audiobooks - Pol/Soc/Relig"
+
+            case "Romance":
+                #MAM has a few romance breakdowns
+                if "Urban" in self.tags: self.category = "Audiobooks - Urban Fantasy"
+                elif "Westerns" in self.tags: self.category = "Audiobooks - Western"
+                else: self.category = "Audiobooks - Romance"
+
+            case "Science & Engineering":
+                self.category = "Audiobooks - Math/Science/Tech"
+                
+            case "Science Fiction & Fantasy":
+                if "Fantasy" in self.tags: self.category = "Audiobooks - Fantasy"
+                else: self.category = "Audiobooks - Science Fiction"
+                
+            case "Sports & Outdoors":
+                self.category = "Audiobooks - General Non-Fic"
+                
+            case "Teen & Young Adult":
+                self.category = "Audiobooks - Young Adult"
+                
+            case "Travel & Tourism":
+                self.category = "Audiobooks - Travel/Adventure"
+                
+            case _:
+                self.category = "Audiobooks - General Fiction"
+
+        return self.category
 
     def export(self, filename):
         #Config

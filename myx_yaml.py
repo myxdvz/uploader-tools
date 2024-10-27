@@ -35,7 +35,7 @@ class YamlBook(Book):
         else:
             print (f"Local book file doesn't exist: {id}")
 
-        return self
+        return True
 
     def __dic2Book__(self, book):
         #book is an Yaml dictionary

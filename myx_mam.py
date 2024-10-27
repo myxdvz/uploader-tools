@@ -10,37 +10,50 @@ import json
 
 class MAMBook(Book):
     total:int=0
-    totalFound:int=0
-    search:list[Book]=[]
+    found:int=0
+    booksFound:list[Book]=None
+
+    #Added Attributes for MAMBook
+    added:str=""
+    bookmarked:str=""
+    browseFlags=int=0
+    cat:str=""
+    categoryId:int=0
+    catName:str=""
+    vip:bool=False
+    fl_vip:bool=False
+    free:bool=False
+    main_cat:int=0
+    my_snatched:bool=False
+    numfiles:int=0
+    owner:int=0
+    owner_name:str=""
+    personal_fl:bool=False
+    filetype:str=""
 
     def __init__ (self, cfg=None):
         super().__init__(cfg)
         self.metadata="mam"     
+        self.booksFound=[]
         
     def getByID (self, id=""):
         #ID is assumed to be search string
-        self.searchMAM(id)
-        return self
+        self.search(id)
+        #if there is only one result, set self to the only result      
+        return (len(self.booksFound) > 0)
 
-    def searchMAM (self, search, authors="", title="", extension="", ebook=False):
+    def search (self, text, ebook=True, audiobook=True):
         #Config
         session = self.config.get("Config/sources/session")
         log_path = self.config.get("Config/log_path")
-        audiobook = not (ebook)
         
-        #put parenthesis around authors and title
-        if len(authors):
-            authors = f"({authors})"
-
-        if len(title):
-            title = f"({title})"
-
         #search string
-        search = f'{search} {authors} {title} {extension} @dummy mamDummy'
+        if len(text):
+            text = f'{text} @dummy mamDummy'
 
         #cache results for this search string
         books={}
-        cacheKey=myx_utilities.getHash(search)
+        cacheKey=myx_utilities.getHash(text)
         
         if myx_utilities.isCached(self.config, cacheKey, "mam"):
             #this search has been done before, load results from cache
@@ -72,14 +85,16 @@ class MAMBook(Book):
                 if audiobook:
                     mam_categories.append(13) #audiobooks
                     mam_categories.append(16) #radio
+
                 if ebook:
                     mam_categories.append(14)
+                
                 if not mam_categories:
                     return self
                 
                 params = {
                     "tor": {
-                        "text": search,  # The search string.
+                        "text": text,  # The search string.
                         "srchIn": {
                             "title": "true",
                             "author": "true",
@@ -91,8 +106,9 @@ class MAMBook(Book):
                     },
                     "searchType": "all",
 		            "searchIn": "torrents",
-                    "thumbnail": "true", 
-                    "descriptiom": "true",
+                    "thumbnail": "", 
+                    "description": "",
+                    "posterLink": "",
                     "perpage":50
                 }
 
@@ -113,12 +129,11 @@ class MAMBook(Book):
         if "data" in books:
             self.json=books
             self.total = int(books["total"])
-            self.totalFound = int(books["found"])
+            self.found = int(books["found"])
 
             #there might be multiples
             for book in books["data"]:
-                self.search.append(self.__dic2Book__(book))
-
+                self.booksFound.append(self.__dic2Book__(book))         
         return self
 
 
@@ -134,7 +149,7 @@ class MAMBook(Book):
             if 'title' in b: 
                 book.title=str(b["title"])
             if 'description' in b: 
-                book.title=str(b["description"])
+                book.description=str(b["description"])
             if 'author_info'in b:
                 #format {id:author, id:author}
                 if len(b["author_info"]):
@@ -154,6 +169,8 @@ class MAMBook(Book):
                     for series in series_info.values():
                         s=list(series)
                         book.series.append(self.Series(str(s[0]), s[1]))    
+            if 'thumbnail' in b: 
+                book.cover=str(b["thumbnail"])
             if 'lang_code' in b: 
                 book.language=myx_utilities.getLanguage((b["lang_code"]))
             if 'my_snatched' in b:
@@ -175,6 +192,7 @@ class MAMBook(Book):
             book.owner=int(b["owner"])
             book.owner_name=str(b["owner_name"])
             book.personal_fl=str(b["personal_freeleech"])
+            book.filetype=str(b["filetype"])
 
             return book
         else:
@@ -182,5 +200,24 @@ class MAMBook(Book):
 
     def getJSONFastFillOut (self, jff_path=None, jff_template=None):
         #overrides book.jsonFastFillOut by generating one for all books in search
-        for book in self.search:
+        for book in self.booksFound:
+            #print (book.description)
             book.getJSONFastFillOut(jff_path, jff_template)
+
+    def getLinks(self):
+        links=[]
+        for book in self.booksFound:
+            links.append (f"{book.id}")
+
+        return links
+
+    def countByFileType(self, format):
+        count=0
+        vip=False
+
+        for book in self.booksFound:
+            if format in book.filetype.split(" "):
+                count += 1
+                vip = book.vip
+        
+        return count, vip
