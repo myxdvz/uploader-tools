@@ -67,7 +67,7 @@ def prep4upload(cfg, books):
     return
 
 def mylib2mam(cfg, books):
-    #books is a path to a log with all the books that needs to be processed
+    #books is a path to a library file with all the books that needs to be processed
     for book in books:
         #load books from my library
         myLib = Library(cfg, book)

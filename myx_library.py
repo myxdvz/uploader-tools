@@ -31,13 +31,13 @@ class Library():
             with open(lib_csv, newline="", errors='ignore', encoding='utf-8',) as csv_file:
                 try:
                     i = 1
-                    fields=self.__getLogHeaders__()    
+                    fields=self.__getHeaders__()    
                     reader = csv.DictReader(csv_file, fieldnames=fields)
                     for row in reader:
                         ##Create a new Book
                         #print (f"Reading row {i}")
                         if (i > 1):
-                            f = str(row["file"])
+                            f = str(row["entry"])
 
                             self.libraryCatalog.append(f)                    
                         i += 1
