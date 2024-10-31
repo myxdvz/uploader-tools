@@ -80,11 +80,11 @@ class Library():
         else:
             print (f"Library doesn't exist: {lib_csv}")
 
-    def scan(self, library, filePattern=["**/*.m4b"]):
+    def scan(self, library, lastscan=0, filePattern=["**/*.m4b"]):
         dryRun = bool(self.config.get("Config/flags/dry_run"))
         verbose = bool(self.config.get("Config/flags/verbose"))
 
-        print (f"Scanning {filePattern} from {library}...")
+        print (f"Scanning {filePattern} from {library} since {lastscan}...")
         #if os.path.exists(library):
         #set library root path
         self.libary = library
@@ -99,50 +99,53 @@ class Library():
         #for each book, grab the metadata, search MAM
         newMetadata=[]
         for entry in self.libraryCatalog:
+            #check the last modtime of this file
             entry = os.path.join(library, entry)
-            hashkey = myx_utilities.getHash(str(entry))
-            if verbose: print (f"File: {entry} >> Hash: {hashkey}")
+            if os.path.getmtime(entry) > lastscan:
+                hashkey = myx_utilities.getHash(str(entry))
+                if verbose: print (f"File: {entry} >> Hash: {hashkey}")
 
-            #check if this book is already in the library
-            if hashkey in self.libraryBooks:
-                if verbose: print (f"This book is already in the library: {entry}")
-            else:
-                if verbose: print (f"Adding {entry} into the Catalog using key: {hashkey}")
-                #grab metadata
-                book = LibationBook(self.config)
-                #get ASIN from the file name
-                asin = book.getAsin(entry)
-                #load book metadata                
-                if book.getByID (entry):
-                    #add this book in the library, if NOT a podcast
-                    if (book.contentType != "Podcast"):
-                        self.libraryBooks[hashkey]={}
-                        self.libraryBooks[hashkey]["entry"]=entry    
-                        self.libraryBooks[str(hashkey)]["book"]=book
-                    else:
-                        print (f"{entry} is a podcast... skipping")
+                #check if this book is already in the library
+                if hashkey in self.libraryBooks:
+                    if verbose: print (f"This book is already in the library: {entry}")
                 else:
-                    #no metadata information found, create one
-                    newMetadata.append(entry)
-                    audibleBook = AudibleBook(self.config)
-                    audibleBook.getByID (asin)
-                    prefix=""
-                    if not dryRun:
-                        audibleBook.export (book.metadataJson)
+                    if verbose: print (f"Adding {entry} into the Catalog using key: {hashkey}")
+                    #grab metadata
+                    book = LibationBook(self.config)
+                    #get ASIN from the file name
+                    asin = book.getAsin(entry)
+                    #load book metadata                
+                    if book.getByID (entry):
+                        #add this book in the library, if NOT a podcast
+                        if (book.contentType != "Podcast"):
+                            self.libraryBooks[hashkey]={}
+                            self.libraryBooks[hashkey]["entry"]=entry    
+                            self.libraryBooks[str(hashkey)]["book"]=book
+                        else:
+                            print (f"{entry} is a podcast... skipping")
                     else:
-                        prefix = "[Dry Run] - "
-                    print (f"{prefix}Creating new metadata.json for {entry}")
-                    if (audibleBook.contentType != "Podcast"):
-                        self.libraryBooks[hashkey]={}
-                        self.libraryBooks[hashkey]["entry"]=entry    
-                        self.libraryBooks[str(hashkey)]["book"]=audibleBook
-                    else:
-                        print (f"{entry} is a podcast... skipping")
+                        #no metadata information found, create one
+                        newMetadata.append(entry)
+                        audibleBook = AudibleBook(self.config)
+                        audibleBook.getByID (asin)
+                        prefix=""
+                        if not dryRun:
+                            audibleBook.export (book.metadataJson)
+                        else:
+                            prefix = "[Dry Run] - "
+                        print (f"{prefix}Creating new metadata.json for {entry}")
+                        if (audibleBook.contentType != "Podcast"):
+                            self.libraryBooks[hashkey]={}
+                            self.libraryBooks[hashkey]["entry"]=entry    
+                            self.libraryBooks[str(hashkey)]["book"]=audibleBook
+                        else:
+                            print (f"{entry} is a podcast... skipping")
 
         print (f"Scanned {len(self.libraryCatalog)}, added {len(self.libraryBooks.keys())} in your library, created {len(newMetadata)} new metadata.json files")
 
-        #Check Library against MAM
-        self.checkMAM()
+        if not dryRun:
+            #Check Library against MAM
+            self.checkMAM()
 
         #Export the library
         self.saveToFile()

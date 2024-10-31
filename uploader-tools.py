@@ -82,13 +82,14 @@ def mylib2mam(cfg, books):
 def scanLibrary(cfg, books):
     dryRun = bool(cfg.get("Config/flags/dry_run"))
     verbose = bool(cfg.get("Config/flags/verbose"))
+    last_libscan = cfg.get("Config/last_libraryscan")
     
     #books is a path to the libation/library root
     myLib = Library(cfg)
 
     for book in books:
         #scan books from my library
-        myLib.scan(book)
+        myLib.scan(book, os.path.getmtime(os.path.abspath(last_libscan)))
 
 def sanitizeLibrary(cfg, books):
     dryRun = bool(cfg.get("Config/flags/dry_run"))

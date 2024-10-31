@@ -63,3 +63,10 @@ class YamlBook(Book):
         else:
             return None        
 
+    def __cleanseName__(self, name:str):
+        #remove periods
+        name=name.replace(".", "")
+        return name.strip()
+
+    def __cleanseSeries__(self, series:str):
+        return series.strip()

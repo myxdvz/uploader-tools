@@ -78,7 +78,7 @@ class Book:
         #remove (Unabridged) and strip accents
         stdTitle=str(self.title)
 
-        for w in [" (Unabridged)", "m4b", "mp3", ",", "- "]:
+        for w in [" (Unabridged)", "m4b", "mp3", ",", "- ", "?"]:
             stdTitle=stdTitle.replace(w," ")
         
         if stripaccents:
