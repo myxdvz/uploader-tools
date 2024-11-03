@@ -43,6 +43,7 @@ class Book:
     series:list[Series]= field(default_factory=list)
     genres:list[str]= field(default_factory=list)
     tags:list[str]= field(default_factory=list)   
+    identifiers:list=None
     delimiter:str="|" 
     source_path:str=""
     filename:str=""
@@ -53,10 +54,12 @@ class Book:
     json:dict=None
 
     def __getMamIsbn__ (self):
-        if len(self.asin):
+        if len(self.isbn):
+            return f"{self.isbn}"
+        elif len(self.asin):
             return f"ASIN: {self.asin}"
         else:
-            return f"{self.isbn}"
+            return f"{self.id}"
 
     def __getMamTags__ (self, delimiter="|"):
         return self.tags
@@ -78,27 +81,33 @@ class Book:
         #remove (Unabridged) and strip accents
         stdTitle=str(self.title)
 
-        for w in [" (Unabridged)", "m4b", "mp3", ",", "- ", "?"]:
+        for w in ["(Dramatized Adaptation)", "[Dramatized Adaptation]", "(Unabridged)", "m4b", "mp3", ",", "-", "?", "!"]:
             stdTitle=stdTitle.replace(w," ")
         
         if stripaccents:
             stdTitle = myx_utilities.strip_accents(stdTitle)
 
         # remove any subtitle that goes after a :
-        stdTitle = re.sub (r"(:(\s)?([a-zA-Z0-9_'\.\s]{2,})*)", "", stdTitle, flags=re.IGNORECASE)
+        stdTitle = re.sub (r"(:(\s)?([a-zA-Z0-9_'\.\s]{2,})*)$", "", stdTitle, flags=re.IGNORECASE)
 
         return stdTitle        
 
     def __cleanseName__(self, name:str):
-        #remove periods
-        name=name.replace(".", "")
-        honorifics=["Mr", "Mrs", "Ms", "Miss", "Dr", "PhD", "Professor", "Prof"]
+        honorifics=["Mr.", "Mrs.", "Ms.", "Miss", "Dr.", "Professor", "Prof.", "Sgt.", "Staff Sgt"]
+        suffixes=["PhD", "RMT", "PhD RMT", "MFT", "MD", "EdM LMFT", "M.S.Ed", "- editor", "- foreword", "- Translated by"]
 
         #remove honorifics
         for prefix in honorifics:
             name = name.removeprefix(prefix + " ")
         
-        return name.strip()
+        for suffix in suffixes:
+            name = name.removesuffix(" " + suffix)
+
+        #remove periods, extra spaces, then reassemble
+        name=name.replace(".", " ")
+        names = name.split()
+       
+        return  " ".join(names).strip()
 
     def __cleanseSeries__(self, series:str):
         #remove The and Series
@@ -178,9 +187,6 @@ class Book:
             "isbn": self.__getMamIsbn__(),
             "title": self.title,
             "description": self.description.replace("<p>", "<p><br/>"),
-            "authors": [],
-            "series": [],
-            "narrators": [],
             "tags": self.__getMamTags__(self.delimiter),
             "thumbnail": self.cover,
             "language": self.language,
@@ -192,14 +198,17 @@ class Book:
             jff["subtitle"]=self.subtitle
 
         #authors
+        if len(self.authors): jff["authors"] = []
         for author in self.authors:
             jff["authors"].append(self.__cleanseName__(author))
 
         #narrators
+        if len(self.narrators): jff["narrators"] = []
         for narrator in self.narrators:
             jff["narrators"].append(self.__cleanseName__(narrator))
 
         #series
+        if len(self.series): jff["series"] = []
         for series in self.series:
             jff["series"].append({"name": self.__cleanseSeries__(series.name), "number": series.number})
 

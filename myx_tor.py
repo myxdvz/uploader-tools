@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from dataclasses import field
 from pathvalidate import sanitize_filename
+import qbittorrentapi
+from qbittorrentapi import Client
 from myx_args import Config
 from myx_book import Book
 import myx_args
@@ -16,6 +18,7 @@ class TBook():
     book:Book=None
     upload_folder:str=""
     upload_fn:str=""
+    torrentfiles:list=None
 
     def go(self):
         #Assumption:  getByID has been called:
@@ -163,7 +166,13 @@ class TBook():
 
         if len(folder):
             print (f"Creating a torrent for {self.upload_folder}")
-            self.__createTorrent__(folder)
+            file = self.__createTorrent__(folder)
+
+            #add the torrent file to the list
+            if os.path.exists(file):
+                if (self.torrentfiles is None): self.torrentfiles=[]
+                self.torrentfiles.append(file)
+
         else:
             print ("Please provide folder to create torrent from...")
 
@@ -194,7 +203,8 @@ class TBook():
                 if not dry_run:
                     p = subprocess.Popen(cmnd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                     out, err =  p.communicate()
-        return
+        
+        return self.upload_fn
 
     def __addExclusions__ (self, commandlist):
         paths = self.config.get("Config/uploader-tools/exclude_paths",[])
@@ -239,4 +249,43 @@ class TBook():
 
         return piecesize
 
+    def add2Client(self):
+        #connect to your client
+        conn_info = dict(
+            host=self.config.get ("Config/client/host"),
+            port=self.config.get ("Config/client/port"),
+            username=self.config.get ("Config/client/username"),
+            password=self.config.get ("Config/client/password")
+        )
+        qbt_client = qbittorrentapi.Client(**conn_info)       
+
+        #login
+        # try:
+        #     qbt_client.auth_log_in()
+        # except qbittorrentapi.LoginFailed as e:
+            # print(f"Error logging in {e}") 
+        
+        # Add all files that were generated
+        category=self.config.get ("Config/client/category", "uploads")
+        print (f"Adding {len(self.torrentfiles)} torrents to client with category {category}")
+        try:
+            msg =  qbt_client.torrents_add(torrent_files=self.torrentfiles, category=category, is_paused=True, use_auto_torrent_management=True)
+
+            print (msg)
+            if  msg != "Ok.":
+                raise Exception("Failed to add torrent.")
+            
+            # now get all the added torrents, and force recheck
+            torrents = qbt_client.torrents_info(status_filter="stopped", category=category)
+            print (torrents)
+
+            #force recheck
+            print(f"Force rechecking ...")
+            for torrent in torrents:
+                torrent.recheck()
+
+        except Exception as e:
+            print (e)   
+
+        return
 

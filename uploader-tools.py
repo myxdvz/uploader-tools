@@ -1,3 +1,4 @@
+from myx_epub import EpubBook
 from myx_audible import AudibleBook
 from myx_google import GoogleBook
 from myx_yaml import YamlBook
@@ -33,6 +34,10 @@ def loadBook(cfg, bookid):
         case "mam":
             #MAM api
             book = MAMBook(cfg)
+
+        case "epub":
+            #MAM api
+            book = EpubBook(cfg)
 
         case _:
             #default is audible

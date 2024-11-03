@@ -2,6 +2,7 @@ title: 'Sherlock Holmes vs. Cthulhu: The Adventure of the Neural Psychoses'
 subtitle: ''
 authors:
 - Lois H. Gresh
+- Dr Seuss
 narrators:
 - Dennis Kleinman
 description: 
@@ -19,6 +20,8 @@ language: English
 series:
 - name: Sherlock Holmes vs. Cthulhu
   number: '2'
+- name: The Sherlock Holmes Series
+  number: '1'
 tags: 
   'Duration: 627 min | Chapterized | Libation True Decrypt | Audible Release:
   2020-08-04 | Publisher: Blackstone Publishing | Science Fiction & Fantasy,Literature
