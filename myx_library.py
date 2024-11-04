@@ -176,7 +176,7 @@ class Library():
         lib_csv = self.library_file
         if len(self.libraryBooks.keys()):
             write_headers = not os.path.exists(lib_csv)
-            with open(lib_csv, mode="a", newline="", errors='ignore') as csv_file:
+            with open(lib_csv, mode="w", newline="", errors='ignore') as csv_file:
                 try:
                     fields=self.__getHeaders__()
                     #pprint (fields)
