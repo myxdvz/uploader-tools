@@ -38,18 +38,19 @@ class Book:
     cover:str=""
     metadata:str=""
     category:str=""
-    authors:list[str]= field(default_factory=list)
-    narrators:list[str]= field(default_factory=list)
-    series:list[Series]= field(default_factory=list)
-    genres:list[str]= field(default_factory=list)
-    tags:list[str]= field(default_factory=list)   
-    identifiers:list=None
+    authors:list[str]=field(default_factory=list)
+    narrators:list[str]=field(default_factory=list)
+    series:list[Series]=field(default_factory=list)
+    genres:list[str]=field(default_factory=list)
+    tags:list[str]=field(default_factory=list)   
+    identifiers:list[str]=field(default_factory=list)   
     delimiter:str="|" 
     source_path:str=""
     filename:str=""
     metadataJson:str=""
     includeSubtitle:bool=False
     extension:str=""
+    contentType:str=""
 
     json:dict=None
 

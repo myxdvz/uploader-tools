@@ -11,15 +11,48 @@ import httpx
 import json
 import pprint
 import os, subprocess
+import shutil
 
 @dataclass
 class TBook():
-    config:Config=None
-    book:Book=None
+    config:Config
+    book:Book
+    library:str=""
     upload_folder:str=""
     upload_fn:str=""
     torrentfiles:list=None
+    #flags
+    dryRun:bool=False
+    verbose:bool=False
+    hardlink:bool=False
+    #settings
+    category:str=""
+    upload_path:str=""
+    libtorrent_path:str=""
+    upload_files:list[str]=field(default_factory=list)
 
+    def __post_init__ (self):
+        super().__init__()
+        if self.config is not None:
+            #get information from the Config File
+            self.dryRun = bool(self.config.get("Config/flags/dry_run"))
+            self.verbose = bool(self.config.get("Config/flags/verbose"))
+            torrent_path = self.config.get(f"Config/uploader-tools/torrent_path")
+            
+            if len(self.library):
+                #important settings for the specified library
+                self.upload_path=self.config.get(f"Config/{self.library}/upload_path")
+                self.upload_files=self.config.get(f"Config/{self.library}/upload_files")
+                self.libtorrent_path=self.config.get(f"Config/{self.library}/torrent_path", torrent_path)
+                self.category=self.config.get (f"Config/{self.library}/category", "uploads")
+            else:
+                self.upload_path=self.config.get(f"Config/uploader-tools/upload_path")
+                self.upload_files=self.config.get(f"Config/uploader-tools/upload_files")
+                self.libtorrent_path=torrent_path
+                self.category=self.config.get (f"Config/uploader-tools/category", "uploads")
+
+            self.hardlink=bool(self.config.get(f"Config/{self.library}/hardlink"))
+        
     def go(self):
         #Assumption:  getByID has been called:
         #self.source_path: should be the parent folder of the file
@@ -37,30 +70,22 @@ class TBook():
                     print (f"Error running step {step}: {e}")
 
     def __getUploadBookFolder__ (self):
-        #Config
-        verbose=bool(self.config.get("Config/flags/vebose"))
-        upload_path=self.config.get("Config/uploader-tools/upload_path")
         in_series=self.config.get("Config/uploader-tools/in_series")
         no_series=self.config.get("Config/uploader-tools/no_series")
 
         #Get primary author
-        if ((self.book.authors is not None) and (len(self.book.authors) == 0)):
-            author=""
-        else:
-            author=self.book.authors[0]
-
-        #standardize author name (replace . with space, and then make sure that there's only single space)
-        if len(author):
-            author=myx_utilities.cleanseAuthor(author)
+        author=""
+        if (self.book.authors is not None) and (len(self.book.authors) > 0):
+            author=self.book.__cleanseName__(self.book.authors[0])
 
         #Does this book belong in a series - only take the first series?
         series=""
         part=""
         if (len(self.book.series) > 0):
-            series = f"{myx_utilities.cleanseSeries(self.book.series[0].name)}"
+            series = f"{self.book.__cleanseSeries__(self.book.series[0].name)}"
             part = str(self.book.series[0].number)
 
-        title = f"{myx_utilities.cleanseTitle(self.book.title)}"
+        title = f"{self.book.__cleanseTitle__()}"
 
         tokens = {}
         tokens["author"] = sanitize_filename(author)
@@ -77,14 +102,14 @@ class TBook():
             y = no_series.format (**tokens)
             sPath = y
 
-        if verbose: print (f"Upload Path: {upload_path} >> sPath: {sPath}")
-        return os.path.join(upload_path, sPath)  
+        if self.verbose: print (f"Upload Path: {self.upload_path} >> sPath: {sPath}")
+        return os.path.join(self.upload_path, sPath)  
 
     def __isForbiddenAuthor__ (self, forbidden_authors):
         found = False
         for a in self.book.authors:
             if a in forbidden_authors:
-                if verbose: print (f"{a}'s {self.book.title} is a forbidden author")
+                if self.verbose: print (f"{a}'s {self.book.title} is a forbidden author")
                 found = True
                 break
 
@@ -96,49 +121,49 @@ class TBook():
         #self.filename: should be the name of the m4b or epub file        
         #metadata would have already been loaded
 
-        #flags
-        dry_run=bool(self.config.get("Config/flags/dry_run"))
-        verbose=bool(self.config.get("Config/flags/verbose"))
-
-        #where to prep the files to upload
-        upload_path=self.config.get("Config/uploader-tools/upload_path")
-        upload_files=self.config.get("Config/uploader-tools/upload_files")
-
         #list of forbidden authors
         forbidden_authors=self.config.get("Config/uploader-tools/forbidden_authors")
 
         #1. Check if the source files exist
-        if verbose: print (f"Checking if source_path {self.book.source_path} exists...")
+        if self.verbose: print (f"Checking if source_path {self.book.source_path} exists...")
         if os.path.exists(self.book.source_path):
             #Check if this books is from a forbidden author, if yes -- don't proceed
-            if verbose: print (f"Checking if {self.book.authors} are forbidden...")
+            if self.verbose: print (f"Checking if {self.book.authors} are forbidden...")
             if not self.__isForbiddenAuthor__ (forbidden_authors):
                 #Create the folder in the upload_path
-                if verbose: print (f"Generating Upload Book folder...")
+                if self.verbose: print (f"Generating Upload Book folder...")
                 self.upload_folder = self.__getUploadBookFolder__()
-                if verbose: print (f"getUploadBookFolder: {self.upload_folder}")
+                if self.verbose: print (f"getUploadBookFolder: {self.upload_folder}")
 
                 #makedir in upload_path
-                if verbose: print (f"Creating directory {self.upload_folder}...")
-                if not dry_run:
+                if self.verbose: print (f"Creating directory {self.upload_folder}...")
+                if not self.dryRun:
                     os.makedirs (self.upload_folder, exist_ok=True)
 
                 #Hardlink the files
-                if verbose: print(f"File: {self.book.filename} >> Source: {self.book.source_path}")
-                if verbose: print (f"Hardlinking {self.book.filename}")
+                if self.verbose: 
+                    print(f"File: {self.book.filename} >> Source: {self.book.source_path}")
+                
                 #for each upload_files, hardlink the files
-                for ft in upload_files:
+                for ft in self.upload_files:
                     #check if the file already exists in the target directory
                     filename = self.book.filename + ft
-                    if verbose: print (f"Filename: {filename}")
+                    if self.verbose: print (f"Filename: {filename}")
                     source = os.path.join (self.book.source_path, filename)
                     dest = os.path.join (self.upload_folder, sanitize_filename(filename))
-                    if verbose: print(f"Source: {source} >> Destination: {dest}")
+                    if self.verbose: print(f"Source: {source} >> Destination: {dest}")
                     if (os.path.exists(source) and (not os.path.exists(dest))):
                         try:
-                            if verbose: print (f"Hardlinking {source} to {dest}")
-                            if not dry_run:
-                                os.link(source, dest)
+                            #Hardlink or Copy
+                            if self.hardlink:
+                                if self.verbose: print (f"Hardlinking {source} to {dest}")
+                                if not self.dryRun:
+                                    os.link(source, dest)
+                            else:
+                                #copy
+                                if self.verbose: print (f"Copying {source} to {dest}")
+                                if not self.dryRun:
+                                    shutil.copy2 (source, dest)                                
                         except Exception as e:
                             print (f"\tFailed due to {e}")   
 
@@ -158,14 +183,14 @@ class TBook():
         print ("Preparing Upload Files...")
         self.__prepUpload__()
     
-    def createTorrent (self, folder=None):
+    def createTorrent (self, folder):
 
         #if no parameter, use self.upload_folder
         if folder is None:
             folder = self.upload_folder
 
         if len(folder):
-            print (f"Creating a torrent for {self.upload_folder}")
+            print (f"Creating a torrent for {folder}")
             file = self.__createTorrent__(folder)
 
             #add the torrent file to the list
@@ -182,14 +207,12 @@ class TBook():
         self.book.getJSONFastFillOut(jff_path=self.upload_folder)
 
     def __createTorrent__ (self, folder):
-        dry_run = self.config.get("Config/flags/dry_run")
-        verbose = self.config.get("Config/flags/verbose")
         announceURL = self.config.get("Config/uploader-tools/announce")
-        torrent_path = self.config.get("Config/uploader-tools/torrent_path")
         
-        torrent_file = os.path.splitext(os.path.basename(folder))[0]
-        self.upload_fn = os.path.join (torrent_path, torrent_file + ".torrent")
-        if verbose: print (f"Creating a torrent file {self.upload_fn}")
+        #the torrent file is the folder name
+        torrent_file = os.path.basename(os.path.normpath(folder))
+        self.upload_fn = os.path.join (self.libtorrent_path, torrent_file + ".torrent")
+        if self.verbose: print (f"Creating a torrent file {self.upload_fn}")
 
         if os.path.exists(self.upload_fn):
             print (f"File {self.upload_fn} exists. Skipping torrent creation")
@@ -199,8 +222,8 @@ class TBook():
                 #py3createtorrent -t udp://tracker.opentrackr.org:1337/announce file_or_folder
                 cmnd = ['py3createtorrent','--private', '--force', '--piece-length', str(piece_size), '--tracker', announceURL, folder, '--output', self.upload_fn]
                 cmnd = self.__addExclusions__(cmnd)
-                if verbose: print (f"Running command: {cmnd}")
-                if not dry_run:
+                if self.verbose: print (f"Running command: {cmnd}")
+                if not self.dryRun:
                     p = subprocess.Popen(cmnd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                     out, err =  p.communicate()
         
@@ -266,18 +289,17 @@ class TBook():
             # print(f"Error logging in {e}") 
         
         # Add all files that were generated
-        category=self.config.get ("Config/client/category", "uploads")
-        print (f"Adding {len(self.torrentfiles)} torrents to client with category {category}")
+        print (f"Adding {len(self.torrentfiles)} torrents to client with category {self.category}")
         try:
-            msg =  qbt_client.torrents_add(torrent_files=self.torrentfiles, category=category, is_paused=True, use_auto_torrent_management=True)
+            msg =  qbt_client.torrents_add(torrent_files=self.torrentfiles, category=self.category, is_paused=True, use_auto_torrent_management=True)
 
-            print (msg)
+            #print (msg)
             if  msg != "Ok.":
                 raise Exception("Failed to add torrent.")
             
             # now get all the added torrents, and force recheck
-            torrents = qbt_client.torrents_info(status_filter="stopped", category=category)
-            print (torrents)
+            torrents = qbt_client.torrents_info(status_filter="stopped", category=self.category)
+            #print (torrents)
 
             #force recheck
             print(f"Force rechecking ...")

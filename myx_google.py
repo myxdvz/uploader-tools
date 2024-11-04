@@ -13,7 +13,9 @@ class GoogleBook(Book):
     def getByID (self, id=""):
         apiKey=myx_utilities.getApiKey(self.config, self.metadata)
         print (f"Searching Google Books for\n\tisbn:{id}")
-        #9780698146402, 0698146409
+        
+        #id is ISBN
+        self.id=id
 
         books={}
         cacheKey = myx_utilities.getHash(f"{id}")
@@ -54,7 +56,53 @@ class GoogleBook(Book):
             print (f"{count} books returned for {id}.")
             if (count == 1):
                 self.__dic2Book__(books["items"][0]["volumeInfo"])
-                self.id=self.isbn
+                return True
+        else:
+            return False
+
+    def getByTitleAuthor (self, title, author):
+        apiKey=myx_utilities.getApiKey(self.config, self.metadata)
+        print (f"Searching Google Books for\n\ttitle:{title}\n\tauthor:{author}")
+
+        books={}
+        cacheKey = myx_utilities.getHash(f"{title}-{author}")
+        if myx_utilities.isCached(self.config, cacheKey, "google"):
+            print (f"Retrieving {cacheKey} from google")
+
+            #this search has been done before, retrieve the results
+            books = myx_utilities.loadFromCache(self.config, cacheKey, "google")
+        else:
+            try:
+                #&key={YOUR_API_KEY}
+                p=f"https://www.googleapis.com/books/v1/volumes"
+
+                r = httpx.get (
+                    p,
+                    params={
+                        "q": f"q=intitle:'{title}'+inauthor:'{author}'+orderBy:'relevance'",
+                        "key": apiKey,
+                        "orderBy": "relevance",
+                        "printType": "all",
+                        "projection": "full"
+                    }
+                )
+
+                r.raise_for_status()
+                books = r.json()
+
+                #cache this results
+                myx_utilities.cacheMe(self.config, cacheKey, "google", books)
+
+            except Exception as e:
+                print(f"Error searching googlebooks: {e}")
+                
+        #check for ["items"][0]["volumeInfo"]
+        if "totalItems" in books:
+            self.json=books
+            count = int(books["totalItems"])
+            print (f"{count} books returned for {id}.")
+            if (count == 1):
+                self.__dic2Book__(books["items"][0]["volumeInfo"])
                 return True
         else:
             return False

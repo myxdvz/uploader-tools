@@ -1,9 +1,12 @@
+import ebookmeta
 import ebooklib
 from ebooklib import epub
 from myx_book import Book
+from myx_google import GoogleBook
 import myx_utilities
 import httpx
 import json
+import os
 
 class EpubBook(Book):
     def __init__ (self, cfg=None):
@@ -19,13 +22,50 @@ class EpubBook(Book):
         #ID is path to epub
         print (f"Retrieving metadata: {id}")
 
-        #read metadata from 
+        #id is path to epub
         self.id = id
-        book=epub.read_epub(id, {"ignore_ncx": True})
+
+        #parse path and filename
+        self.source_path = os.path.dirname(id)
+        self.filename = os.path.splitext(os.path.basename(id))[0]
+
+        #use ebookmeta for series and tag information
+        md=ebookmeta.get_metadata(id)
+        if (md.series is not None) and len(md.series):
+            self.series.append (Book.Series(md.series, md.series_index))
+
+        for tag in md.tag_list:
+            self.genres.append (tag)
+
+        for author in md.author_list:
+            self.authors.append (author)
+
+        #read metadata from 
+        book = epub.read_epub(id)
+
+        #get IDs
+        identifiers = book.get_metadata("DC", "identifier")
+        if len(identifiers):
+            #identifier could have multiple things
+            self.identifiers=[]
+            for id in identifiers:
+                #this is a tuple, the first item is the ID, the second is a dictionary, and we're looking for '{http://www.idpf.org/2007/opf}scheme'
+                if "{http://www.idpf.org/2007/opf}scheme" in id[1]:
+                    self.identifiers.append ({"id": id[0], "type": id[1]["{http://www.idpf.org/2007/opf}scheme"]})
+                    match id[1]["{http://www.idpf.org/2007/opf}scheme"]:
+                        case "AMAZON": self.asin = id[0]
+                        case "ISBN": self.isbn = id[0]     
+                else:
+                    self.isbn = id[0]                   
 
         title = book.get_metadata("DC", "title")
         if len(title):
             self.title = title[0][0]
+
+        # authors = book.get_metadata("DC", "creator")
+        # if len(authors):
+        #     for author in authors:
+        #         self.authors.append (author[0])
 
         subtitle = book.get_metadata("DC", "subtitle")
         if len(subtitle):
@@ -47,25 +87,6 @@ class EpubBook(Book):
         if len(language):
             self.language = myx_utilities.getLanguage(language[0][0])
 
-        identifiers = book.get_metadata("DC", "identifier")
-        if len(identifiers):
-            #identifier could have multiple things
-            self.identifiers=[]
-            for id in identifiers:
-                #this is a tuple, the first item is the ID, the second is a dictionary, and we're looking for '{http://www.idpf.org/2007/opf}scheme'
-                if "{http://www.idpf.org/2007/opf}scheme" in id[1]:
-                    self.identifiers.append ({"id": id[0], "type": id[1]["{http://www.idpf.org/2007/opf}scheme"]})
-                    match id[1]["{http://www.idpf.org/2007/opf}scheme"]:
-                        case "AMAZON": self.asin = id[0]
-                        case "ISBN": self.isbn = id[0]     
-                else:
-                    self.isbn = id[0]                   
-
-        authors = book.get_metadata("DC", "creator")
-        if len(authors):
-            for author in authors:
-                self.authors.append (author[0])
-
         #genres
         subject = book.get_metadata("DC", "subject")
         if len(subject):
@@ -80,39 +101,20 @@ class EpubBook(Book):
         #series
         #series += f"\t<ns0:meta name='calibre:series' content='{s.name}' />\n"
         #series += f"\t<ns0:meta name='calibre:series_index' content='{s.part}' />\n"        
-        series = book.get_metadata("OPF", "calibre:series")
-        parts = book.get_metadata("OPF", "calibre:series_index")
+        series = book.get_metadata("DC", "series")
+        parts = book.get_metadata("DC", "series_index")
         if len(series):
             for i in range(len(series)):
                 self.series.append (Series(series[i][0], parts[i][0]))
 
-        #ID is ISBN or ASIN
-        if len(self.isbn): self.id = self.isbn
-        elif len(self.asin): self.id = self.asin
-
         #print them all out
-        #if verbose:
-            # print ("Series:", book.get_metadata("OPF", "calibre:series"))
-            # print ("Colleciton:", book.get_metadata("OPF", "collection"))
-            # print (book.get_metadata("OPF", "belongs-to-collection"))
-            # print (book.get_metadata("OPF", "file-as"))
-            # print (book.get_metadata("OPF", "dcterms:identifier"))
-            # print (book.get_metadata("OPF", "group-position"))
+        # if verbose:
+        #     print (book)
+        #     #print (md)
+        #     print (self)
 
-            # print (f"title: {title}")
-            # print (f"subtitle: {subtitle}"
-            # print (f"description: {description}")
-            # print (f"publisher: {publisher}")
-            # print (f"date: {date}")
-            # print (f"language: {language}")
-            # print (f"identifier: {identifiers}")
-            # print (f"authors: {authors}")
-            # print (f"subject: {subject}")
-            # print (f"tags: {tags}")
-            # print (f"series: {series}")
-            # print (self)
-            # print (book.metadata["http://www.idpf.org/2007/opf"])
-            # print (book.metadata["http://purl.org/dc/elements/1.1/"])
+
+        return True
 
     def __getMamTags__ (self, delimiter="|"):
         return f"Publisher: {self.publisher} | Publication Date : {self.releaseDate[:10]} | {','.join(set(self.genres))}"

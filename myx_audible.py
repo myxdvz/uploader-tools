@@ -6,8 +6,6 @@ import json
 import os
 
 class AudibleBook(Book):
-    contentType:str=""
-
     def __init__ (self, cfg=None):
         super().__init__(cfg)
         self.metadata="audible"
@@ -15,6 +13,9 @@ class AudibleBook(Book):
         
     def getByID (self, id=""):
         print (f"Searching Audible for\n\tasin:{id}")
+
+        #id is ASIN
+        self.id=id
 
         books={}
         cacheKey = myx_utilities.getHash(f"{id}")
@@ -51,7 +52,6 @@ class AudibleBook(Book):
         if "product" in books:
             self.json=books
             self.__dic2Book__(books["product"])
-            self.id=self.asin
 
             return True
         else:

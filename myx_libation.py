@@ -18,6 +18,9 @@ class LibationBook(AudibleBook):
         #id is the path of the m4b file in the libation download folder
         if verbose: print (f"Getting metadata for \n\tLibation Book:{id}")
 
+        #id is the path to the libation m4b
+        self.id = id 
+        
         #parse path and filename
         self.source_path = os.path.dirname(id)
         self.filename = os.path.splitext(os.path.basename(id))[0]
@@ -41,14 +44,20 @@ class LibationBook(AudibleBook):
             #check for ["product"]
             self.json=product
             self.__dic2Book__(product)
-            self.id=self.asin
 
             return True
 
         else:
-            print(f"Metadata file {self.metadataJson}, not found")
-            return False
-
+            #metadata was not found, query audible instead
+            asin = self.getAsin(self.filename)
+            audibleBook = AudibleBook(self.config)
+            audibleBook.getByID (asin)
+            if not dry_run:
+                audibleBook.export (self.metadataJson)
+            
+            self = audibleBook
+            return True
+    
     def getAsin(self, filename):
         #derive asin from the filename, formatted *[asin].m4b
         match = re.search(r"\[(?P<asin>[a-zA-Z0-9]+)\]",filename, re.IGNORECASE)

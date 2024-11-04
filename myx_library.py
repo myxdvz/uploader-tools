@@ -5,7 +5,9 @@ from myx_args import Config
 from myx_book import Book
 from myx_audible import AudibleBook
 from myx_libation import LibationBook
+from myx_epub import EpubBook
 from myx_mam import MAMBook
+from myx_tor import TBook
 from glob import iglob, glob
 from datetime import datetime
 import myx_utilities
@@ -14,19 +16,138 @@ import json
 import pprint
 import os, subprocess
 import csv
+import shutil
+import time
 
 @dataclass
 class Library():
-    config:Config=None
-    library:str=""
-    libraryCatalog:list[str]= field(default_factory=list)
+    config:Config
+    library:str
+    source_path:str=""
+    output_path=str=""
+    library_file=str=""
+    metadata:str=""
+    category:str=""
+    lastscan:float=0
+    files:list[str]=field(default_factory=list)
+    upload_files:list[str]=field(default_factory=list)
+    libraryCatalog:list[str]=field(default_factory=list)
     libraryBooks={}
+    dryRun:bool=False
+    verbose:bool=False
 
-    def loadFromFile(self, lib_csv):
-        dryRun = bool(self.config.get("Config/flags/dry_run"))
-        verbose = bool(self.config.get("Config/flags/verbose"))
+    def __post_init__ (self):
+        super().__init__()
+        if self.config is not None:
+            #get information from the Config File
+            self.dryRun = bool(self.config.get("Config/flags/dry_run"))
+            self.verbose = bool(self.config.get("Config/flags/verbose"))
+        
 
+            #important settings for the specified library
+            self.files = self.config.get(f"Config/{self.library}/files")
+            self.source_path = self.config.get(f"Config/{self.library}/source_path")
+            self.output_path = self.config.get(f"Config/{self.library}/output_path")
+            self.library_file = self.config.get(f"Config/{self.library}/library_file")
+            self.upload_files = self.config.get(f"Config/{self.library}/upload_files")
+            self.metadata = self.config.get(f"Config/{self.library}/metadata")
+            self.category = self.config.get(f"Config/{self.library}/category")
+            self.lastscan = self.config.get(f"Config/{self.library}/last_libraryscan", None)
+
+
+            #Check if source path exists
+            if not os.path.exists(self.source_path):
+                raise Exception (f"Libary not found. Please recheck {self.source_path}")
+
+            #if library_file exists, use it as lastscan and backitup
+            archive_path = os.path.join (self.output_path, "archive")
+            os.makedirs(archive_path, exist_ok=True)
+            if os.path.exists(self.library_file):
+                archive_name = f"{os.path.splitext(os.path.basename(self.library))[0]}_{datetime.now().strftime('%Y%m%d%H%M%S')}.csv"
+                shutil.copy2(self.library_file, os.path.join(archive_path, archive_name))
+                #last scan is config or if none, last scan date of library file
+                if (self.lastscan is None):
+                    self.lastscan = os.path.getmtime (self.library_file)
+
+    def scan(self):
+        print (f"Scanning {self.files} from {self.library} since {time.localtime(self.lastscan)}...")
+
+        #find all files that fit the pattern
+        for f in self.files:
+            pattern = f.translate({ord('['):'[[]', ord(']'):'[]]'})
+            print (f"Looking for {f} from {self.source_path}")
+            #grab all files and put it in libraryBooks
+            self.libraryCatalog.extend(iglob(f, root_dir=self.source_path, recursive=True))
+
+        #for each book, grab the metadata, search MAM
+        newMetadata=[]
+        for entry in self.libraryCatalog:
+            #check the last modtime of this file
+            entry = os.path.join(self.source_path, entry)
+            if os.path.getmtime(entry) > self.lastscan:
+                hashkey = myx_utilities.getHash(str(entry))
+                if self.verbose: print (f"File: {entry} >> Hash: {hashkey}")
+
+                #check if this book is already in the library
+                if hashkey in self.libraryBooks:
+                    if self.verbose: print (f"This book is already in the library: {entry}")
+                else:
+                    if self.verbose: print (f"Adding {entry} into the Catalog using key: {hashkey}")
+                    #grab metadata
+                    match self.library:
+                        case "libation":
+                            book = LibationBook(self.config)
+
+                        case "epub":
+                            book = EpubBook(self.config)
+
+                        case _:
+                            raise Exception (f"{self.library} is an unsupported library")    
+
+                    #load book metadata                
+                    if book.getByID (entry):
+                        self.libraryBooks[hashkey]={}
+                        self.libraryBooks[hashkey]["entry"]=entry    
+                        self.libraryBooks[hashkey]["book"]=book
+
+        print (f"Scanned {len(self.libraryCatalog)}, added {len(self.libraryBooks.keys())} in your library")
+
+        if not self.dryRun:
+            #Check Library against MAM
+            self.__checkMAM__()
+
+        #Export the library
+        self.__saveToFile__()
+
+        return self.libraryBooks
+
+    def prep4MAM (self):
+        #load all the files from the last Library Scan (set in the config) into the library Catalog
+        self.__loadFromFile__()
+
+        #create a torrent for each file in the library catalog
+        for file in self.libraryCatalog:
+            book = None
+            match self.library:
+                case "libation": book = LibationBook(self.config)
+                case "calibre": book = EpubBook(self.config)
+                case _:
+                    raise Exception(f"{self.library} library is not yet supported")
+
+            #get book information
+            if self.verbose: print (f"Loading book {file} from {self.library}")
+            book.getByID (file)
+
+            tbook = TBook(self.config, book, self.library)
+            tbook.go() 
+
+        #at this point, all the files have been prep, add then to client
+        tbook.add2Client()       
+
+
+    def __loadFromFile__(self):
         #Load My Audible Library from self.library
+        lib_csv = self.library_file
         if os.path.exists(lib_csv):        
             with open(lib_csv, newline="", errors='ignore', encoding='utf-8',) as csv_file:
                 try:
@@ -48,14 +169,11 @@ class Library():
             print (f"Library doesn't exist: {lib_csv}")
 
 
-    def saveToFile (self, lib_csv=""):
+    def __saveToFile__ (self):
         dryRun = bool(self.config.get("Config/flags/dry_run"))
         verbose = bool(self.config.get("Config/flags/verbose"))
-        output_path = self.config.get("Config/output_path")
 
-        if (len(lib_csv) == 0):
-            lib_csv = os.path.join (output_path,f"mylibrary_{datetime.now().strftime('%Y%m%d%H%M%S')}.csv")
-
+        lib_csv = self.library_file
         if len(self.libraryBooks.keys()):
             write_headers = not os.path.exists(lib_csv)
             with open(lib_csv, mode="a", newline="", errors='ignore') as csv_file:
@@ -80,79 +198,7 @@ class Library():
         else:
             print (f"Library doesn't exist: {lib_csv}")
 
-    def scan(self, library, lastscan=0, filePattern=["**/*.m4b"]):
-        dryRun = bool(self.config.get("Config/flags/dry_run"))
-        verbose = bool(self.config.get("Config/flags/verbose"))
-
-        print (f"Scanning {filePattern} from {library} since {lastscan}...")
-        #if os.path.exists(library):
-        #set library root path
-        self.libary = library
-
-        #find all files that fit the pattern
-        for f in filePattern:
-            pattern = f.translate({ord('['):'[[]', ord(']'):'[]]'})
-            print (f"Looking for {f} from {library}")
-            #grab all files and put it in libraryBooks
-            self.libraryCatalog.extend(iglob(f, root_dir=library, recursive=True))
-
-        #for each book, grab the metadata, search MAM
-        newMetadata=[]
-        for entry in self.libraryCatalog:
-            #check the last modtime of this file
-            entry = os.path.join(library, entry)
-            if os.path.getmtime(entry) > lastscan:
-                hashkey = myx_utilities.getHash(str(entry))
-                if verbose: print (f"File: {entry} >> Hash: {hashkey}")
-
-                #check if this book is already in the library
-                if hashkey in self.libraryBooks:
-                    if verbose: print (f"This book is already in the library: {entry}")
-                else:
-                    if verbose: print (f"Adding {entry} into the Catalog using key: {hashkey}")
-                    #grab metadata
-                    book = LibationBook(self.config)
-                    #get ASIN from the file name
-                    asin = book.getAsin(entry)
-                    #load book metadata                
-                    if book.getByID (entry):
-                        #add this book in the library, if NOT a podcast
-                        if (book.contentType != "Podcast"):
-                            self.libraryBooks[hashkey]={}
-                            self.libraryBooks[hashkey]["entry"]=entry    
-                            self.libraryBooks[str(hashkey)]["book"]=book
-                        else:
-                            print (f"{entry} is a podcast... skipping")
-                    else:
-                        #no metadata information found, create one
-                        newMetadata.append(entry)
-                        audibleBook = AudibleBook(self.config)
-                        audibleBook.getByID (asin)
-                        prefix=""
-                        if not dryRun:
-                            audibleBook.export (book.metadataJson)
-                        else:
-                            prefix = "[Dry Run] - "
-                        print (f"{prefix}Creating new metadata.json for {entry}")
-                        if (audibleBook.contentType != "Podcast"):
-                            self.libraryBooks[hashkey]={}
-                            self.libraryBooks[hashkey]["entry"]=entry    
-                            self.libraryBooks[str(hashkey)]["book"]=audibleBook
-                        else:
-                            print (f"{entry} is a podcast... skipping")
-
-        print (f"Scanned {len(self.libraryCatalog)}, added {len(self.libraryBooks.keys())} in your library, created {len(newMetadata)} new metadata.json files")
-
-        if not dryRun:
-            #Check Library against MAM
-            self.checkMAM()
-
-        #Export the library
-        self.saveToFile()
-
-        return self.libraryBooks
-
-    def checkMAM(self):
+    def __checkMAM__(self):
         dryRun = bool(self.config.get("Config/flags/dry_run"))
         verbose = bool(self.config.get("Config/flags/verbose"))
 
@@ -245,15 +291,14 @@ class Library():
         #library book information
         book={}
         book["entry"]=libraryBook["entry"]
-        book["content_type"]=libraryBook["book"].contentType
-        book["id"]=libraryBook["book"].id
-        book["isbn"]=libraryBook["book"].isbn
-        book["asin"]=libraryBook["book"].asin
+        book["id"]=str(libraryBook["book"].id)
+        book["isbn"]=str(libraryBook["book"].isbn)
+        book["asin"]=str(libraryBook["book"].asin)
         book["title"]=libraryBook["book"].title
         book["subtitle"]=libraryBook["book"].subtitle
-        book["series"]=libraryBook["book"].series
-        book["authors"]=libraryBook["book"].authors
-        book["narrators"]=libraryBook["book"].narrators
+        book["series"]=libraryBook["book"].__getSeries__()
+        book["authors"]=libraryBook["book"].__getAuthors__()
+        book["narrators"]=libraryBook["book"].__getNarrators__()
         #calclated fields
         book["cleansed-title"]=libraryBook["cleansed-title"]
         book["cleansed-authors"]=libraryBook["cleansed-authors"]

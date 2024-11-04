@@ -57,9 +57,10 @@ def createJson(cfg, books):
     return
 
 def createTorrent(cfg, books):
-    for bookid in books:
-        tbook = TBook(cfg)
-        tbook.createTorrent(bookid)
+    for book in books:
+        tbook = TBook(cfg, book)
+        tbook.createTorrent(book)
+        tbook.add2Client()
 
     return
 
@@ -71,30 +72,23 @@ def prep4upload(cfg, books):
 
     return
 
-def mylib2mam(cfg, books):
+def mylib2mam(cfg, libraries):
     #books is a path to a library file with all the books that needs to be processed
-    for book in books:
+    for library in libraries:
         #load books from my library
-        myLib = Library(cfg, book)
-        myLib.loadFromFile(book)
-
-        #create a torrent for each file in the library
-        for file in myLib.libraryCatalog:
-            book = loadBook(cfg, file)
-            tbook = TBook(cfg, book)
-            tbook.go()        
+        myLib = Library(cfg, library)
+        myLib.prep4MAM()
 
 def scanLibrary(cfg, books):
     dryRun = bool(cfg.get("Config/flags/dry_run"))
     verbose = bool(cfg.get("Config/flags/verbose"))
-    last_libscan = cfg.get("Config/last_libraryscan")
     
-    #books is a path to the libation/library root
-    myLib = Library(cfg)
-
     for book in books:
+        #books is a path to the libation/library root
+        myLib = Library(cfg, book)
+
         #scan books from my library
-        myLib.scan(book, os.path.getmtime(os.path.abspath(last_libscan)))
+        myLib.scan()
 
 def sanitizeLibrary(cfg, books):
     dryRun = bool(cfg.get("Config/flags/dry_run"))
