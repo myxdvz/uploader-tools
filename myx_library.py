@@ -98,7 +98,7 @@ class Library():
                         case "libation":
                             book = LibationBook(self.config)
 
-                        case "epub":
+                        case "calibre":
                             book = EpubBook(self.config)
 
                         case _:

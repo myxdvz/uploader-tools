@@ -41,6 +41,7 @@ class TBook():
             
             if len(self.library):
                 #important settings for the specified library
+                self.source_path = self.config.get(f"Config/{self.library}/source_path")
                 self.upload_path=self.config.get(f"Config/{self.library}/upload_path")
                 self.upload_files=self.config.get(f"Config/{self.library}/upload_files")
                 self.libtorrent_path=self.config.get(f"Config/{self.library}/torrent_path", torrent_path)
@@ -181,9 +182,14 @@ class TBook():
 
         #the step is to create a folder in the Upload_path and hardlink the cue, m4b and jpg files    
         print ("Preparing Upload Files...")
-        self.__prepUpload__()
+        #do you need to prep?
+        if (self.source_path == self.upload_path):
+            #self.upload_folder is the parent folder
+            self.upload_folder = self.book.source_path
+        else:
+            self.__prepUpload__()
     
-    def createTorrent (self, folder):
+    def createTorrent (self, folder=None):
 
         #if no parameter, use self.upload_folder
         if folder is None:
@@ -310,4 +316,3 @@ class TBook():
             print (e)   
 
         return
-
