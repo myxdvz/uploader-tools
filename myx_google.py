@@ -60,12 +60,21 @@ class GoogleBook(Book):
         else:
             return False
 
-    def getByTitleAuthor (self, title, author):
+    def search (self, params):
+        verbose=bool(self.config.get("Config/flags/verbose"))
         apiKey=myx_utilities.getApiKey(self.config, self.metadata)
         print (f"Searching Google Books for\n\ttitle:{title}\n\tauthor:{author}")
 
+        #get parameters, replace all spaces with +
+        title=""
+        author=""
+        if "title" in params:
+            title = params["title"].replace(" ","+")
+        if "author" in params:
+            author = params["author"].replace(" ","+")
+
         books={}
-        cacheKey = myx_utilities.getHash(f"{title}-{author}")
+        cacheKey = myx_utilities.getHash(f"{params}")
         if myx_utilities.isCached(self.config, cacheKey, "google"):
             print (f"Retrieving {cacheKey} from google")
 
@@ -79,11 +88,12 @@ class GoogleBook(Book):
                 r = httpx.get (
                     p,
                     params={
-                        "q": f"q=intitle:'{title}'+inauthor:'{author}'+orderBy:'relevance'",
+                        "q": f"q=intitle:{title}+inauthor:{author}",
                         "key": apiKey,
                         "orderBy": "relevance",
                         "printType": "all",
-                        "projection": "full"
+                        "projection": "full",
+                        "langRestrict": "en"
                     }
                 )
 
@@ -97,15 +107,35 @@ class GoogleBook(Book):
                 print(f"Error searching googlebooks: {e}")
                 
         #check for ["items"][0]["volumeInfo"]
+        found=False
         if "totalItems" in books:
             self.json=books
             count = int(books["totalItems"])
-            print (f"{count} books returned for {id}.")
+            print (f"{count} books returned for {title}-{author}")
             if (count == 1):
                 self.__dic2Book__(books["items"][0]["volumeInfo"])
-                return True
-        else:
-            return False
+                if verbose: print(f"{self.title}({self.releaseDate}) by {self.__getAuthors__()}, ISBN: {self.isbn}, Language: {self.language}")
+                found=True
+
+            elif (count > 1):
+                booksFound = []
+                choices=[]
+                for item in books["items"]:
+                    #display all options
+                    gbook=GoogleBook(self.config)
+                    gbook.__dic2Book__(item["volumeInfo"])
+                    booksFound.append(gbook)
+
+                    #display
+                    print(f"[{len(booksFound)}] {gbook.title}({gbook.releaseDate}) by {gbook.__getAuthors__()}, ISBN: {gbook.isbn}, Language: {gbook.language}")
+                    choices.append (len(booksFound))
+
+                choice = myx_utilities.promptChoice (f"Pick a match [1-{len(booksFound)}]:  ", choices)
+                if verbose: print(f"You've selected [{choice}] {booksFound[choice-1].title}({booksFound[choice-1].releaseDate}) by {booksFound[choice-1].__getAuthors__()}, ISBN: {booksFound[choice-1].isbn}, Language: {booksFound[choice-1].language}")
+                self.__dic2Book__(books["items"][choice-1]["volumeInfo"])
+                found=True
+
+        return found
 
     def __dic2Book__(self, book):
         #book is an google books volumeInfo dictionary
@@ -141,4 +171,71 @@ class GoogleBook(Book):
     def __getMamTags__ (self, delimiter="|"):
         return f"Publish Date: {self.releaseDate} | Publisher: {self.publisher} | {','.join(set(self.tags))}"
 
+    def getMAMCategory (self):  
+        bisgMapping = {
+            "Antiques & Collectibles": "E-books - Crafts",
+            "Architecture": "E-books - Art",
+            "Art": "E-books - Art",
+            "Bibles": "E-books - Pol/Soc/Relig",
+            "Biography & Autobiography": "E-books - Biographical",
+            "Body, Mind & Spirit": "E-books - Self-Help",
+            "Business & Economics": "E-books - Business",
+            "Comics & Graphic Novels": "E-books - Comics/Graphic novels",
+            "Computers": "E-books - Computer/Internet",
+            "Cooking": "E-books - Food",
+            "Crafts & Hobbies": "E-books - Crafts",
+            "Design": "E-books - Art",
+            "Drama": "E-books - General Fiction",
+            "Education": "E-books - Instructional",
+            "Family & Relationships": "E-books - General Fiction",
+            "Fiction": "E-books - General Fiction",
+            "Foreign Language Study": "E-books - Language",
+            "Games & Activities": "E-books - Recreation",
+            "Gardening": "E-books - Home/Garden",
+            "Health & Fitness": "E-books - Self-Help",
+            "History": "E-books - History",
+            "House & Home": "E-books - Home/Garden",
+            "Humor": "E-books - Humor",
+            "Juvenile Fiction": "E-books - Juvenile",
+            "Juvenile NonFiction": "E-books - Juvenile",
+            "Language Arts & Disciplines": "E-books - Language",
+            "Law": "E-books - General Fiction",
+            "Literary Collections": "E-books - Mixed Collections",
+            "Literary Criticism": "E-books - Literary Classics",
+            "Mathematics": "E-books - Math/Science/Tech",
+            "Medical": "E-books - Medical",
+            "Music": "E-books - Art",
+            "Nature": "E-books - Nature",
+            "Performing Arts": "E-books - Art",
+            "Pets": "E-books - General Non-Fic",
+            "Philosophy": "E-books - Philosophy",
+            "Photography": "E-books - Art",
+            "Poetry": "E-books - Art",
+            "Political Science": "E-books - Pol/Soc/Relig",
+            "Psychology": "E-books - Math/Science/Tech",
+            "Reference": "E-books - General Non-Fic",
+            "Religion": "E-books - Pol/Soc/Relig",
+            "Science": "E-books - Math/Science/Tech",
+            "Self-Help": "E-books - Self-Help",
+            "Social Science": "E-books - Pol/Soc/Relig",
+            "Sports & Recreation": "E-books - Recreation",
+            "Study Aids": "E-books - Instructional",
+            "Technology & Engineering": "E-books - Math/Science/Tech",
+            "Transportation": "E-books - Travel/Adventure",
+            "Travel": "E-books - Travel/Adventure",
+            "True Crime": "E-books - Crime/Thriller",
+            "Young Adult Fiction": "E-books - Young Adult",
+            "Young Adult NonFiction": "E-books - Young Adult"
+        }
+        
+        genre=""
+        if len(self.genres): genre = self.genres[0]
+        elif len(self.genres) == 0 and len(self.tags): genre = self.tags[0]
+        
+        if len(genre) and genre in bisgMapping:
+             self.category =  bisgMapping[genre]
+        else:
+             self.category =  "E-books - General Non-Fic"
+
+        return self.category
 

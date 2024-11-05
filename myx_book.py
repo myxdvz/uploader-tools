@@ -51,6 +51,7 @@ class Book:
     includeSubtitle:bool=False
     extension:str=""
     contentType:str=""
+    booksFound:list=None
 
     json:dict=None
 
@@ -95,7 +96,8 @@ class Book:
 
     def __cleanseName__(self, name:str):
         honorifics=["Mr.", "Mrs.", "Ms.", "Miss", "Dr.", "Professor", "Prof.", "Sgt.", "Staff Sgt"]
-        suffixes=["PhD", "RMT", "PhD RMT", "MFT", "MD", "EdM LMFT", "M.S.Ed", "- editor", "- foreword", "- Translated by"]
+        suffixes=["PhD", "RMT", "PhD RMT", "MFT", "MD", "EdM LMFT", "M.S.Ed", "- editor", "- foreword", "- Translated by", "MBA",
+            "MSBA", "CRE", "- contributor"]
 
         #remove honorifics
         for prefix in honorifics:
@@ -225,3 +227,20 @@ class Book:
 
     def getMAMCategory (self):  
         return self.category        
+
+    def query(self, parameters):
+        #if there's an ID, get by ID
+        if "isbn" in parameters:
+            return self.getByID (parameters["isbn"])
+
+        elif "asin" in parameters:
+            return self.getByID (parameters["asin"])
+
+        else: 
+            return self.search (parameters)
+    
+    def getByID (self, id):
+        print ("If you're seeing this, then this feature has not been implemented for this Book")
+
+    def search (self, params):
+        print ("If you're seeing this, then this feature has not been implemented for this Book")

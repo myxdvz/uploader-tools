@@ -10,16 +10,15 @@ def importArgs():
     appDescription = """Uploader toolkit - useful scripts to help an uploader automate some of their tasks"""
     parser = argparse.ArgumentParser(prog="uploader-tools", description=appDescription)
     #Primary Action to run
-    parser.add_argument ("action", choices=["createJson", "createTorrent", "prep4upload", "mylib2mam", "scanLibrary", "sanitizeLibrary"], help="A specific task or tool to run")
-    parser.add_argument ("--metadata", choices=["audible", "google", "mam", "file", "libation", "epub"], help="Source of metadata")
-    parser.add_argument ("--book", help="List of Books: ASIN or ISBN or Yaml Files", nargs="+")
-    parser.add_argument ("--input", help="Where are the source media files")
-    parser.add_argument ("--output", help="Where to save the output files")
+    parser.add_argument ("action", choices=["query", "createJson", "createTorrent", "prep4upload", "mylib2mam", "scanLibrary", "sanitizeLibrary"], help="A specific task or tool to run")
+    parser.add_argument ("-m", "--metadata", choices=["audible", "google", "mam", "file", "libation", "epub"], help="Source of metadata")
+    parser.add_argument ("-p", "--params", help="Parameters for the action", nargs="+")
 
     #Debug flags
     parser.add_argument("--dry-run", default=None, action="store_true", help="If provided, will override dryRun in config")
     parser.add_argument("--verbose", default=None, action="store_true", help="If provided, will print additional info")
     parser.add_argument("--add-hash", default=None, action="store_true", help="If provided, will add hash to output filenames")
+    parser.add_argument("--quiet", default=None, action="store_true", help="If provided, it will skip any interactive elements")
 
     #get all arguments
     args = parser.parse_args()
@@ -54,13 +53,7 @@ class Config(object):
 
                 #override config with command line param
                 if params.metadata is not None:
-                    cfg["Config"]["metadata"] = params.metadata          
-
-                if params.input is not None:
-                    cfg["Config"]["input_path"] = params.input          
-
-                if params.output is not None:
-                    cfg["Config"]["output_path"] = params.output            
+                    cfg["Config"]["metadata"] = params.metadata                 
 
                 #override config/flags with command line param
                 if params.dry_run is not None:
@@ -71,6 +64,9 @@ class Config(object):
 
                 if params.add_hash is not None:
                     cfg["Config"]["flags"]["add_hash"] = bool(params.verbose)            
+
+                if params.quiet is not None:
+                    cfg["Config"]["flags"]["quiet"] = bool(params.quiet)            
 
             self._data = cfg            
         except Exception as e:

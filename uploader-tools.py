@@ -102,45 +102,93 @@ def sanitizeLibrary(cfg, books):
         badFiles = myLib.sanitize(book)
         print (f"Found {len(badFiles)} badly named files in your library at {book}")
 
+def query (cfg, params):
+    metadata=cfg.get("Config/metadata")
+    output=cfg.get("Config/output")
+    verbose=bool(cfg.get("Config/flags/verbose"))
+
+    #query supports id, title and author parameters
+    parameters={}
+
+    for param in params:
+        #parse the key value pair
+        parameters[param.split("=")[0]]=param.split("=")[1]
+
+    match metadata:
+        case "file":
+            #yaml file
+            book = YamlBook(cfg)
+
+        case "google":
+            #googlebooks api
+            book = GoogleBook(cfg)
+
+        case "libation":
+            #googlebooks api
+            book = LibationBook(cfg)
+
+        case "mam":
+            #MAM api
+            book = MAMBook(cfg)
+
+        case "epub":
+            #MAM api
+            book = EpubBook(cfg)
+
+        case _:
+            #default is audible
+            book = AudibleBook(cfg)
+
+    #get book information
+    if verbose: print (f"Querying {metadata} using {parameters}")   
+    
+    if book.query(parameters) and (output == "jff"):
+        book.getJSONFastFillOut()
+        
+    return book
+    
 
 def main(cfg):
     action=myx_args.params.action
-    books=myx_args.params.book
+    params=myx_args.params.params
     dryRun=cfg.get("Config/flags/dry_run")
     verbose=cfg.get("Config/flags/verbose")
 
     #assume all parameters are from command line
-    if verbose: print (f"Action: {action}, Books: {books}, Dry Run: {dryRun}, Verbose: {verbose}")
+    if verbose: print (f"Action: {action}, Params: {params}, Dry Run: {dryRun}, Verbose: {verbose}")
 
     match action:
+        case "query":
+            query (cfg, params)
+
         case "createJson":
             #creates a Json file for the passed books
             #--book is a list of ISBN, ASIN or Yaml Files
-            createJson(cfg, books)
+            createJson(cfg, params)
 
         case "createTorrent":
             #creates a Torrent file from a folder
             #--book is a list of paths to upload folder
-            createTorrent(cfg, books)
+            createTorrent(cfg, params)
 
         case "prep4upload":
             #performs all steps in the torrent creation process (steps in config) for a list of books
             #--book is a list of M4B files from source, e.g. libation folder
-            prep4upload(cfg, books)
+            prep4upload(cfg, params)
 
         case "mylib2mam":
             #performs all steps in the torrent creation process for all books in the passed library file
             #--book is path to a CSV file that has a list of M4B paths, sames a prep4upload with a file input
-            mylib2mam(cfg, books)
+            mylib2mam(cfg, params)
 
         case "scanLibrary":
             #scans your library -- and then what?
-            scanLibrary(cfg, books)
+            scanLibrary(cfg, params)
 
         case "sanitizeLibrary":
             #scans your library -- and sanitizes filenames (removes colons)
             #--book is a root path
-            sanitizeLibrary(cfg, books)
+            sanitizeLibrary(cfg, params)
 
         case _:
             print ("Invalid action...")

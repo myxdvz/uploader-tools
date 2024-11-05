@@ -57,6 +57,91 @@ class AudibleBook(Book):
         else:
             return False
 
+    def search (self, params):
+        verbose=bool(self.config.get("Config/flags/verbose"))
+        print (f"Searching Audible for\n\t{params}")
+
+        #get parameters, replace all spaces with +
+        title=""
+        author=""
+        narrator=""
+        keywords=""
+        language="en"
+        if "title" in params:
+            title = params["title"]
+        if "author" in params:
+            author = params["author"]
+        if "narrator" in params:
+            narrator = params["narrator"]
+        if "keywords" in params:
+            keywords = params["keywords"]
+        if "language" in params:
+            language = params["language"]
+        
+
+        books={}
+        cacheKey = myx_utilities.getHash(f"{params}")
+        if myx_utilities.isCached(self.config, cacheKey, "audible"):
+            print (f"Retrieving {cacheKey} from audible")
+
+            #this search has been done before, retrieve the results
+            books = myx_utilities.loadFromCache(self.config, cacheKey, "audible")
+        else:
+            try:
+                p=f"https://api.audible.com/1.0/catalog/products"
+
+                r = httpx.get (
+                    p,
+                    params={
+                        "title": title,
+                        "author": author,
+                        "narrator": narrator,
+                        "keywords": keywords,
+                        "products_sort_by": "Relevance",
+                        "response_groups": (
+                            "media, series, product_attrs, relationships, contributors, product_desc, product_extended_attrs, category_ladders"
+                        )
+                    }
+                )
+
+                r.raise_for_status()
+                books = r.json()
+
+                #cache this results
+                myx_utilities.cacheMe(self.config, cacheKey, "audible", books)
+
+            except Exception as e:
+                print(f"Error searching audible: {e}")
+            
+        #check for ["product"]
+        found=False
+        if "products" in books:
+            self.json=books
+            count = len (books["products"])
+            print (f"{count} books returned for {params}")
+            if (count == 1):
+                self.__dic2Book__(books["products"][0])
+                found=True
+            elif (count > 1):
+                booksFound=[]
+                choices=[]
+                for book in books["products"]:
+                    abook = AudibleBook(self.config)
+                    abook.__dic2Book__(book)
+                    if abook.language == myx_utilities.getLanguage(language):
+                        booksFound.append(abook)
+
+                        #display
+                        print(f"[{len(booksFound)}] {abook.title}({abook.releaseDate}) by {abook.__getAuthors__()}, ASIN: {abook.asin}, Language: {abook.language}")
+                        choices.append (len(booksFound))
+
+                choice = myx_utilities.promptChoice (f"Pick a match [1-{len(booksFound)}]:  ", choices)
+                if verbose: print(f"You've selected [{choice}] {booksFound[choice-1].title}({booksFound[choice-1].releaseDate}) by {booksFound[choice-1].__getAuthors__()}, ASIN: {booksFound[choice-1].asin}, Language: {booksFound[choice-1].language}")
+                self.__dic2Book__(books["products"][choice-1])
+                found=True
+
+        return found
+
     def __dic2Book__(self, book):
         #book is an Audible product dictionary
         if book is not None:

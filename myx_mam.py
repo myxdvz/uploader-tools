@@ -11,7 +11,6 @@ import json
 class MAMBook(Book):
     total:int=0
     found:int=0
-    booksFound:list[Book]=None
 
     #Added Attributes for MAMBook
     added:str=""
