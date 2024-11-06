@@ -135,10 +135,15 @@ class AudibleBook(Book):
                         print(f"[{len(booksFound)}] {abook.title}({abook.releaseDate}) by {abook.__getAuthors__()}, ASIN: {abook.asin}, Language: {abook.language}")
                         choices.append (len(booksFound))
 
-                choice = myx_utilities.promptChoice (f"Pick a match [1-{len(booksFound)}]:  ", choices)
-                if verbose: print(f"You've selected [{choice}] {booksFound[choice-1].title}({booksFound[choice-1].releaseDate}) by {booksFound[choice-1].__getAuthors__()}, ASIN: {booksFound[choice-1].asin}, Language: {booksFound[choice-1].language}")
-                self.__dic2Book__(books["products"][choice-1])
-                found=True
+                #add none
+                print(f"[0] None of the above")                            
+                choices.append (0)
+
+                choice = myx_utilities.promptChoice (f"Pick a match [0-{len(booksFound)}]:  ", choices)
+                if choice > 0:
+                    if verbose: print(f"You've selected [{choice}] {booksFound[choice-1].title}({booksFound[choice-1].releaseDate}) by {booksFound[choice-1].__getAuthors__()}, ASIN: {booksFound[choice-1].asin}, Language: {booksFound[choice-1].language}")
+                    self.__dic2Book__(books["products"][choice-1])
+                    found=True
 
         return found
 

@@ -226,7 +226,7 @@ class Library():
             if not lb["book"].__isForbiddenAuthor__():
                 try:
                     if verbose: print (f"MAM search: {search}...")
-                    mamBook.search (search)
+                    mamBook.search ({"text": search})
                     #save MAM search
                     lb["mam"] = mamBook
                 except Exception as e:

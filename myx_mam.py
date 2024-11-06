@@ -41,18 +41,29 @@ class MAMBook(Book):
         #if there is only one result, set self to the only result      
         return (len(self.booksFound) > 0)
 
-    def search (self, text, ebook=True, audiobook=True):
+    def search (self, params, interactive=False):
         #Config
         session = self.config.get("Config/sources/session")
         log_path = self.config.get("Config/log_path")
-        
+
+        #get parameters, replace all spaces with +
+        text=""
+        ebook=True
+        audiobook=True
+        if "text" in params:
+            text = params["text"]
+        if "ebook" in params:
+            ebook = bool(params["ebook"])
+        if "audiobook" in params:
+            audiobook = bool(params["audiobook"])
+
         #search string
         if len(text):
             text = f'{text} @dummy mamDummy'
 
         #cache results for this search string
         books={}
-        cacheKey=myx_utilities.getHash(text)
+        cacheKey=myx_utilities.getHash(str(params))
         
         if myx_utilities.isCached(self.config, cacheKey, "mam"):
             #this search has been done before, load results from cache
@@ -88,9 +99,6 @@ class MAMBook(Book):
                 if ebook:
                     mam_categories.append(14)
                 
-                if not mam_categories:
-                    return self
-                
                 params = {
                     "tor": {
                         "text": text,  # The search string.
@@ -125,14 +133,43 @@ class MAMBook(Book):
                     print(f'error searching MAM {e}')
 
         #check for ["data"]
+        found=False
         if "data" in books:
             self.json=books
             self.total = int(books["total"])
             self.found = int(books["found"])
 
-            #there might be multiples
-            for book in books["data"]:
-                self.booksFound.append(self.__dic2Book__(book))         
+            if interactive:
+                count = self.found
+                print (f"{count} books returned for {params}")
+                if (count == 1):
+                    self.__dic2Book__(book["data"][0])
+                    found=True
+                elif (count > 1):
+                    booksFound=[]
+                    choices=[]
+                    for book in books["data"]:
+                        abook = MAMBook(self.config)
+                        abook.__dic2Book__(book)
+                        booksFound.append(abook)
+
+                        #display
+                        print(f"[{len(booksFound)}] {abook.title}({abook.releaseDate}) by {abook.__getAuthors__()}, ASIN: {abook.asin}, Language: {abook.language}")
+                        choices.append (len(booksFound))
+
+                    #add none
+                    print(f"[0] None of the above")                            
+                    choices.append (0)
+
+                    choice = myx_utilities.promptChoice (f"Pick a match [0-{len(booksFound)}]:  ", choices)
+                    if choice > 0:
+                        if verbose: print(f"You've selected [{choice}] {booksFound[choice-1].title}({booksFound[choice-1].releaseDate}) by {booksFound[choice-1].__getAuthors__()}, ASIN: {booksFound[choice-1].asin}, Language: {booksFound[choice-1].language}")
+                        self.__dic2Book__(books["products"][choice-1])
+                        found=True
+            else:
+                for book in books["data"]:
+                    self.booksFound.append(self.__dic2Book__(book))   
+
         return self
 
 

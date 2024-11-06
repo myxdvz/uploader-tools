@@ -130,10 +130,16 @@ class GoogleBook(Book):
                     print(f"[{len(booksFound)}] {gbook.title}({gbook.releaseDate}) by {gbook.__getAuthors__()}, ISBN: {gbook.isbn}, Language: {gbook.language}")
                     choices.append (len(booksFound))
 
-                choice = myx_utilities.promptChoice (f"Pick a match [1-{len(booksFound)}]:  ", choices)
-                if verbose: print(f"You've selected [{choice}] {booksFound[choice-1].title}({booksFound[choice-1].releaseDate}) by {booksFound[choice-1].__getAuthors__()}, ISBN: {booksFound[choice-1].isbn}, Language: {booksFound[choice-1].language}")
-                self.__dic2Book__(books["items"][choice-1]["volumeInfo"])
-                found=True
+                #add none
+                print(f"[0] None of the above")                            
+                choices.append (0)
+
+                choice = myx_utilities.promptChoice (f"Pick a match [0-{len(booksFound)}]:  ", choices)
+
+                if choice > 0:
+                    if verbose: print(f"You've selected [{choice}] {booksFound[choice-1].title}({booksFound[choice-1].releaseDate}) by {booksFound[choice-1].__getAuthors__()}, ISBN: {booksFound[choice-1].isbn}, Language: {booksFound[choice-1].language}")
+                    self.__dic2Book__(books["items"][choice-1]["volumeInfo"])
+                    found=True
 
         return found
 
