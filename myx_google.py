@@ -63,7 +63,6 @@ class GoogleBook(Book):
     def search (self, params):
         verbose=bool(self.config.get("Config/flags/verbose"))
         apiKey=myx_utilities.getApiKey(self.config, self.metadata)
-        print (f"Searching Google Books for\n\ttitle:{title}\n\tauthor:{author}")
 
         #get parameters, replace all spaces with +
         title=""
@@ -72,6 +71,7 @@ class GoogleBook(Book):
             title = params["title"].replace(" ","+")
         if "author" in params:
             author = params["author"].replace(" ","+")
+        print (f"Searching Google Books for\n\ttitle:{title}\n\tauthor:{author}")
 
         books={}
         cacheKey = myx_utilities.getHash(f"{params}")
