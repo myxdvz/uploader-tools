@@ -93,7 +93,8 @@ class GoogleBook(Book):
                         "orderBy": "relevance",
                         "printType": "all",
                         "projection": "full",
-                        "langRestrict": "en"
+                        "langRestrict": "en",
+                        "maxResults":40
                     }
                 )
 

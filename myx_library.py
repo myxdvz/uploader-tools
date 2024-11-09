@@ -175,7 +175,7 @@ class Library():
 
         lib_csv = self.library_file
         if len(self.libraryBooks.keys()):
-            write_headers = not os.path.exists(lib_csv)
+            write_headers = True
             with open(lib_csv, mode="w", newline="", errors='ignore') as csv_file:
                 try:
                     fields=self.__getHeaders__()
@@ -202,7 +202,7 @@ class Library():
         dryRun = bool(self.config.get("Config/flags/dry_run"))
         verbose = bool(self.config.get("Config/flags/verbose"))
 
-        #for each audible/libation book in the libraryBooks
+        #for each audible/libation book in the libraryBooksc
         for lb in self.libraryBooks.values():
             mamBook = MAMBook(self.config)
             #do a MAM search based on author, title, extension

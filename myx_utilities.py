@@ -230,6 +230,6 @@ def promptChoice (prompt, choices):
                 return choice
             else:
                 print ("Invalid choice, try again.")
-        except ValueError:
-            print ("This is not a valid choice.")
+        except ValueError as e:
+            print (f"This is not a valid choice: {e}")
     
