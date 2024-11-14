@@ -95,16 +95,16 @@ class Book:
         return stdTitle        
 
     def __cleanseName__(self, name:str):
-        honorifics=["Mr.", "Mrs.", "Ms.", "Miss", "Dr.", "Professor", "Prof.", "Sgt.", "Staff Sgt"]
-        suffixes=["PhD", "RMT", "PhD RMT", "MFT", "MD", "EdM LMFT", "M.S.Ed", "- editor", "- foreword", "- Translated by", "MBA",
-            "MSBA", "CRE", "- contributor"]
+        honorifics=["Mr.", "Mrs.", "Ms.", "Miss", "Dr.", "Professor", "Prof.", "Sgt.", "Staff Sgt", "Father"]
+        suffixes=["PhD", "RMT", "MFT", "MD", "EdM", "LMFT", "M.S.Ed", "- editor", "- foreword", "- Translated by", "MBA",
+            "MSBA", "CRE", "- contributor", "- adaptation", "- adaption", "- read to", "- translator", "- Edited by"]
 
         #remove honorifics
         for prefix in honorifics:
             name = name.removeprefix(prefix + " ")
         
         for suffix in suffixes:
-            name = name.removesuffix(" " + suffix)
+            name = name.replace(suffix, " ")
 
         #remove periods, extra spaces, then reassemble
         name=name.replace(".", " ")

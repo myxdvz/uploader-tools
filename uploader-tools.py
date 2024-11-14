@@ -1,3 +1,4 @@
+from myx_pdf import PdfBook
 from myx_epub import EpubBook
 from myx_audible import AudibleBook
 from myx_google import GoogleBook
@@ -28,7 +29,7 @@ def loadBook(cfg, bookid):
             book = GoogleBook(cfg)
 
         case "libation":
-            #googlebooks api
+            #libation metadata.json
             book = LibationBook(cfg)
 
         case "mam":
@@ -36,8 +37,12 @@ def loadBook(cfg, bookid):
             book = MAMBook(cfg)
 
         case "epub":
-            #MAM api
+            #epub metadata
             book = EpubBook(cfg)
+
+        case "pdf":
+            #pdf metadata
+            book = PdfBook(cfg)
 
         case _:
             #default is audible
