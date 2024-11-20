@@ -51,8 +51,8 @@ class Book:
     includeSubtitle:bool=False
     extension:str=""
     contentType:str=""
+    formatType:str=""
     booksFound:list=None
-
     json:dict=None
 
     def __getMamIsbn__ (self):
@@ -97,7 +97,8 @@ class Book:
     def __cleanseName__(self, name:str):
         honorifics=["Mr.", "Mrs.", "Ms.", "Miss", "Dr.", "Professor", "Prof.", "Sgt.", "Staff Sgt", "Father"]
         suffixes=["PhD", "RMT", "MFT", "MD", "EdM", "LMFT", "M.S.Ed", "- editor", "- foreword", "- Translated by", "MBA",
-            "MSBA", "CRE", "- contributor", "- adaptation", "- adaption", "- read to", "- translator", "- Edited by"]
+            "MSBA", "CRE", "- contributor", "- adaptation", "- adaption", "- read to", "- translator", "- Edited by",
+            "- author/editor"]
 
         #remove honorifics
         for prefix in honorifics:
@@ -105,6 +106,7 @@ class Book:
         
         for suffix in suffixes:
             name = name.replace(suffix, " ")
+            name = name.replace(suffix.lower(), " ")
 
         #remove periods, extra spaces, then reassemble
         name=name.replace(".", " ")

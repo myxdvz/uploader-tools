@@ -119,7 +119,7 @@ def getLanguage(code):
         lang = Language.get(code).display_name()
 
     except:
-        print ("Unable to get display name for Language: {code}, defaulting to English")
+        print (f"Unable to get display name for Language: {code}, defaulting to English")
     
     return lang
 

@@ -66,18 +66,17 @@ class AudibleBook(Book):
         author=""
         narrator=""
         keywords=""
-        language="en"
+        language=""
         if "title" in params:
-            title = params["title"]
+            title = params["title"].replace(" ", "+")
         if "author" in params:
-            author = params["author"]
+            author = params["author"].replace(" ", "+")
         if "narrator" in params:
-            narrator = params["narrator"]
+            narrator = params["narrator"].replace(" ", "+")
         if "keywords" in params:
             keywords = params["keywords"]
         if "language" in params:
-            language = params["language"]
-        
+            language = myx_utilities.getLanguage(str(params["language"]))
 
         books={}
         cacheKey = myx_utilities.getHash(f"{params}")
@@ -128,11 +127,11 @@ class AudibleBook(Book):
                 for book in books["products"]:
                     abook = AudibleBook(self.config)
                     abook.__dic2Book__(book)
-                    if abook.language == myx_utilities.getLanguage(language):
+                    if (len(language) == 0) or (len(language) > 0 and abook.language == language):
                         booksFound.append(abook)
 
                         #display
-                        print(f"[{len(booksFound)}] {abook.title}({abook.releaseDate}) by {abook.__getAuthors__()}, ASIN: {abook.asin}, Language: {abook.language}")
+                        print(f"[{len(booksFound)}] {abook.title}({abook.releaseDate}) by {abook.__getAuthors__()}, {abook.language}, {abook.formatType}, https://www.audible.com/pd/{abook.asin}")
                         choices.append (len(booksFound))
 
                 #add none
@@ -141,7 +140,7 @@ class AudibleBook(Book):
 
                 choice = myx_utilities.promptChoice (f"Pick a match [0-{len(booksFound)}]:  ", choices)
                 if choice > 0:
-                    if verbose: print(f"You've selected [{choice}] {booksFound[choice-1].title}({booksFound[choice-1].releaseDate}) by {booksFound[choice-1].__getAuthors__()}, ASIN: {booksFound[choice-1].asin}, Language: {booksFound[choice-1].language}")
+                    if verbose: print(f"You've selected [{choice}] {booksFound[choice-1].title}({booksFound[choice-1].releaseDate}) by {booksFound[choice-1].__getAuthors__()}, {booksFound[choice-1].language}, {booksFound[choice-1].formatType},  https://www.audible.com/pd/{booksFound[choice-1].asin}")
                     self.__dic2Book__(books["products"][choice-1])
                     found=True
 
@@ -178,6 +177,8 @@ class AudibleBook(Book):
                             self.tags.append(item["name"])    
             if 'content_type' in book:
                 self.contentType = str(book["content_type"])
+            if 'format_type' in book:
+                self.formatType = str(book["format_type"])
 
             return self
         else:
