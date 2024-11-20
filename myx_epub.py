@@ -15,6 +15,7 @@ class EpubBook(Book):
         self.extension="epub"
         
     def getByID (self, id=""):
+        filtered_tags = self.config.get("Config/uploader-tools/filtered_tags", [])
         #flags
         dry_run=bool(self.config.get("Config/flags/dry_run"))
         verbose=bool(self.config.get("Config/flags/verbose"))
@@ -91,7 +92,8 @@ class EpubBook(Book):
         subject = book.get_metadata("DC", "subject")
         if len(subject):
             for genre in subject:
-                self.genres.append(genre[0])
+                if genre[0].lower() not in filtered_tags:
+                    self.genres.append(genre[0])
 
         tags = book.get_metadata("DC", "tags")
         if len(subtitle):
