@@ -57,7 +57,10 @@ class YamlBook(Book):
                     self.narrators.append(str(narrator))
             if 'series' in book: 
                 for s in book["series"]:
-                    self.series.append(self.Series(str(s["name"]), str(s["number"])))
+                    if 'number' in s:
+                        self.series.append(self.Series(str(s["name"]), str(s["number"])))
+                    else:
+                        self.series.append(self.Series(str(s["name"]), ""))
 
             return self
         else:
