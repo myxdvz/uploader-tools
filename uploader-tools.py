@@ -72,7 +72,7 @@ def createTorrent(cfg, books):
 def prep4upload(cfg, books):
     for bookid in books:
         book = loadBook(cfg, bookid)
-        tbook = TBook(cfg, book)
+        tbook = TBook(cfg, book, "libation")
         tbook.go()
 
     return
