@@ -1,4 +1,3 @@
-from myx_pdf import PdfBook
 from myx_epub import EpubBook
 from myx_audible import AudibleBook
 from myx_google import GoogleBook
@@ -39,10 +38,6 @@ def loadBook(cfg, bookid):
         case "epub":
             #epub metadata
             book = EpubBook(cfg)
-
-        case "pdf":
-            #pdf metadata
-            book = PdfBook(cfg)
 
         case _:
             #default is audible

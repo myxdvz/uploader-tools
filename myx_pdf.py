@@ -1,4 +1,4 @@
-from pypdf import PdfReader
+#from pypdf import PdfReader
 from myx_book import Book
 from pprint import pprint
 import myx_utilities
@@ -34,20 +34,20 @@ class PdfBook(Book):
         self.filename = os.path.splitext(os.path.basename(id))[0]
 
         #read metadata from 
-        book = PdfReader(id)
-        metadata = book.metadata
-        pprint (metadata)
+        # book = PdfReader(id)
+        # metadata = book.metadata
+        # pprint (metadata)
 
-        self.title = metadata.title
+        # self.title = metadata.title
 
-        if (metadata.author is not None) and len(metadata.author) > 0:
-            self.authors.append (metadata.author)
+        # if (metadata.author is not None) and len(metadata.author) > 0:
+        #     self.authors.append (metadata.author)
 
-        if (metadata.subject is not None) and len(metadata.subject) > 0:
-            self.genres.append (metadata.subject)
+        # if (metadata.subject is not None) and len(metadata.subject) > 0:
+        #     self.genres.append (metadata.subject)
 
-        self.publisher = metadata.producer
-        self.releaseDate = str(metadata.creation_date)
+        # self.publisher = metadata.producer
+        # self.releaseDate = str(metadata.creation_date)
 
-        if (metadata.creator is not None) and len(metadata.creator) > 0:
-            self.tags.append (metadata.creator)
+        # if (metadata.creator is not None) and len(metadata.creator) > 0:
+        #     self.tags.append (metadata.creator)
