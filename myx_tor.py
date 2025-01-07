@@ -343,7 +343,7 @@ class TBook():
                 
                 #if there are no seeders, check if this has been deleted, if so add tag
                 if ((properties.seeds == 0) and (properties.seeds_total == 0)):
-                    print(f"Checking {properties['hash']}...")
+                    #print(f"Checking {properties['hash']}...")
 
                     for tracker in trackers:
                         #print (f"Tracker: {tracker.url}, Msg: {tracker.msg}")
@@ -352,6 +352,7 @@ class TBook():
 
             #add tags to the deleted Torrents
             qbt_client.torrents_add_tags (tags="deleted", torrent_hashes=deletedTorrents)
+            qbt_client.torrents_pause (torrent_hashes=deletedTorrents)
             print (f"Found {len(deletedTorrents)} deleted torrents")
 
 
