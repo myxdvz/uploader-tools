@@ -316,3 +316,46 @@ class TBook():
             print (e)   
 
         return
+
+    def tagDeleted(self, category=None):
+        #connect to your client
+        conn_info = dict(
+            host=self.config.get ("Config/client/host"),
+            port=self.config.get ("Config/client/port"),
+            username=self.config.get ("Config/client/username"),
+            password=self.config.get ("Config/client/password")
+        )
+        qbt_client = qbittorrentapi.Client(**conn_info)       
+
+        try:
+            # now get all the torrents, and check if it's been deleted
+            torrents = qbt_client.torrents_info(status_filter="seeding", private=True, category=category)
+            print (f"Checking {len(torrents)} files that have 0 seeders from {category}")
+            #print (torrents)
+
+            deletedTorrents = []
+            for torrent in torrents:
+                properties = torrent.properties
+                trackers = torrent.trackers
+
+                #print(properties)
+                #print(trackers)
+                
+                #if there are no seeders, check if this has been deleted, if so add tag
+                if ((properties.seeds == 0) and (properties.seeds_total == 0)):
+                    print(f"Checking {properties['hash']}...")
+
+                    for tracker in trackers:
+                        #print (f"Tracker: {tracker.url}, Msg: {tracker.msg}")
+                        if (tracker.msg == "torrent not registered with this tracker"):
+                            deletedTorrents.append(properties["hash"])
+
+            #add tags to the deleted Torrents
+            qbt_client.torrents_add_tags (tags="deleted", torrent_hashes=deletedTorrents)
+            print (f"Found {len(deletedTorrents)} deleted torrents")
+
+
+        except Exception as e:
+            print (e)   
+
+        return

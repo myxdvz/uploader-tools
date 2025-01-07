@@ -64,6 +64,13 @@ def createTorrent(cfg, books):
 
     return
 
+def tagDeleted(cfg, categories):
+    for category in categories:
+        tbook = TBook(cfg, None)
+        tbook.tagDeleted(category)
+
+    return
+
 def prep4upload(cfg, books):
     for bookid in books:
         book = loadBook(cfg, bookid)
@@ -189,6 +196,9 @@ def main(cfg):
             #scans your library -- and sanitizes filenames (removes colons)
             #--book is a root path
             sanitizeLibrary(cfg, params)
+
+        case "tagDeleted":
+            tagDeleted(cfg, params)
 
         case _:
             print ("Invalid action...")
