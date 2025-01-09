@@ -212,7 +212,7 @@ if __name__ == "__main__":
         myx_args.params = myx_args.importArgs()
 
         #check if config files are present
-        settingsConfig = "config/settings.json"
+        settingsConfig = myx_args.params.settings
         if (os.path.exists(settingsConfig)):
             try:
                 #import config

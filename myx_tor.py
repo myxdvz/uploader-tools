@@ -347,7 +347,7 @@ class TBook():
 
                     for tracker in trackers:
                         #print (f"Tracker: {tracker.url}, Msg: {tracker.msg}")
-                        if (tracker.msg == "torrent not registered with this tracker"):
+                        if ("torrent not registered with this tracker" in tracker.msg.lower()):
                             deletedTorrents.append(properties["hash"])
 
             #add tags to the deleted Torrents

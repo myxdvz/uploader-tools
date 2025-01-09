@@ -13,6 +13,7 @@ def importArgs():
     parser.add_argument ("action", choices=["query", "createJson", "createTorrent", "prep4upload", "mylib2mam", "scanLibrary", "sanitizeLibrary", "tagDeleted"], help="A specific task or tool to run")
     parser.add_argument ("-m", "--metadata", choices=["audible", "google", "mam", "file", "libation", "epub"], help="Source of metadata")
     parser.add_argument ("-p", "--params", help="Parameters for the action", nargs="+")
+    parser.add_argument ("-s", "--settings", default="config/settings.json", help="Path to config file")
 
     #Debug flags
     parser.add_argument("--dry-run", default=None, action="store_true", help="If provided, will override dryRun in config")

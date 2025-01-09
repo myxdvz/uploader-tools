@@ -61,7 +61,7 @@ class Book:
         elif len(self.asin):
             return f"ASIN: {self.asin}"
         else:
-            return f"{self.id}"
+            return ""
 
     def __getMamTags__ (self, delimiter="|"):
         return self.tags

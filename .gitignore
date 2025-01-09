@@ -14,3 +14,4 @@ tests/*
 config/settings.json
 templates/book2.yaml
 booktree.py
+templates/darn.yaml
