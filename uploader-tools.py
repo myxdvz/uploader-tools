@@ -213,6 +213,10 @@ if __name__ == "__main__":
 
         #check if config files are present
         settingsConfig = myx_args.params.settings
+        if ((settingsConfig is None) or (len(settingsConfig) == 0)):
+            #assume config file is in a config file in the app path
+            settingsConfig = os.path.join(os.path.dirname(os.path.realpath(sys.argv[0])),"config/settings.json") 
+
         if (os.path.exists(settingsConfig)):
             try:
                 #import config
