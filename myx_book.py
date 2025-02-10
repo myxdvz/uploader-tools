@@ -95,18 +95,18 @@ class Book:
         return stdTitle        
 
     def __cleanseName__(self, name:str):
-        honorifics=["Mr.", "Mrs.", "Ms.", "Miss", "Dr.", "Professor", "Prof.", "Sgt.", "Staff Sgt", "Father"]
+        honorifics=["Mr.", "Mrs.", "Ms.", "Miss", "Dr.", "Professor", "Prof.", "Sgt.", "Staff Sgt", "Father", "Saint"]
         suffixes=["PhD", "RMT", "MFT", "MD", "EdM", "LMFT", "M.S.Ed", "- editor", "- foreword", "- Translated by", "MBA",
-            "MSBA", "CRE", "- contributor", "- adaptation", "- adaption", "- read to", "- translator", "- Edited by",
-            "- author/editor"]
+            "MSBA", "CRE", "LCSW", "- contributor", "- adaptation", "- adaption", "- read to", "- translator", "- Edited by",
+            "- author/editor", "- preface"]
 
         #remove honorifics
         for prefix in honorifics:
             name = name.removeprefix(prefix + " ")
         
         for suffix in suffixes:
-            name = name.replace(suffix, " ")
-            name = name.replace(suffix.lower(), " ")
+            #name = name.replace(suffix, " ")
+            name = name.replace(" " + suffix.lower(), " ")
 
         #remove periods, extra spaces, then reassemble
         name=name.replace(".", " ")
@@ -117,7 +117,7 @@ class Book:
     def __cleanseSeries__(self, series:str):
         #remove The and Series
         prefixes=["The","A"]
-        suffixes=["Series", "Novel", "Novels", "Trilogy", "Saga"]
+        suffixes=["Series", "Novel", "Novels", "Trilogy", "Saga", "Mystery", "Mysteries"]
 
         for prefix in prefixes:
            series = series.removeprefix(prefix + " ")
@@ -170,8 +170,9 @@ class Book:
         return found
 
     def getJSONFastFillOut (self, jff_path=None, jff_template=None):
-        dry_run = self.config.get ("Config/flags/dry_run")
-        verbose = self.config.get ("Config/flags/verbose")
+        dry_run = bool(self.config.get ("Config/flags/dry_run"))
+        verbose = bool(self.config.get ("Config/flags/verbose"))
+        #self.includeSubtitle=bool(self.config.get("Config/flags/includeSubtitle"))
             
         #generating JsonFastFilleout file defaults
         if jff_path is None:

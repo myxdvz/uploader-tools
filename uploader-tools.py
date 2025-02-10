@@ -74,7 +74,7 @@ def tagDeleted(cfg, categories):
 def prep4upload(cfg, books):
     for bookid in books:
         book = loadBook(cfg, bookid)
-        tbook = TBook(cfg, book, "libation")
+        tbook = TBook(cfg, book, "calibre")
         tbook.go()
 
     return
@@ -217,6 +217,7 @@ if __name__ == "__main__":
             #assume config file is in a config file in the app path
             settingsConfig = os.path.join(os.path.dirname(os.path.realpath(sys.argv[0])),"config/settings.json") 
 
+        print(settingsConfig)
         if (os.path.exists(settingsConfig)):
             try:
                 #import config
