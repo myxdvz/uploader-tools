@@ -233,3 +233,17 @@ def promptChoice (prompt, choices):
         except ValueError as e:
             print (f"This is not a valid choice: {e}")
     
+def mlaTitleCase(title):
+    minor_words = ['a', 'an', 'and', 'but', 'nor', 'the', 'to', 'of', 'for', 'with', 'at', 'from', 'or', 'between', 'so', 'yet']
+    words = title.lower().split()
+    
+    result = [words[0].capitalize()]
+    for word in words[1:-1]:
+        if word in minor_words:
+            result.append(word)
+        else:
+            result.append(word.capitalize())
+    if len(words) > 1:
+        result.append(words[-1].capitalize())
+
+    return ' '.join(result)

@@ -3,6 +3,7 @@ from myx_audible import AudibleBook
 from myx_google import GoogleBook
 from myx_yaml import YamlBook
 from myx_libation import LibationBook
+from myx_libby import LibbyBook
 from myx_mam import MAMBook
 from myx_tor import TBook
 from myx_library import Library
@@ -12,12 +13,12 @@ import myx_utilities
 import pprint
 import os, sys, subprocess, shlex, re
 
-def loadBook(cfg, bookid):
-    metadata=cfg.get("Config/metadata")
+def loadBook(cfg, bookid, metadata):
+    #metadata=cfg.get("Config/metadata")
     output=cfg.get("Config/output_path")
     dryRun=cfg.get("Config/flags/dry_run")
     verbose=cfg.get("Config/flags/verbose")
-
+    
     match metadata:
         case "file":
             #yaml file
@@ -39,6 +40,10 @@ def loadBook(cfg, bookid):
             #epub metadata
             book = EpubBook(cfg)
 
+        case "libby":
+            #libby metadata
+            book = LibbyBook(cfg)
+
         case _:
             #default is audible
             book = AudibleBook(cfg)
@@ -56,9 +61,9 @@ def createJson(cfg, books):
 
     return
 
-def createTorrent(cfg, books):
+def createTorrent(cfg, books, metadata, library):
     for book in books:
-        tbook = TBook(cfg, book)
+        tbook = TBook(cfg, book, library)
         tbook.createTorrent(book)
         tbook.add2Client()
 
@@ -71,10 +76,11 @@ def tagDeleted(cfg, categories):
 
     return
 
-def prep4upload(cfg, books):
+def prep4upload(cfg, books, metadata, library):
     for bookid in books:
-        book = loadBook(cfg, bookid)
-        tbook = TBook(cfg, book, "calibre")
+        print (f"{cfg},{bookid},{metadata}")
+        book = loadBook(cfg, bookid, metadata)
+        tbook = TBook(cfg, book, library)
         tbook.go()
 
     return
@@ -158,11 +164,13 @@ def query (cfg, params):
 def main(cfg):
     action=myx_args.params.action
     params=myx_args.params.params
+    metadata=cfg.get("Config/metadata")
+    library=cfg.get("Config/library")
     dryRun=cfg.get("Config/flags/dry_run")
     verbose=cfg.get("Config/flags/verbose")
 
     #assume all parameters are from command line
-    if verbose: print (f"Action: {action}, Params: {params}, Dry Run: {dryRun}, Verbose: {verbose}")
+    if verbose: print (f"Action: {action}, Metadata: {metadata}, Params: {params}, Dry Run: {dryRun}, Verbose: {verbose}")
 
     match action:
         case "query":
@@ -176,12 +184,12 @@ def main(cfg):
         case "createTorrent":
             #creates a Torrent file from a folder
             #--book is a list of paths to upload folder
-            createTorrent(cfg, params)
+            createTorrent(cfg, params, metadata, library)
 
         case "prep4upload":
             #performs all steps in the torrent creation process (steps in config) for a list of books
             #--book is a list of M4B files from source, e.g. libation folder
-            prep4upload(cfg, params)
+            prep4upload(cfg, params, metadata, library)
 
         case "mylib2mam":
             #performs all steps in the torrent creation process for all books in the passed library file

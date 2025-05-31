@@ -67,7 +67,8 @@ class Library():
                 shutil.copy2(self.library_file, os.path.join(archive_path, archive_name))
                 #last scan is config or if none, last scan date of library file
                 if (self.lastscan is None):
-                    self.lastscan = os.path.getmtime (self.library_file)
+                    self.lastscan = os.path.getctime (self.library_file)
+                    #self.lastscan = int(datetime.strptime("2025-05-14 08:51:00", "%Y-%m-%d %H:%M:%S").timestamp())
 
     def scan(self):
         print (f"Scanning {self.files} from {self.library} since {time.localtime(self.lastscan)}...")
@@ -131,6 +132,7 @@ class Library():
             match self.library:
                 case "libation": book = LibationBook(self.config)
                 case "calibre": book = EpubBook(self.config)
+                case "libby": book = LibbyBook(self.config)
                 case _:
                     raise Exception(f"{self.library} library is not yet supported")
 

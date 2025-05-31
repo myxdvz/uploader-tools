@@ -47,6 +47,7 @@ class Book:
     delimiter:str="|" 
     source_path:str=""
     filename:str=""
+    files:list[str]=field(default_factory=list)
     metadataJson:str=""
     includeSubtitle:bool=False
     extension:str=""
@@ -191,7 +192,7 @@ class Book:
         #generate the mam json file for easy upload
         jff = {
             "isbn": self.__getMamIsbn__(),
-            "title": self.title,
+            "title": myx_utilities.mlaTitleCase(self.title),
             "description": self.description.replace("<p>", "<p><br/>"),
             "tags": self.__getMamTags__(self.delimiter),
             "thumbnail": self.cover,
@@ -247,3 +248,57 @@ class Book:
 
     def search (self, params):
         print ("If you're seeing this, then this feature has not been implemented for this Book")
+
+    def hardlinkFiles (self, destination, isHardlink=True):
+        #flags
+        dry_run=bool(self.config.get("Config/flags/dry_run"))
+        verbose=bool(self.config.get("Config/flags/verbose"))
+
+        if len(self.filename):
+            print (f"Hardlinking {self.filename}")
+            source = os.path.join (self.source_path, self.filename)
+            dest = os.path.join (destination, sanitize_filename(self.filename))
+
+            if verbose: print(f"Source: {source} >> Destination: {dest}")
+            if (os.path.exists(source) and (not os.path.exists(dest))):
+                try:
+                    #Hardlink or Copy
+                    if isHardlink:
+                        if verbose: print (f"Hardlinking {source} to {dest}")
+                        if not dry_run:
+                            os.link(source, dest)
+                    else:
+                        #copy
+                        if verbose: print (f"Copying {source} to {dest}")
+                        if not dry_run:
+                            shutil.copy2 (source, dest)                                
+                except Exception as e:
+                    print (f"\tFailed due to {e}")   
+
+        #this book might have multiple files
+        if len(self.files):
+            print (f"Hardlinking {len(self.files)} files...")
+            for f in self.files:
+                fn = f
+                if verbose: print (f"Filename: {fn}")
+                source = os.path.join (self.source_path, fn)
+                dest = os.path.join (destination, sanitize_filename(fn))
+
+                if verbose: print(f"Source: {source} >> Destination: {dest}")
+                if (os.path.exists(source) and (not os.path.exists(dest))):
+                    try:
+                        #Hardlink or Copy
+                        if isHardlink:
+                            if verbose: print (f"Hardlinking {source} to {dest}")
+                            if not dry_run:
+                                os.link(source, dest)
+                        else:
+                            #copy
+                            if verbose: print (f"Copying {source} to {dest}")
+                            if not dry_run:
+                                shutil.copy2 (source, dest)                                
+                    except Exception as e:
+                        print (f"\tFailed due to {e}")  
+
+        return 
+        

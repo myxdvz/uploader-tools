@@ -1,0 +1,422 @@
+/code/workspaces/uploader-tools/config/settings.json
+Action: scanLibrary, Params: ['libation'], Dry Run: 0, Verbose: 1
+Scanning ['**/*.m4b'] from libation since time.struct_time(tm_year=2025, tm_mon=5, tm_mday=14, tm_hour=8, tm_min=51, tm_sec=0, tm_wday=2, tm_yday=134, tm_isdst=0)...
+Looking for **/*.m4b from /data/media/audiobooks/libation
+File: /data/media/audiobooks/libation/James Patterson/The Commuter {Lizzy Caplan, Richard Schiff, Thomas Lennon, James Urbaniak, Sarah Steele, Terrence Terrell, Nicolas Dromard, Wolf Williams, full cast}/The Commuter [B0DY89R844].m4b >> Hash: fc81082e6683461fedb16dab97dc2d3c5b8aa5a37297e0a4cf9284985fb8c060
+Adding /data/media/audiobooks/libation/James Patterson/The Commuter {Lizzy Caplan, Richard Schiff, Thomas Lennon, James Urbaniak, Sarah Steele, Terrence Terrell, Nicolas Dromard, Wolf Williams, full cast}/The Commuter [B0DY89R844].m4b into the Catalog using key: fc81082e6683461fedb16dab97dc2d3c5b8aa5a37297e0a4cf9284985fb8c060
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/James Patterson/The Commuter {Lizzy Caplan, Richard Schiff, Thomas Lennon, James Urbaniak, Sarah Steele, Terrence Terrell, Nicolas Dromard, Wolf Williams, full cast}/The Commuter [B0DY89R844].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/James Patterson/The Commuter {Lizzy Caplan, Richard Schiff, Thomas Lennon, James Urbaniak, Sarah Steele, Terrence Terrell, Nicolas Dromard, Wolf Williams, full cast}/The Commuter [B0DY89R844].metadata.json
+File: /data/media/audiobooks/libation/Disney Books/The Enchantment {Disney Publishing Worldwide}/The Enchantment [B0CKKHS278].m4b >> Hash: 8ad599ce6516157bccecac1a52eb6b8341183ccd318dba3f12f1a4f9cdb530c5
+Adding /data/media/audiobooks/libation/Disney Books/The Enchantment {Disney Publishing Worldwide}/The Enchantment [B0CKKHS278].m4b into the Catalog using key: 8ad599ce6516157bccecac1a52eb6b8341183ccd318dba3f12f1a4f9cdb530c5
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Disney Books/The Enchantment {Disney Publishing Worldwide}/The Enchantment [B0CKKHS278].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Disney Books/The Enchantment {Disney Publishing Worldwide}/The Enchantment [B0CKKHS278].metadata.json
+File: /data/media/audiobooks/libation/Disney Press/Disney Princess {Kelly Marie Tran, full cast}/Disney Princess [B0DY1WJJGV].m4b >> Hash: 1c1b60a8d485fe701689abe4c01e615a2eebf197ee4f36d0d890d4fc424ed839
+Adding /data/media/audiobooks/libation/Disney Press/Disney Princess {Kelly Marie Tran, full cast}/Disney Princess [B0DY1WJJGV].m4b into the Catalog using key: 1c1b60a8d485fe701689abe4c01e615a2eebf197ee4f36d0d890d4fc424ed839
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Disney Press/Disney Princess {Kelly Marie Tran, full cast}/Disney Princess [B0DY1WJJGV].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Disney Press/Disney Princess {Kelly Marie Tran, full cast}/Disney Princess [B0DY1WJJGV].metadata.json
+File: /data/media/audiobooks/libation/Sarah A. Denzil/Secret Sister {Jessica Gunning, Sacha Dhawan, Joanne Froggatt, Nathaniel Curtis, Hopi Grace}/Secret Sister [B0F3JYCH2F].m4b >> Hash: 84163f59f5c88cf4d001c1feb2dfd811f38b419bc33e0b0229c2caf4e6e52cac
+Adding /data/media/audiobooks/libation/Sarah A. Denzil/Secret Sister {Jessica Gunning, Sacha Dhawan, Joanne Froggatt, Nathaniel Curtis, Hopi Grace}/Secret Sister [B0F3JYCH2F].m4b into the Catalog using key: 84163f59f5c88cf4d001c1feb2dfd811f38b419bc33e0b0229c2caf4e6e52cac
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Sarah A. Denzil/Secret Sister {Jessica Gunning, Sacha Dhawan, Joanne Froggatt, Nathaniel Curtis, Hopi Grace}/Secret Sister [B0F3JYCH2F].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Sarah A. Denzil/Secret Sister {Jessica Gunning, Sacha Dhawan, Joanne Froggatt, Nathaniel Curtis, Hopi Grace}/Secret Sister [B0F3JYCH2F].metadata.json
+File: /data/media/audiobooks/libation/Jennifer Cognard-Black/Margaret Atwood {Jennifer Cognard-Black}/Margaret Atwood [B0F4L5D494].m4b >> Hash: 0cf8024a8cd0ba346ddcbd1e9522d280ea78f5a196a6c4516a4208e216e41f72
+Adding /data/media/audiobooks/libation/Jennifer Cognard-Black/Margaret Atwood {Jennifer Cognard-Black}/Margaret Atwood [B0F4L5D494].m4b into the Catalog using key: 0cf8024a8cd0ba346ddcbd1e9522d280ea78f5a196a6c4516a4208e216e41f72
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Jennifer Cognard-Black/Margaret Atwood {Jennifer Cognard-Black}/Margaret Atwood [B0F4L5D494].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Jennifer Cognard-Black/Margaret Atwood {Jennifer Cognard-Black}/Margaret Atwood [B0F4L5D494].metadata.json
+File: /data/media/audiobooks/libation/Octavia Goredema/Brand Yourself for Success {Octavia Goredema}/Brand Yourself for Success [B0DX3P2YMB].m4b >> Hash: e27f41b9ae3e44325db8c2734db9ba4ceea5c1029946d1a25fdcc3f8762238c4
+Adding /data/media/audiobooks/libation/Octavia Goredema/Brand Yourself for Success {Octavia Goredema}/Brand Yourself for Success [B0DX3P2YMB].m4b into the Catalog using key: e27f41b9ae3e44325db8c2734db9ba4ceea5c1029946d1a25fdcc3f8762238c4
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Octavia Goredema/Brand Yourself for Success {Octavia Goredema}/Brand Yourself for Success [B0DX3P2YMB].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Octavia Goredema/Brand Yourself for Success {Octavia Goredema}/Brand Yourself for Success [B0DX3P2YMB].metadata.json
+File: /data/media/audiobooks/libation/Michael Buckley/N.E.R.D.S/N.E.R.D.S. #5 - NERDS 5 {Johnny Heller}/NERDS 5 [B00FW5LJJE].m4b >> Hash: de068b10bc53819c8b0c40ff934287da712affa88730a928a1957e5224e74f1f
+Adding /data/media/audiobooks/libation/Michael Buckley/N.E.R.D.S/N.E.R.D.S. #5 - NERDS 5 {Johnny Heller}/NERDS 5 [B00FW5LJJE].m4b into the Catalog using key: de068b10bc53819c8b0c40ff934287da712affa88730a928a1957e5224e74f1f
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Michael Buckley/N.E.R.D.S/N.E.R.D.S. #5 - NERDS 5 {Johnny Heller}/NERDS 5 [B00FW5LJJE].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Michael Buckley/N.E.R.D.S/N.E.R.D.S. #5 - NERDS 5 {Johnny Heller}/NERDS 5 [B00FW5LJJE].metadata.json
+File: /data/media/audiobooks/libation/Cassius Lange/Battleworld Series/Battleworld Series #1 - Battle World 1 {Todd Menesses}/Battle World 1 [B0B336HJQ8].m4b >> Hash: b8e35f643354ff76f831c2b52487c4acdb27018234859b28ad28f758237ed281
+Adding /data/media/audiobooks/libation/Cassius Lange/Battleworld Series/Battleworld Series #1 - Battle World 1 {Todd Menesses}/Battle World 1 [B0B336HJQ8].m4b into the Catalog using key: b8e35f643354ff76f831c2b52487c4acdb27018234859b28ad28f758237ed281
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Cassius Lange/Battleworld Series/Battleworld Series #1 - Battle World 1 {Todd Menesses}/Battle World 1 [B0B336HJQ8].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Cassius Lange/Battleworld Series/Battleworld Series #1 - Battle World 1 {Todd Menesses}/Battle World 1 [B0B336HJQ8].metadata.json
+File: /data/media/audiobooks/libation/Layla Hagen/Leblanc Brothers/Leblanc Brothers #4 - The Match {Erin Mallon, Christian Fox}/The Match [B0F853ZRBC].m4b >> Hash: 06d7b3a62321aafe7334befc9f7c5ac1d334a1d920b298b6c5ccd61760394117
+Adding /data/media/audiobooks/libation/Layla Hagen/Leblanc Brothers/Leblanc Brothers #4 - The Match {Erin Mallon, Christian Fox}/The Match [B0F853ZRBC].m4b into the Catalog using key: 06d7b3a62321aafe7334befc9f7c5ac1d334a1d920b298b6c5ccd61760394117
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Layla Hagen/Leblanc Brothers/Leblanc Brothers #4 - The Match {Erin Mallon, Christian Fox}/The Match [B0F853ZRBC].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Layla Hagen/Leblanc Brothers/Leblanc Brothers #4 - The Match {Erin Mallon, Christian Fox}/The Match [B0F853ZRBC].metadata.json
+File: /data/media/audiobooks/libation/B. Love/The Mister Series/The Mister Series #3 - Mister Jeweler {Opal Black, Winston James}/Mister Jeweler [B0BFC6D7F4].m4b >> Hash: 68f9083d324fbdc430b206d9fc0e7c8d02e7e3266092a29867a79edee7bf4e15
+Adding /data/media/audiobooks/libation/B. Love/The Mister Series/The Mister Series #3 - Mister Jeweler {Opal Black, Winston James}/Mister Jeweler [B0BFC6D7F4].m4b into the Catalog using key: 68f9083d324fbdc430b206d9fc0e7c8d02e7e3266092a29867a79edee7bf4e15
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/B. Love/The Mister Series/The Mister Series #3 - Mister Jeweler {Opal Black, Winston James}/Mister Jeweler [B0BFC6D7F4].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/B. Love/The Mister Series/The Mister Series #3 - Mister Jeweler {Opal Black, Winston James}/Mister Jeweler [B0BFC6D7F4].metadata.json
+File: /data/media/audiobooks/libation/Karin Slaughter/The Twisted Women's Book Club {January LaVoy, Andi Arndt, Saskia Maarleveld, Kathleen Early, full cast}/The Twisted Women's Book Club [B0DPR5N5J5].m4b >> Hash: 3a8fe5bbd1b11eee5ac1ca5e12b3ea9e31a377644325ba9e626f76b5a8b69a90
+Adding /data/media/audiobooks/libation/Karin Slaughter/The Twisted Women's Book Club {January LaVoy, Andi Arndt, Saskia Maarleveld, Kathleen Early, full cast}/The Twisted Women's Book Club [B0DPR5N5J5].m4b into the Catalog using key: 3a8fe5bbd1b11eee5ac1ca5e12b3ea9e31a377644325ba9e626f76b5a8b69a90
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Karin Slaughter/The Twisted Women's Book Club {January LaVoy, Andi Arndt, Saskia Maarleveld, Kathleen Early, full cast}/The Twisted Women's Book Club [B0DPR5N5J5].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Karin Slaughter/The Twisted Women's Book Club {January LaVoy, Andi Arndt, Saskia Maarleveld, Kathleen Early, full cast}/The Twisted Women's Book Club [B0DPR5N5J5].metadata.json
+File: /data/media/audiobooks/libation/Scott Cook/Scott Jarvis Private Investigator/Scott Jarvis Private Investigator #15 - It Comes Not from Your Enemies {Dave Alexander}/It Comes Not from Your Enemies [B0F7ZX2D5N].m4b >> Hash: 4ee4c272f22ac60da69ad8358ad24c1e034e9b40e62d5b99edfa82a39a8b2fbb
+Adding /data/media/audiobooks/libation/Scott Cook/Scott Jarvis Private Investigator/Scott Jarvis Private Investigator #15 - It Comes Not from Your Enemies {Dave Alexander}/It Comes Not from Your Enemies [B0F7ZX2D5N].m4b into the Catalog using key: 4ee4c272f22ac60da69ad8358ad24c1e034e9b40e62d5b99edfa82a39a8b2fbb
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Scott Cook/Scott Jarvis Private Investigator/Scott Jarvis Private Investigator #15 - It Comes Not from Your Enemies {Dave Alexander}/It Comes Not from Your Enemies [B0F7ZX2D5N].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Scott Cook/Scott Jarvis Private Investigator/Scott Jarvis Private Investigator #15 - It Comes Not from Your Enemies {Dave Alexander}/It Comes Not from Your Enemies [B0F7ZX2D5N].metadata.json
+File: /data/media/audiobooks/libation/Scott Cook/Fightin'est Ship in WWII series/Fightin'est Ship in WWII series #4 - Wings of Valor {Dave Alexander}/Wings of Valor [B0D9HTYFNH].m4b >> Hash: 4fa6c193d35cbdd0d28bc40a1793029169596e932319c89779d1a0ea289de5c8
+Adding /data/media/audiobooks/libation/Scott Cook/Fightin'est Ship in WWII series/Fightin'est Ship in WWII series #4 - Wings of Valor {Dave Alexander}/Wings of Valor [B0D9HTYFNH].m4b into the Catalog using key: 4fa6c193d35cbdd0d28bc40a1793029169596e932319c89779d1a0ea289de5c8
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Scott Cook/Fightin'est Ship in WWII series/Fightin'est Ship in WWII series #4 - Wings of Valor {Dave Alexander}/Wings of Valor [B0D9HTYFNH].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Scott Cook/Fightin'est Ship in WWII series/Fightin'est Ship in WWII series #4 - Wings of Valor {Dave Alexander}/Wings of Valor [B0D9HTYFNH].metadata.json
+File: /data/media/audiobooks/libation/Laura Scott/Sullivan K9 Search and Rescue/Sullivan K9 Search and Rescue #4 - Scent of Fear {Garrett Kiesel}/Scent of Fear [B0F8RFBB75].m4b >> Hash: c0f49fc67eee0403d563b8e77b4fea90133dbd503a7dec31939c68be1ca5e561
+Adding /data/media/audiobooks/libation/Laura Scott/Sullivan K9 Search and Rescue/Sullivan K9 Search and Rescue #4 - Scent of Fear {Garrett Kiesel}/Scent of Fear [B0F8RFBB75].m4b into the Catalog using key: c0f49fc67eee0403d563b8e77b4fea90133dbd503a7dec31939c68be1ca5e561
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Laura Scott/Sullivan K9 Search and Rescue/Sullivan K9 Search and Rescue #4 - Scent of Fear {Garrett Kiesel}/Scent of Fear [B0F8RFBB75].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Laura Scott/Sullivan K9 Search and Rescue/Sullivan K9 Search and Rescue #4 - Scent of Fear {Garrett Kiesel}/Scent of Fear [B0F8RFBB75].metadata.json
+File: /data/media/audiobooks/libation/Sedona Ashe/Just Walk It Off/Just Walk It Off #1 - Urn My Love {Bridget Bordeaux, Jake Bordeaux}/Urn My Love [B0D9R1QS53].m4b >> Hash: aaa3734f71b9966a05f3524ef5de8a62466eb972db2a726ef70633551f4440e6
+Adding /data/media/audiobooks/libation/Sedona Ashe/Just Walk It Off/Just Walk It Off #1 - Urn My Love {Bridget Bordeaux, Jake Bordeaux}/Urn My Love [B0D9R1QS53].m4b into the Catalog using key: aaa3734f71b9966a05f3524ef5de8a62466eb972db2a726ef70633551f4440e6
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Sedona Ashe/Just Walk It Off/Just Walk It Off #1 - Urn My Love {Bridget Bordeaux, Jake Bordeaux}/Urn My Love [B0D9R1QS53].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Sedona Ashe/Just Walk It Off/Just Walk It Off #1 - Urn My Love {Bridget Bordeaux, Jake Bordeaux}/Urn My Love [B0D9R1QS53].metadata.json
+File: /data/media/audiobooks/libation/Jennifer Keishin Armstrong/Seinfeldia {Christina Delaine}/Seinfeldia [B01HIHQZTC].m4b >> Hash: 8e4677b70c5eb10e64c2ec58c57741e78cb10036d4c9163f3044fe036c803564
+Adding /data/media/audiobooks/libation/Jennifer Keishin Armstrong/Seinfeldia {Christina Delaine}/Seinfeldia [B01HIHQZTC].m4b into the Catalog using key: 8e4677b70c5eb10e64c2ec58c57741e78cb10036d4c9163f3044fe036c803564
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Jennifer Keishin Armstrong/Seinfeldia {Christina Delaine}/Seinfeldia [B01HIHQZTC].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Jennifer Keishin Armstrong/Seinfeldia {Christina Delaine}/Seinfeldia [B01HIHQZTC].metadata.json
+File: /data/media/audiobooks/libation/Fred Stoller/My Seinfeld Year {Fred Stoller}/My Seinfeld Year [B011MV3Y4E].m4b >> Hash: 8b71e8a6f02c9afddaee4938fca7ebc26855e418e87ea8fd6d69254b797a10b1
+Adding /data/media/audiobooks/libation/Fred Stoller/My Seinfeld Year {Fred Stoller}/My Seinfeld Year [B011MV3Y4E].m4b into the Catalog using key: 8b71e8a6f02c9afddaee4938fca7ebc26855e418e87ea8fd6d69254b797a10b1
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Fred Stoller/My Seinfeld Year {Fred Stoller}/My Seinfeld Year [B011MV3Y4E].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Fred Stoller/My Seinfeld Year {Fred Stoller}/My Seinfeld Year [B011MV3Y4E].metadata.json
+File: /data/media/audiobooks/libation/Richard Brian Davis - editor/Blackwell Philosophy and Pop Culture Series/Blackwell Philosophy and Pop Culture Series #0 - Disney and Philosophy {Emily Ellet, Al Kessel}/Disney and Philosophy [1705213820].m4b >> Hash: 6fbae401fa4dc188235ba6ad0c3d4b1758a1e827bc64e22eb9872ee47e9f51c9
+Adding /data/media/audiobooks/libation/Richard Brian Davis - editor/Blackwell Philosophy and Pop Culture Series/Blackwell Philosophy and Pop Culture Series #0 - Disney and Philosophy {Emily Ellet, Al Kessel}/Disney and Philosophy [1705213820].m4b into the Catalog using key: 6fbae401fa4dc188235ba6ad0c3d4b1758a1e827bc64e22eb9872ee47e9f51c9
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Richard Brian Davis - editor/Blackwell Philosophy and Pop Culture Series/Blackwell Philosophy and Pop Culture Series #0 - Disney and Philosophy {Emily Ellet, Al Kessel}/Disney and Philosophy [1705213820].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Richard Brian Davis - editor/Blackwell Philosophy and Pop Culture Series/Blackwell Philosophy and Pop Culture Series #0 - Disney and Philosophy {Emily Ellet, Al Kessel}/Disney and Philosophy [1705213820].metadata.json
+File: /data/media/audiobooks/libation/Adrian Molina/Disney Classic Stories {Disney Publishing Worldwide}/Disney Classic Stories [B0DKKKQ1DF].m4b >> Hash: a6298c64ce94cfbe8154a9f05d72d90576d4603207b5c6625d606cbecc5a4618
+Adding /data/media/audiobooks/libation/Adrian Molina/Disney Classic Stories {Disney Publishing Worldwide}/Disney Classic Stories [B0DKKKQ1DF].m4b into the Catalog using key: a6298c64ce94cfbe8154a9f05d72d90576d4603207b5c6625d606cbecc5a4618
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Adrian Molina/Disney Classic Stories {Disney Publishing Worldwide}/Disney Classic Stories [B0DKKKQ1DF].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Adrian Molina/Disney Classic Stories {Disney Publishing Worldwide}/Disney Classic Stories [B0DKKKQ1DF].metadata.json
+File: /data/media/audiobooks/libation/Sarah Page/Billionaire for Sale {Cush Jumbo, full cast}/Billionaire for Sale [B0F5ZM2WM3].m4b >> Hash: b65fb47d26bb7802769773b57fd5ffad3d096e4243c21646ebdb389f92bc0e9b
+Adding /data/media/audiobooks/libation/Sarah Page/Billionaire for Sale {Cush Jumbo, full cast}/Billionaire for Sale [B0F5ZM2WM3].m4b into the Catalog using key: b65fb47d26bb7802769773b57fd5ffad3d096e4243c21646ebdb389f92bc0e9b
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Sarah Page/Billionaire for Sale {Cush Jumbo, full cast}/Billionaire for Sale [B0F5ZM2WM3].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Sarah Page/Billionaire for Sale {Cush Jumbo, full cast}/Billionaire for Sale [B0F5ZM2WM3].metadata.json
+File: /data/media/audiobooks/libation/Jeffrey M Jones/The Two Witnesses/The Two Witnesses #1 - Kingdom {Emily Woo Zeller}/Kingdom [B0F8CV8F59].m4b >> Hash: b20409bd149d155f0d6c2c08917501dbdde19730f729b95182c498137a200388
+Adding /data/media/audiobooks/libation/Jeffrey M Jones/The Two Witnesses/The Two Witnesses #1 - Kingdom {Emily Woo Zeller}/Kingdom [B0F8CV8F59].m4b into the Catalog using key: b20409bd149d155f0d6c2c08917501dbdde19730f729b95182c498137a200388
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Jeffrey M Jones/The Two Witnesses/The Two Witnesses #1 - Kingdom {Emily Woo Zeller}/Kingdom [B0F8CV8F59].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Jeffrey M Jones/The Two Witnesses/The Two Witnesses #1 - Kingdom {Emily Woo Zeller}/Kingdom [B0F8CV8F59].metadata.json
+File: /data/media/audiobooks/libation/Bonnie Hardy/Welcome to Lily Rock Holiday Mystery/Welcome to Lily Rock Holiday Mystery #2 - All Aboard for Murder {Mallory Fuccella}/All Aboard for Murder [B0F6G4G5CY].m4b >> Hash: 2723d47bb71f57b057f6c8e85e8c02d04ea2078fe0697355c944311b8852e3d6
+Adding /data/media/audiobooks/libation/Bonnie Hardy/Welcome to Lily Rock Holiday Mystery/Welcome to Lily Rock Holiday Mystery #2 - All Aboard for Murder {Mallory Fuccella}/All Aboard for Murder [B0F6G4G5CY].m4b into the Catalog using key: 2723d47bb71f57b057f6c8e85e8c02d04ea2078fe0697355c944311b8852e3d6
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Bonnie Hardy/Welcome to Lily Rock Holiday Mystery/Welcome to Lily Rock Holiday Mystery #2 - All Aboard for Murder {Mallory Fuccella}/All Aboard for Murder [B0F6G4G5CY].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Bonnie Hardy/Welcome to Lily Rock Holiday Mystery/Welcome to Lily Rock Holiday Mystery #2 - All Aboard for Murder {Mallory Fuccella}/All Aboard for Murder [B0F6G4G5CY].metadata.json
+File: /data/media/audiobooks/libation/ITN Productions/Beyond Suspicion {Yinka Bokinni}/Beyond Suspicion [B0DYK8DGZG].m4b >> Hash: 89f629524ea1e0ed1d27cf90bb3eacf46e2a661d3ffea5b6ee5c475f9dc67140
+Adding /data/media/audiobooks/libation/ITN Productions/Beyond Suspicion {Yinka Bokinni}/Beyond Suspicion [B0DYK8DGZG].m4b into the Catalog using key: 89f629524ea1e0ed1d27cf90bb3eacf46e2a661d3ffea5b6ee5c475f9dc67140
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/ITN Productions/Beyond Suspicion {Yinka Bokinni}/Beyond Suspicion [B0DYK8DGZG].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/ITN Productions/Beyond Suspicion {Yinka Bokinni}/Beyond Suspicion [B0DYK8DGZG].metadata.json
+File: /data/media/audiobooks/libation/Dwayne Alexander Smith/Kingsland {Winston Duke, Yara Martinez, Joniece Abbott-Pratt, Jabari Banks, Jason George, Joe Morton, Dion Graham, full cast}/Kingsland [B0F63PVTKS].m4b >> Hash: 7f8f30c985753ddc8d2239cc4528cdd14f760e9dc92784fb2d0529f90722ef26
+Adding /data/media/audiobooks/libation/Dwayne Alexander Smith/Kingsland {Winston Duke, Yara Martinez, Joniece Abbott-Pratt, Jabari Banks, Jason George, Joe Morton, Dion Graham, full cast}/Kingsland [B0F63PVTKS].m4b into the Catalog using key: 7f8f30c985753ddc8d2239cc4528cdd14f760e9dc92784fb2d0529f90722ef26
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Dwayne Alexander Smith/Kingsland {Winston Duke, Yara Martinez, Joniece Abbott-Pratt, Jabari Banks, Jason George, Joe Morton, Dion Graham, full cast}/Kingsland [B0F63PVTKS].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Dwayne Alexander Smith/Kingsland {Winston Duke, Yara Martinez, Joniece Abbott-Pratt, Jabari Banks, Jason George, Joe Morton, Dion Graham, full cast}/Kingsland [B0F63PVTKS].metadata.json
+File: /data/media/audiobooks/libation/John Mankiewicz/Jack Bergin/Jack Bergin #2 - The Big Fix {Jon Hamm, Ana de la Reguera, Alia Shawkat, Omar Epps, Erin Moriarty, Sosie Bacon, John Slattery, Full Cast}/The Big Fix [B0DTKV2H8J].m4b >> Hash: 6b699b6bceb9840819ac5e4312f17203754a8c5f97c9e4f9cbb742e6664856da
+Adding /data/media/audiobooks/libation/John Mankiewicz/Jack Bergin/Jack Bergin #2 - The Big Fix {Jon Hamm, Ana de la Reguera, Alia Shawkat, Omar Epps, Erin Moriarty, Sosie Bacon, John Slattery, Full Cast}/The Big Fix [B0DTKV2H8J].m4b into the Catalog using key: 6b699b6bceb9840819ac5e4312f17203754a8c5f97c9e4f9cbb742e6664856da
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/John Mankiewicz/Jack Bergin/Jack Bergin #2 - The Big Fix {Jon Hamm, Ana de la Reguera, Alia Shawkat, Omar Epps, Erin Moriarty, Sosie Bacon, John Slattery, Full Cast}/The Big Fix [B0DTKV2H8J].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/John Mankiewicz/Jack Bergin/Jack Bergin #2 - The Big Fix {Jon Hamm, Ana de la Reguera, Alia Shawkat, Omar Epps, Erin Moriarty, Sosie Bacon, John Slattery, Full Cast}/The Big Fix [B0DTKV2H8J].metadata.json
+File: /data/media/audiobooks/libation/Rafael Walker/James Baldwin {Rafael Walker}/James Baldwin [B0DSCHZSLV].m4b >> Hash: 9ff8636eea785fe4979fd69335e35e59936cbc17abb92dab422b2655c7097234
+Adding /data/media/audiobooks/libation/Rafael Walker/James Baldwin {Rafael Walker}/James Baldwin [B0DSCHZSLV].m4b into the Catalog using key: 9ff8636eea785fe4979fd69335e35e59936cbc17abb92dab422b2655c7097234
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Rafael Walker/James Baldwin {Rafael Walker}/James Baldwin [B0DSCHZSLV].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Rafael Walker/James Baldwin {Rafael Walker}/James Baldwin [B0DSCHZSLV].metadata.json
+File: /data/media/audiobooks/libation/Michael Stewart Foley/The Story of Grunge {Michael Stewart Foley}/The Story of Grunge [B0DMFVMRGX].m4b >> Hash: f837b11af8b41e358f54d5d6462e0ffd3b521450a41060c9f51b479140bf0e97
+Adding /data/media/audiobooks/libation/Michael Stewart Foley/The Story of Grunge {Michael Stewart Foley}/The Story of Grunge [B0DMFVMRGX].m4b into the Catalog using key: f837b11af8b41e358f54d5d6462e0ffd3b521450a41060c9f51b479140bf0e97
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Michael Stewart Foley/The Story of Grunge {Michael Stewart Foley}/The Story of Grunge [B0DMFVMRGX].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Michael Stewart Foley/The Story of Grunge {Michael Stewart Foley}/The Story of Grunge [B0DMFVMRGX].metadata.json
+File: /data/media/audiobooks/libation/Sherri L Smith/Teenage Wastelands {Sherri L Smith}/Teenage Wastelands [B0DYWSR7N3].m4b >> Hash: d2ca87d0883940372a712b34a150d92b78dc8cf8d502d709b0fb51811077e489
+Adding /data/media/audiobooks/libation/Sherri L Smith/Teenage Wastelands {Sherri L Smith}/Teenage Wastelands [B0DYWSR7N3].m4b into the Catalog using key: d2ca87d0883940372a712b34a150d92b78dc8cf8d502d709b0fb51811077e489
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Sherri L Smith/Teenage Wastelands {Sherri L Smith}/Teenage Wastelands [B0DYWSR7N3].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Sherri L Smith/Teenage Wastelands {Sherri L Smith}/Teenage Wastelands [B0DYWSR7N3].metadata.json
+File: /data/media/audiobooks/libation/Kathleen Day/Understanding Bank Crises and Contagion {Kathleen Day}/Understanding Bank Crises and Contagion [B0DJ3HHYB5].m4b >> Hash: e75d778ae455ceb51a93e8e247cd2d98f55547db3ef9981dc688c8b03c2bf975
+Adding /data/media/audiobooks/libation/Kathleen Day/Understanding Bank Crises and Contagion {Kathleen Day}/Understanding Bank Crises and Contagion [B0DJ3HHYB5].m4b into the Catalog using key: e75d778ae455ceb51a93e8e247cd2d98f55547db3ef9981dc688c8b03c2bf975
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Kathleen Day/Understanding Bank Crises and Contagion {Kathleen Day}/Understanding Bank Crises and Contagion [B0DJ3HHYB5].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Kathleen Day/Understanding Bank Crises and Contagion {Kathleen Day}/Understanding Bank Crises and Contagion [B0DJ3HHYB5].metadata.json
+File: /data/media/audiobooks/libation/Sheila Liming/The Great Gatsby at 100 {Sheila Liming}/The Great Gatsby at 100 [B0F3DV7FBX].m4b >> Hash: 8fad29b3970818f7f0e83f91de87412a68618a8e33bf779e90cae674f028f7b1
+Adding /data/media/audiobooks/libation/Sheila Liming/The Great Gatsby at 100 {Sheila Liming}/The Great Gatsby at 100 [B0F3DV7FBX].m4b into the Catalog using key: 8fad29b3970818f7f0e83f91de87412a68618a8e33bf779e90cae674f028f7b1
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Sheila Liming/The Great Gatsby at 100 {Sheila Liming}/The Great Gatsby at 100 [B0F3DV7FBX].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Sheila Liming/The Great Gatsby at 100 {Sheila Liming}/The Great Gatsby at 100 [B0F3DV7FBX].metadata.json
+File: /data/media/audiobooks/libation/Edward Lengel/The Fall of Saigon {Edward Lengel}/The Fall of Saigon [B0F3LVDBFM].m4b >> Hash: 68073ca43c994c9fdc7ac0858b09b9aa882993ba96f541b6bd90b514faaa5b7d
+Adding /data/media/audiobooks/libation/Edward Lengel/The Fall of Saigon {Edward Lengel}/The Fall of Saigon [B0F3LVDBFM].m4b into the Catalog using key: 68073ca43c994c9fdc7ac0858b09b9aa882993ba96f541b6bd90b514faaa5b7d
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Edward Lengel/The Fall of Saigon {Edward Lengel}/The Fall of Saigon [B0F3LVDBFM].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Edward Lengel/The Fall of Saigon {Edward Lengel}/The Fall of Saigon [B0F3LVDBFM].metadata.json
+File: /data/media/audiobooks/libation/Kellie Carter Jackson/The Abolitionists {Kellie Carter Jackson}/The Abolitionists [B0DS41TRZH].m4b >> Hash: 4e4dcb314f24272fb0460e579e2aaac8e687514b422ed4fb599530a52c3812df
+Adding /data/media/audiobooks/libation/Kellie Carter Jackson/The Abolitionists {Kellie Carter Jackson}/The Abolitionists [B0DS41TRZH].m4b into the Catalog using key: 4e4dcb314f24272fb0460e579e2aaac8e687514b422ed4fb599530a52c3812df
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Kellie Carter Jackson/The Abolitionists {Kellie Carter Jackson}/The Abolitionists [B0DS41TRZH].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Kellie Carter Jackson/The Abolitionists {Kellie Carter Jackson}/The Abolitionists [B0DS41TRZH].metadata.json
+File: /data/media/audiobooks/libation/Leilani Basham/Great Heroes and Heroines of Hawaiian Heritage {Leilani Basham}/Great Heroes and Heroines of Hawaiian Heritage [B0F63ZHXXC].m4b >> Hash: c885663e9e76ef8aa52b1efa81fa90c1eebb210edb1a12e2609eb9363311a5d1
+Adding /data/media/audiobooks/libation/Leilani Basham/Great Heroes and Heroines of Hawaiian Heritage {Leilani Basham}/Great Heroes and Heroines of Hawaiian Heritage [B0F63ZHXXC].m4b into the Catalog using key: c885663e9e76ef8aa52b1efa81fa90c1eebb210edb1a12e2609eb9363311a5d1
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Leilani Basham/Great Heroes and Heroines of Hawaiian Heritage {Leilani Basham}/Great Heroes and Heroines of Hawaiian Heritage [B0F63ZHXXC].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Leilani Basham/Great Heroes and Heroines of Hawaiian Heritage {Leilani Basham}/Great Heroes and Heroines of Hawaiian Heritage [B0F63ZHXXC].metadata.json
+File: /data/media/audiobooks/libation/Devin Hunter/The Trapped in Battle Royale Series/The Trapped in Battle Royale Series #3 - Betrayal at Salty Springs {Ramon De Ocampo}/Betrayal at Salty Springs [1982576286].m4b >> Hash: df64fae7ee2922a801ee52efedbde53c02009e38e7edaa34f56331a6e3139bd8
+Adding /data/media/audiobooks/libation/Devin Hunter/The Trapped in Battle Royale Series/The Trapped in Battle Royale Series #3 - Betrayal at Salty Springs {Ramon De Ocampo}/Betrayal at Salty Springs [1982576286].m4b into the Catalog using key: df64fae7ee2922a801ee52efedbde53c02009e38e7edaa34f56331a6e3139bd8
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Devin Hunter/The Trapped in Battle Royale Series/The Trapped in Battle Royale Series #3 - Betrayal at Salty Springs {Ramon De Ocampo}/Betrayal at Salty Springs [1982576286].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Devin Hunter/The Trapped in Battle Royale Series/The Trapped in Battle Royale Series #3 - Betrayal at Salty Springs {Ramon De Ocampo}/Betrayal at Salty Springs [1982576286].metadata.json
+File: /data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #1 - His Absolute Conditions {Lauren Sweet}/His Absolute Conditions [B00BLOPFHM].m4b >> Hash: a6fddcb9a9b5e29b4d9ee1e00c5dd164476bb7ecc19716e7c33beec09989edf0
+Adding /data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #1 - His Absolute Conditions {Lauren Sweet}/His Absolute Conditions [B00BLOPFHM].m4b into the Catalog using key: a6fddcb9a9b5e29b4d9ee1e00c5dd164476bb7ecc19716e7c33beec09989edf0
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #1 - His Absolute Conditions {Lauren Sweet}/His Absolute Conditions [B00BLOPFHM].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #1 - His Absolute Conditions {Lauren Sweet}/His Absolute Conditions [B00BLOPFHM].metadata.json
+File: /data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #2 - His Absolute Requirements {Lauren Sweet}/His Absolute Requirements [B00CAXTJW0].m4b >> Hash: c4d92054aa868d6cc70046782af38d517c62e4e9f8d2f41cdf7d8dfddd1cdf77
+Adding /data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #2 - His Absolute Requirements {Lauren Sweet}/His Absolute Requirements [B00CAXTJW0].m4b into the Catalog using key: c4d92054aa868d6cc70046782af38d517c62e4e9f8d2f41cdf7d8dfddd1cdf77
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #2 - His Absolute Requirements {Lauren Sweet}/His Absolute Requirements [B00CAXTJW0].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #2 - His Absolute Requirements {Lauren Sweet}/His Absolute Requirements [B00CAXTJW0].metadata.json
+File: /data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #3 - His Absolute Instructions {Lauren Sweet}/His Absolute Instructions [B00E8RU8GM].m4b >> Hash: 5e7276aa601b46eb2500f2915bdf459bb3318aaf88effa9b22ca3b869371038f
+Adding /data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #3 - His Absolute Instructions {Lauren Sweet}/His Absolute Instructions [B00E8RU8GM].m4b into the Catalog using key: 5e7276aa601b46eb2500f2915bdf459bb3318aaf88effa9b22ca3b869371038f
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #3 - His Absolute Instructions {Lauren Sweet}/His Absolute Instructions [B00E8RU8GM].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #3 - His Absolute Instructions {Lauren Sweet}/His Absolute Instructions [B00E8RU8GM].metadata.json
+File: /data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #4 - His Absolute Orders {Lauren Sweet}/His Absolute Orders [B00FOTQ8P8].m4b >> Hash: 3fd77b643ce2db74927db91b3bddcf35ef9482180bf3efb473a06395c5dbe4d1
+Adding /data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #4 - His Absolute Orders {Lauren Sweet}/His Absolute Orders [B00FOTQ8P8].m4b into the Catalog using key: 3fd77b643ce2db74927db91b3bddcf35ef9482180bf3efb473a06395c5dbe4d1
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #4 - His Absolute Orders {Lauren Sweet}/His Absolute Orders [B00FOTQ8P8].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #4 - His Absolute Orders {Lauren Sweet}/His Absolute Orders [B00FOTQ8P8].metadata.json
+File: /data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #5 - His Absolute Desires {Lauren Sweet}/His Absolute Desires [B00FVXEJHQ].m4b >> Hash: e3318b6b714559899d7a26a0ea90c072d90391cbddb607648ada0f3934673e1e
+Adding /data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #5 - His Absolute Desires {Lauren Sweet}/His Absolute Desires [B00FVXEJHQ].m4b into the Catalog using key: e3318b6b714559899d7a26a0ea90c072d90391cbddb607648ada0f3934673e1e
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #5 - His Absolute Desires {Lauren Sweet}/His Absolute Desires [B00FVXEJHQ].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #5 - His Absolute Desires {Lauren Sweet}/His Absolute Desires [B00FVXEJHQ].metadata.json
+File: /data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #6 - His Absolute Indulgence {Lauren Sweet}/His Absolute Indulgence [B00G3HMA1Q].m4b >> Hash: 5a1b637060a67025671554d0fc4c091db59fd7a7a4ebfa724591cd93bd8a27c6
+Adding /data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #6 - His Absolute Indulgence {Lauren Sweet}/His Absolute Indulgence [B00G3HMA1Q].m4b into the Catalog using key: 5a1b637060a67025671554d0fc4c091db59fd7a7a4ebfa724591cd93bd8a27c6
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #6 - His Absolute Indulgence {Lauren Sweet}/His Absolute Indulgence [B00G3HMA1Q].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #6 - His Absolute Indulgence {Lauren Sweet}/His Absolute Indulgence [B00G3HMA1Q].metadata.json
+File: /data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #7 - His Absolute Impulse {Lauren Sweet}/His Absolute Impulse [B00GBI29IQ].m4b >> Hash: 92b5e4c961697c70f0505aa08fd728e749de1bda14704dc21d5f558548bb11ad
+Adding /data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #7 - His Absolute Impulse {Lauren Sweet}/His Absolute Impulse [B00GBI29IQ].m4b into the Catalog using key: 92b5e4c961697c70f0505aa08fd728e749de1bda14704dc21d5f558548bb11ad
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #7 - His Absolute Impulse {Lauren Sweet}/His Absolute Impulse [B00GBI29IQ].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #7 - His Absolute Impulse {Lauren Sweet}/His Absolute Impulse [B00GBI29IQ].metadata.json
+File: /data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #9 - His Absolute Devotion {Lauren Sweet}/His Absolute Devotion [B00GIQ8F8Y].m4b >> Hash: 374eab9bd4e69cbc3bc89819906f3437f0f8ac2abd2a5bbbd681706246d81d9a
+Adding /data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #9 - His Absolute Devotion {Lauren Sweet}/His Absolute Devotion [B00GIQ8F8Y].m4b into the Catalog using key: 374eab9bd4e69cbc3bc89819906f3437f0f8ac2abd2a5bbbd681706246d81d9a
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #9 - His Absolute Devotion {Lauren Sweet}/His Absolute Devotion [B00GIQ8F8Y].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #9 - His Absolute Devotion {Lauren Sweet}/His Absolute Devotion [B00GIQ8F8Y].metadata.json
+File: /data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #8 - His Absolute Passion {Lauren Sweet}/His Absolute Passion [B00GHR7UK8].m4b >> Hash: 54b0f7620b107a835ff9d98d1ff0307957fe7b20128d677d428994c736f6af20
+Adding /data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #8 - His Absolute Passion {Lauren Sweet}/His Absolute Passion [B00GHR7UK8].m4b into the Catalog using key: 54b0f7620b107a835ff9d98d1ff0307957fe7b20128d677d428994c736f6af20
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #8 - His Absolute Passion {Lauren Sweet}/His Absolute Passion [B00GHR7UK8].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #8 - His Absolute Passion {Lauren Sweet}/His Absolute Passion [B00GHR7UK8].metadata.json
+File: /data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #1 - His Absolute Need {Lauren Sweet}/His Absolute Need [B00GMPGMY0].m4b >> Hash: 3d2ea268b902979212bf0b0446672aca8eaa8052b2d641f489ab3f036193e381
+Adding /data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #1 - His Absolute Need {Lauren Sweet}/His Absolute Need [B00GMPGMY0].m4b into the Catalog using key: 3d2ea268b902979212bf0b0446672aca8eaa8052b2d641f489ab3f036193e381
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #1 - His Absolute Need {Lauren Sweet}/His Absolute Need [B00GMPGMY0].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Cerys du Lys/The Billionaire's Ultimatum/The Billionaire's Ultimatum #1 - His Absolute Need {Lauren Sweet}/His Absolute Need [B00GMPGMY0].metadata.json
+File: /data/media/audiobooks/libation/Marc Sedaka/What He Can Expect When She's Not Expecting {Marc Sedaka}/What He Can Expect When She's Not Expecting [B00CWG877I].m4b >> Hash: 341636438e360fbf58a83285f95875bbdead83111d9fd7c131bffd37ea437bb2
+Adding /data/media/audiobooks/libation/Marc Sedaka/What He Can Expect When She's Not Expecting {Marc Sedaka}/What He Can Expect When She's Not Expecting [B00CWG877I].m4b into the Catalog using key: 341636438e360fbf58a83285f95875bbdead83111d9fd7c131bffd37ea437bb2
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Marc Sedaka/What He Can Expect When She's Not Expecting {Marc Sedaka}/What He Can Expect When She's Not Expecting [B00CWG877I].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Marc Sedaka/What He Can Expect When She's Not Expecting {Marc Sedaka}/What He Can Expect When She's Not Expecting [B00CWG877I].metadata.json
+File: /data/media/audiobooks/libation/Tom Mason/Avatar: The Last Airbender/Avatar: The Last Airbender #0 - The Lost Scrolls {Maya Aoki Tuttle}/The Lost Scrolls [B0D6CW8M27].m4b >> Hash: 3777be6f914ad25f5aef3ef2379ca75bdec7ea467e788a47a96bdb2be7a625b8
+Adding /data/media/audiobooks/libation/Tom Mason/Avatar: The Last Airbender/Avatar: The Last Airbender #0 - The Lost Scrolls {Maya Aoki Tuttle}/The Lost Scrolls [B0D6CW8M27].m4b into the Catalog using key: 3777be6f914ad25f5aef3ef2379ca75bdec7ea467e788a47a96bdb2be7a625b8
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Tom Mason/Avatar: The Last Airbender/Avatar: The Last Airbender #0 - The Lost Scrolls {Maya Aoki Tuttle}/The Lost Scrolls [B0D6CW8M27].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Tom Mason/Avatar: The Last Airbender/Avatar: The Last Airbender #0 - The Lost Scrolls {Maya Aoki Tuttle}/The Lost Scrolls [B0D6CW8M27].metadata.json
+File: /data/media/audiobooks/libation/Molly Reisner/Dora the Explorer/Dora the Explorer #0 - Happy Birthday, Abuela {Gabriella Garcia – Union}/Happy Birthday, Abuela [B0D63KVCN8].m4b >> Hash: 444a861410dd02e1c253d48baf3279b5f1fa763d0135c7e6e810b999ed5acbd3
+Adding /data/media/audiobooks/libation/Molly Reisner/Dora the Explorer/Dora the Explorer #0 - Happy Birthday, Abuela {Gabriella Garcia – Union}/Happy Birthday, Abuela [B0D63KVCN8].m4b into the Catalog using key: 444a861410dd02e1c253d48baf3279b5f1fa763d0135c7e6e810b999ed5acbd3
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Molly Reisner/Dora the Explorer/Dora the Explorer #0 - Happy Birthday, Abuela {Gabriella Garcia – Union}/Happy Birthday, Abuela [B0D63KVCN8].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Molly Reisner/Dora the Explorer/Dora the Explorer #0 - Happy Birthday, Abuela {Gabriella Garcia – Union}/Happy Birthday, Abuela [B0D63KVCN8].metadata.json
+File: /data/media/audiobooks/libation/Rowan Morgana/The Green Witch's Herb and Plant Encyclopedia {Stacia Newcomb}/The Green Witch's Herb and Plant Encyclopedia [B0D9PBCKYQ].m4b >> Hash: 06900b706838099e4978558ea1e6d691423647d588b8d0c13c82e71530608d89
+Adding /data/media/audiobooks/libation/Rowan Morgana/The Green Witch's Herb and Plant Encyclopedia {Stacia Newcomb}/The Green Witch's Herb and Plant Encyclopedia [B0D9PBCKYQ].m4b into the Catalog using key: 06900b706838099e4978558ea1e6d691423647d588b8d0c13c82e71530608d89
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Rowan Morgana/The Green Witch's Herb and Plant Encyclopedia {Stacia Newcomb}/The Green Witch's Herb and Plant Encyclopedia [B0D9PBCKYQ].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Rowan Morgana/The Green Witch's Herb and Plant Encyclopedia {Stacia Newcomb}/The Green Witch's Herb and Plant Encyclopedia [B0D9PBCKYQ].metadata.json
+File: /data/media/audiobooks/libation/Deepak Surana/The Kargil Story {Suyash Mohan}/The Kargil Story [B0D9PC3P4F].m4b >> Hash: 02799775781db918f4218509e679f04f84717a9dbb0874c03f9feeeb78632dfc
+Adding /data/media/audiobooks/libation/Deepak Surana/The Kargil Story {Suyash Mohan}/The Kargil Story [B0D9PC3P4F].m4b into the Catalog using key: 02799775781db918f4218509e679f04f84717a9dbb0874c03f9feeeb78632dfc
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Deepak Surana/The Kargil Story {Suyash Mohan}/The Kargil Story [B0D9PC3P4F].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Deepak Surana/The Kargil Story {Suyash Mohan}/The Kargil Story [B0D9PC3P4F].metadata.json
+File: /data/media/audiobooks/libation/Dr. Patricia Pimentel Selassie/Aging Brilliantly {Jennifer Aquino}/Aging Brilliantly [B0D9HYG4T6].m4b >> Hash: 5605715ab5a6ad5d327c9536e866235a91237a8b1ea01795664c7ec1d2c256c8
+Adding /data/media/audiobooks/libation/Dr. Patricia Pimentel Selassie/Aging Brilliantly {Jennifer Aquino}/Aging Brilliantly [B0D9HYG4T6].m4b into the Catalog using key: 5605715ab5a6ad5d327c9536e866235a91237a8b1ea01795664c7ec1d2c256c8
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Dr. Patricia Pimentel Selassie/Aging Brilliantly {Jennifer Aquino}/Aging Brilliantly [B0D9HYG4T6].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Dr. Patricia Pimentel Selassie/Aging Brilliantly {Jennifer Aquino}/Aging Brilliantly [B0D9HYG4T6].metadata.json
+File: /data/media/audiobooks/libation/Josh Simonds/The Beginner's Guide to Runes {Joel Richards}/The Beginner's Guide to Runes [B0D9ZNH12Z].m4b >> Hash: c78a9e5ccad5e3785749abb7983e50752db3fe4c8ac4884042e82c0fa6b664e4
+Adding /data/media/audiobooks/libation/Josh Simonds/The Beginner's Guide to Runes {Joel Richards}/The Beginner's Guide to Runes [B0D9ZNH12Z].m4b into the Catalog using key: c78a9e5ccad5e3785749abb7983e50752db3fe4c8ac4884042e82c0fa6b664e4
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Josh Simonds/The Beginner's Guide to Runes {Joel Richards}/The Beginner's Guide to Runes [B0D9ZNH12Z].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Josh Simonds/The Beginner's Guide to Runes {Joel Richards}/The Beginner's Guide to Runes [B0D9ZNH12Z].metadata.json
+File: /data/media/audiobooks/libation/Vanessa Green Allen MEd NBCT/Me and My Feelings {Kate Coventry}/Me and My Feelings [B0D9HS5WZD].m4b >> Hash: 8d1328082734c189eb682849a0b63b1f456af3ee6bd4aafb3fed60533c3b90e2
+Adding /data/media/audiobooks/libation/Vanessa Green Allen MEd NBCT/Me and My Feelings {Kate Coventry}/Me and My Feelings [B0D9HS5WZD].m4b into the Catalog using key: 8d1328082734c189eb682849a0b63b1f456af3ee6bd4aafb3fed60533c3b90e2
+Getting metadata for 
+	Libation Book:/data/media/audiobooks/libation/Vanessa Green Allen MEd NBCT/Me and My Feelings {Kate Coventry}/Me and My Feelings [B0D9HS5WZD].m4b
+Loading metadata from 
+	Metadata Json:/data/media/audiobooks/libation/Vanessa Green Allen MEd NBCT/Me and My Feelings {Kate Coventry}/Me and My Feelings [B0D9HS5WZD].metadata.json
+Scanned 5131, added 52 in your library
+MAM search: ("James Patterson"|"Aaron Tracy") The Commuter...
+Checking cache: mam/d97d28435ec5eff77d36675b474696ad07dec608b25ed29c053d8b0e3314f00b...
+MAM search: "Disney Books" The Enchantment...
+Checking cache: mam/96da58aaee8335c5ce3d62fe43c1755501ae0fa38f22c735a0505a525441d4a9...
+MAM search: ("Disney Press"|"Cynthea Liu") Disney Princess...
+Checking cache: mam/3fc33e2881d9e81be9032f84b68e1788d7bc85cfc54c3f8150a34569fa7108e2...
+MAM search: "Sarah A Denzil" Secret Sister...
+Checking cache: mam/58904eb818497ec6a258b69b2fbc07650286f44f0626cd7680ce023d5619863a...
+MAM search: ("Jennifer Cognard-Black"|"The Great Courses") Margaret Atwood...
+Checking cache: mam/fb541ca9a119642be673efd4d4f6744cfba31ec50433c9cc61aaf4e7efb392fa...
+MAM search: ("Octavia Goredema"|"The Great Courses") Brand Yourself for Success...
+Checking cache: mam/23f72ab762245c1110ab4365954de48e91d200ac872101ede2679d90022bd257...
+MAM search: "Michael Buckley" NERDS 5...
+Checking cache: mam/5f9f0884decf5f8430e0fe4cbf9733f1c19dc322864220b4c6563d24af05316b...
+MAM search: ("Cassius Lange"|"Castor") Battle World 1...
+Checking cache: mam/a22a4a0adcd51279e3e1db8eaf76e0789aeb68d504d1a6cd5aa9d0eddb24e162...
+MAM search: "Layla Hagen" The Match...
+Checking cache: mam/a6aa07c93505604d499594eb0aae1a57e121c8433203b0c7aefa71cafc5cfb8e...
+MAM search: "B Love" Mister Jeweler...
+Checking cache: mam/436915a2844f055d65fa54dd76477b01e85b79d15ba537575db57e10aee67a8a...
+MAM search: ("Karin Slaughter"|"Lee Child"|"B A Paris"|"Caroline Kepnes"|"Oyinkan Braithwaite"|"Sarah Pekkanen"|"Linwood Barclay"|"Naomi Hirahara"|"K J Howe"|"Robert Dugoni"|"Alison Gaylin"|"Heather Gudenkauf"|"Shari Lapena"|"Clare Mackintosh"|"Stacy Willingham") The Twisted Women's Book Club...
+Checking cache: mam/f4657168beaec5b99ff192b760207514418d05427a93b8327a9a2136bae23891...
+MAM search: "Scott Cook" It Comes Not from Your Enemies...
+Checking cache: mam/38b601ee0474701671022f002ce652c4622160ca7f39db2667e9ced6fb55efea...
+MAM search: "Scott Cook" Wings of Valor...
+Checking cache: mam/ff708525559c260cf91523e885ac227210ac3ee8ee53a6f6cd027adbeea87cc0...
+MAM search: "Laura Scott" Scent of Fear...
+Checking cache: mam/0d48d19d89bcf95cdaf545906f748a4096f522ebe2ffbe0d752efeb8bb6d78d7...
+MAM search: "Sedona Ashe" Urn My Love...
+Checking cache: mam/7401c9d24c618dd708350bb22da74df3130e975412af8c476906631a596057f8...
+MAM search: "Jennifer Keishin Armstrong" Seinfeldia...
+Checking cache: mam/a881625780af1c34fc239a8ca6ea1a1bbaf24fdbbda3013dfb3642fcc1878787...
+MAM search: "Fred Stoller" My Seinfeld Year...
+Checking cache: mam/c2ab8564a438880e33fe128e38183239874de3731bc2e0b5b3c68a18f8efcbd8...
+MAM search: ("Richard Brian Davis"|"William Irwin") Disney and Philosophy...
+Checking cache: mam/cc968a601512cdeb690d3a18bb392c7f631f6051411bb474b84d1d33243bd99a...
+MAM search: "Adrian Molina" Disney Classic Stories...
+Checking cache: mam/9980aa5abff0a64c90133bb231411cab58e0697dfa64207eb957b184daa613d8...
+MAM search: "Sarah Page" Billionaire for Sale...
+Checking cache: mam/cd149031b3d23ed43828e1dc2c59194636cb8c96c06e5d1f13ff8a8648b662b2...
+MAM search: "Jeffrey M Jones" Kingdom...
+Checking cache: mam/c2d4b5614f3b58061125efd8817ebda0299c6e814311a8b0b7061dfb868bd724...
+MAM search: "Bonnie Hardy" All Aboard for Murder...
+Checking cache: mam/22f5d83bc6a60db424583b6e8b4653f42c0f8c08ba87ba9eac7045749b61d498...
+MAM search: "ITN Productions" Beyond Suspicion...
+Checking cache: mam/da350af707bdbaf5b54c1334031999461f3aa3ec5547112220614604b43d83c5...
+MAM search: ("Dwayne Alexander Smith"|"Kevin Hart"|"Charlamagne tha God"|"SBH Productions") Kingsland...
+Checking cache: mam/b89c0dcad6466e44da9a95ac19854ee074f957c8ce5d09d80be53e95d62edde5...
+MAM search: ("John Mankiewicz"|"Jamie Napoli"|"Daniel Pyne"|"Katie Pyne"|"Aaron Lipstadt") The Big Fix...
+Checking cache: mam/45b48a1081c552304991121d97e87174aa94f89ae7e7f00e6e3b5693a5a4e1d8...
+MAM search: ("Rafael Walker"|"The Great Courses") James Baldwin...
+Checking cache: mam/92e4e211a491f96cb2c4ca270f26ececddd3855bc24fe60d6239e730aa54a3ef...
+MAM search: ("Michael Stewart Foley"|"The Great Courses") The Story of Grunge...
+Checking cache: mam/e1e4270bc8d43b364cdc0e3d829acb10f342a700011f214f753babcc01311dc8...
+MAM search: ("Sherri L Smith"|"The Great Courses") Teenage Wastelands...
+Checking cache: mam/8271a5acd764592d2adcfc61dc2950e21f36e343910220df04365e099fafe4d6...
+MAM search: ("Kathleen Day"|"The Great Courses") Understanding Bank Crises and Contagion...
+Checking cache: mam/da8d867d6dd0042a3d206da17cd55a57eb8facbc2a758b929b6b00a666eeddb0...
+MAM search: ("Sheila Liming"|"The Great Courses") The Great Gatsby at 100...
+Checking cache: mam/598c6da41411c0a620c427a9b2e1dd19f18c3281166aef03be0e29bd2318d35a...
+MAM search: ("Edward Lengel"|"The Great Courses") The Fall of Saigon...
+Checking cache: mam/312dae415b7bca8a21c4e7547fd5946fa2074d132b5e5f1e96e7817a9bdaa5fa...
+MAM search: ("Kellie Carter Jackson"|"The Great Courses") The Abolitionists...
+Checking cache: mam/5060f34c29a35bbb5dfbdd0bd21dca1ef492665c7642da3506c62022ac335d18...
+MAM search: ("Leilani Basham"|"The Great Courses") Great Heroes and Heroines of Hawaiian Heritage...
+Checking cache: mam/9825b5512c0ed7da8dffb6fc640ff1cfbb63576ebced371ec96d738dc4e26c56...
+MAM search: "Devin Hunter" Betrayal at Salty Springs...
+Checking cache: mam/d5765c721a8dbe150ac04f296dc2f31ae04a09e57ac7ab8319977a27603470f4...
+MAM search: "Cerys du Lys" His Absolute Conditions...
+Checking cache: mam/9b74bdd6ec5fefbed4c66f8e9b800b7d00b4ca975075e6188ed094c6492626ff...
+MAM search: "Cerys du Lys" His Absolute Requirements...
+Checking cache: mam/99609dfad9e6cf4e4c5dc098e3b85a3f2c1ae422ab052689a5b4df7ea9697c72...
+MAM search: "Cerys du Lys" His Absolute Instructions...
+Checking cache: mam/aedc0ebd3573299c2f4022de257ba247a00d3e8d10e3f1cd1f49ba991dbfbe4d...
+MAM search: "Cerys du Lys" His Absolute Orders...
+Checking cache: mam/a7c06b1441a1360e97690205d767771d4fe740b9d0843939cec5af7d04baf92b...
+MAM search: "Cerys du Lys" His Absolute Desires...
+Checking cache: mam/bb8e1a8aece1f21130c40af4b6ec92354c203a9d4716fd5fbbb49ed7c030a685...
+MAM search: "Cerys du Lys" His Absolute Indulgence...
+Checking cache: mam/3eb35d6838c504b7bee1b11ee7ee68828a0b0f33d116cc65e4bda659c9c69a55...
+MAM search: "Cerys du Lys" His Absolute Impulse...
+Checking cache: mam/7b51718e4aaeb741574c7c3dbc816fa44fc0743a005218bd8be5a1206a2fcc2b...
+MAM search: "Cerys du Lys" His Absolute Devotion...
+Checking cache: mam/bcce0947fbb1731c4e3b5336695e9f6636ba41e3da8008571cc1d3433eda6d25...
+MAM search: "Cerys du Lys" His Absolute Passion...
+Checking cache: mam/aba42e55c2447f855e0a8f4439cca2b6015303c2c4d40d03705b363c0da2a634...
+MAM search: "Cerys du Lys" His Absolute Need...
+Checking cache: mam/9bb954f4d04f3ca636252cad08eeab1ad6c3c236c03764af87950b2e5648b6f7...
+MAM search: ("Marc Sedaka"|"Gregory Rosen") What He Can Expect When She's Not Expecting...
+Checking cache: mam/f29772c406a37e25eff659b9b18849693d99f8b5203dfa1acd5683977a9f3df5...
+MAM search: ("Tom Mason"|"Dan Danko"|"Nickelodeon Publishing") The Lost Scrolls...
+Checking cache: mam/b1c02d2c73342c613b4caa498b1a47e61fb1abd27f7f9ff0f3c792a4f4cb5d67...
+MAM search: ("Molly Reisner"|"Nickelodeon Publishing") Happy Birthday  Abuela...
+Checking cache: mam/c122acd56f75c382a8d4ae3c3ffabe1e8cfb60d6a2643853e93a8599a2ade1a6...
+MAM search: "Rowan Morgana" The Green Witch's Herb and Plant Encyclopedia...
+Checking cache: mam/95486218be0ce6653c4a4b686a3f60f52088641bbf52026560facad2dc620ebe...
+MAM search: "Deepak Surana" The Kargil Story...
+Checking cache: mam/7b38d6ad46982cc162f7bcb2062c94e4b22a687fa0b6f5cfdb7389159d3c8f3a...
+MAM search: "Patricia Pimentel Selassie" Aging Brilliantly...
+Checking cache: mam/4c0793e538e4bb85167e0a69f201676da2f40cb164286d98796153c8e20b519d...
+MAM search: "Josh Simonds" The Beginner's Guide to Runes...
+Checking cache: mam/d1dfd9d22f908ece80ad54f54b2ede3cd493cfe6f96c99a308fc2b1bb7a28031...
+MAM search: "Vanessa Green Allen MEd NBCT" Me and My Feelings...
+Checking cache: mam/c9d9dc92790aa2e8b50352bdd5973ac86dfb27c4f82642feb8c936f486d369ff...
+Saved your library to: logs/libraryscans/libation.csv

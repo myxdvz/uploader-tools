@@ -145,28 +145,32 @@ class TBook():
                 if self.verbose: 
                     print(f"File: {self.book.filename} >> Source: {self.book.source_path}")
                 
+                #hardlink the files
+                self.book.hardlinkFiles(self.upload_folder, self.hardlink)
+
                 #for each upload_files, hardlink the files
                 for ft in self.upload_files:
-                    #check if the file already exists in the target directory
-                    filename = self.book.filename + ft
-                    if self.verbose: print (f"Filename: {filename}")
-                    source = os.path.join (self.book.source_path, filename)
-                    dest = os.path.join (self.upload_folder, sanitize_filename(filename))
-                    if self.verbose: print(f"Source: {source} >> Destination: {dest}")
-                    if (os.path.exists(source) and (not os.path.exists(dest))):
-                        try:
-                            #Hardlink or Copy
-                            if self.hardlink:
-                                if self.verbose: print (f"Hardlinking {source} to {dest}")
-                                if not self.dryRun:
-                                    os.link(source, dest)
-                            else:
-                                #copy
-                                if self.verbose: print (f"Copying {source} to {dest}")
-                                if not self.dryRun:
-                                    shutil.copy2 (source, dest)                                
-                        except Exception as e:
-                            print (f"\tFailed due to {e}")   
+                    if len(self.book.filename):
+                        #check if the file already exists in the target directory
+                        filename = self.book.filename + ft
+                        if self.verbose: print (f"Filename: {filename}")
+                        source = os.path.join (self.book.source_path, filename)
+                        dest = os.path.join (self.upload_folder, sanitize_filename(filename))
+                        if self.verbose: print(f"Source: {source} >> Destination: {dest}")
+                        if (os.path.exists(source) and (not os.path.exists(dest))):
+                            try:
+                                #Hardlink or Copy
+                                if self.hardlink:
+                                    if self.verbose: print (f"Hardlinking {source} to {dest}")
+                                    if not self.dryRun:
+                                        os.link(source, dest)
+                                else:
+                                    #copy
+                                    if self.verbose: print (f"Copying {source} to {dest}")
+                                    if not self.dryRun:
+                                        shutil.copy2 (source, dest)                                
+                            except Exception as e:
+                                print (f"\tFailed due to {e}")   
 
                 return self.upload_folder 
             else:
@@ -295,25 +299,26 @@ class TBook():
             # print(f"Error logging in {e}") 
         
         # Add all files that were generated
-        print (f"Adding {len(self.torrentfiles)} torrents to client with category {self.category}")
-        try:
-            msg =  qbt_client.torrents_add(torrent_files=self.torrentfiles, category=self.category, is_paused=True, use_auto_torrent_management=True)
+        if (self.torrentfiles is not None):
+            print (f"Adding {len(self.torrentfiles)} torrents to client with category {self.category}")
+            try:
+                msg =  qbt_client.torrents_add(torrent_files=self.torrentfiles, category=self.category, is_paused=True, use_auto_torrent_management=True)
 
-            #print (msg)
-            if  msg != "Ok.":
-                raise Exception("Failed to add torrent.")
-            
-            # now get all the added torrents, and force recheck
-            torrents = qbt_client.torrents_info(status_filter="stopped", category=self.category)
-            #print (torrents)
+                #print (msg)
+                if  msg != "Ok.":
+                    raise Exception("Failed to add torrent.")
+                
+                # now get all the added torrents, and force recheck
+                torrents = qbt_client.torrents_info(status_filter="stopped", category=self.category)
+                #print (torrents)
 
-            #force recheck
-            print(f"Force rechecking ...")
-            for torrent in torrents:
-                torrent.recheck()
+                #force recheck
+                print(f"Force rechecking ...")
+                for torrent in torrents:
+                    torrent.recheck()
 
-        except Exception as e:
-            print (e)   
+            except Exception as e:
+                print (e)   
 
         return
 

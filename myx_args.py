@@ -11,7 +11,8 @@ def importArgs():
     parser = argparse.ArgumentParser(prog="uploader-tools", description=appDescription)
     #Primary Action to run
     parser.add_argument ("action", choices=["query", "createJson", "createTorrent", "prep4upload", "mylib2mam", "scanLibrary", "sanitizeLibrary", "tagDeleted"], help="A specific task or tool to run")
-    parser.add_argument ("-m", "--metadata", choices=["audible", "google", "mam", "file", "libation", "epub"], help="Source of metadata")
+    parser.add_argument ("-m", "--metadata", default="libation", choices=["audible", "google", "mam", "file", "libation", "epub", "libby"], help="Source of metadata")
+    parser.add_argument ("-l", "--library", choices=["libation", "calibre", "libby"], help="Library source")
     parser.add_argument ("-p", "--params", help="Parameters for the action", nargs="+")
     parser.add_argument ("-s", "--settings", default="", help="Path to config file")
 
@@ -55,6 +56,10 @@ class Config(object):
                 #override config with command line param
                 if params.metadata is not None:
                     cfg["Config"]["metadata"] = params.metadata                 
+
+                #override config with command line param
+                if params.library is not None:
+                    cfg["Config"]["library"] = params.library                 
 
                 #override config/flags with command line param
                 if params.dry_run is not None:
